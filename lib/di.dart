@@ -13,11 +13,6 @@ final di = GetIt.instance;
 Future<void> setup() async {
   initializeDateFormatting();
 
-  _coreLocator();
-  _authLocator();
-}
-
-void _coreLocator() async {
   var dir = await getTemporaryDirectory();
 
   /* -----------------> Network <-----------------*/
@@ -53,6 +48,10 @@ void _coreLocator() async {
             ),
           ]),
   );
+
+  di.registerFactory<NetworkClient>(() => NetworkClientImpl(dio: di<Dio>()));
+  di.registerFactory<AppNavigator>(() => AppNavigator());
+  _authLocator();
 }
 
 void _authLocator() {

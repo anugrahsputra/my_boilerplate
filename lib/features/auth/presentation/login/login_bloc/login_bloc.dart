@@ -11,18 +11,24 @@ part 'login_state.dart';
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final LoginUsecase loginUsecase;
 
-  LoginBloc({required this.loginUsecase}) : super(const LoginInitial()) {
-    on<OnLogin>(_onLogin);
+  LoginBloc({required this.loginUsecase}) : super(LoginState.initial()) {
+    on<OnEmailChanged>((event, emit) => emit(state.copyWith(email: event.email)));
+
+    on<OnPasswordChanged>((event, emit) => emit(state.copyWith(password: event.password)));
+
+    on<OnLogin>((event, emit) async {
+      emit(state.copyWith(isLoading: true, errorMessage: null));
+
+      final loginReq = LoginReqDto(email: state.email, password: state.password);
+
+      final result = await loginUsecase.execute(loginReq);
+
+      result.fold(
+        (l) => emit(state.copyWith(isLoading: false, errorMessage: l.message)),
+        (r) => emit(state.copyWith(isLoading: false, errorMessage: null)),
+      );
+    });
   }
 
-  Future<void> _onLogin(OnLogin event, Emitter<LoginState> emit) async {
-    final loginReq = LoginReqDto(email: event.email, password: event.password);
 
-    emit(const LoginLoading());
-    final result = await loginUsecase.execute(loginReq);
-    result.fold(
-      (failure) => emit(const LoginFailed()),
-      (login) => emit(const LoginSuccess()),
-    );
-  }
 }
