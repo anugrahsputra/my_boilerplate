@@ -4,3 +4,4 @@ export 'request_retrier.dart';
 export 'interceptor_mixin.dart';
 export 'exceptions.dart';
 export 'api_endpoints.dart';
+export 'safe_call.dart';
