@@ -11,10 +11,15 @@ class AppIconHeader extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset(IconPath.appIcon, width: 110.w),
+          Image.asset(IconPath.appIcon, width: 80.w),
           Text(
-            "Downormal",
-            style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
+            "Login",
+            style: TextStyle(fontSize: 30.sp, fontWeight: FontWeight.bold),
+          ),
+
+          Text(
+            "Please Login to contiue using the app",
+            style: TextStyle(fontWeight: FontWeight.w500),
           ),
         ],
       ),
@@ -43,7 +48,7 @@ class LoginFields extends StatelessWidget {
           keyboardType: TextInputType.emailAddress,
           prefixIcon: const Icon(Icons.email),
           onChanged: (val) =>
-              context.read<LoginBloc>().add(OnEmailChanged(val)),
+              context.read<LoginBloc>().add(LoginOnEmailChanged(val)),
         ),
         DefaultFormField(
           controller: passwordController,
@@ -52,7 +57,7 @@ class LoginFields extends StatelessWidget {
           keyboardType: TextInputType.visiblePassword,
           prefixIcon: const Icon(Icons.lock),
           onChanged: (val) =>
-              context.read<LoginBloc>().add(OnPasswordChanged(val)),
+              context.read<LoginBloc>().add(LoginOnPasswordChanged(val)),
         ),
       ],
     );
@@ -99,14 +104,14 @@ class LoginFooter extends StatelessWidget {
       padding: EdgeInsets.all(16.w),
       child: RichText(
         text: TextSpan(
-          text: "Belum punya akun? ",
+          text: "Don't have account? ",
           style: TextStyle(
             color: Theme.of(context).colorScheme.onSurface,
             fontSize: 16.sp,
           ),
           children: [
             TextSpan(
-              text: "Daftar",
+              text: "Register",
               style: TextStyle(
                 color: Theme.of(context).colorScheme.primary,
                 fontSize: 16.sp,

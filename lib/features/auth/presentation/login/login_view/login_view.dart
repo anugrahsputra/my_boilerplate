@@ -44,6 +44,10 @@ class _LoginViewState extends State<LoginView> {
                 behavior: SnackBarBehavior.floating,
               ),
             );
+          } else if (state.isSuccess) {
+            Future.microtask(() {
+              log.info("Login Success");
+            });
           }
         },
         child: BlocBuilder<LoginBloc, LoginState>(
@@ -58,18 +62,7 @@ class _LoginViewState extends State<LoginView> {
                       sliver: SliverList(
                         delegate: SliverChildListDelegate([
                           AppIconHeader(),
-                          SizedBox(height: 16),
-                          SizedBox(
-                            width: double.infinity,
-                            child: Text(
-                              "Login",
-                              style: TextStyle(
-                                fontSize: 50.sp,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 16),
+                          SizedBox(height: 80.h),
                           LoginFields(
                             emailController: emailController,
                             passwordController: passwordController,
@@ -77,10 +70,9 @@ class _LoginViewState extends State<LoginView> {
                           SizedBox(height: 16),
                           LoginButton(
                             state: state,
-                            onTap: () => context.read<LoginBloc>().add(
-                              const OnLogin(),
-                            ),
-                          )
+                            onTap: () =>
+                                context.read<LoginBloc>().add(OnLogin()),
+                          ),
                         ]),
                       ),
                     ),
