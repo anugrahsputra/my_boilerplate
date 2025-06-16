@@ -22,9 +22,34 @@ class NetworkInterceptor extends Interceptor with InterceptorMixin {
     );
   }
 
+  String _formatRequestBody(dynamic data) {
+    try {
+      if (data is Map || data is List) {
+        return const JsonEncoder.withIndent('  ').convert(data);
+      } else if (data is FormData) {
+        final fields = data.fields.map((e) => '${e.key}: ${e.value}').join(', ');
+        final files = data.files.map((e) => '${e.key}: ${e.value.filename}').join(', ');
+        return 'FormData: { fields: {$fields}, files: {$files} }';
+      } else {
+        return data.toString();
+      }
+    } catch (e) {
+      return 'Could not format request body: $e';
+    }
+  }
+
   @override
-  void onRequest(options, handler) {
-    log.fine("Request: ${options.uri}");
+  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+    log.fine("➡️ Request [${options.method}] => URL: ${options.uri}");
+    log.fine("➡️ Headers: ${options.headers}");
+    log.info("➡️ On Send Progress: ${options.onSendProgress}");
+
+    if (options.data != null) {
+      log.fine("➡️ Body: ${_formatRequestBody(options.data)}");
+    }
+    options.headers["Content-Type"] = "application/json";
+    options.headers["x-api-key"] = "reqres-free-v1";
+
     super.onRequest(options, handler);
   }
 

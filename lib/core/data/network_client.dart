@@ -7,8 +7,8 @@ abstract class NetworkClient {
     Options? options,
     CancelToken? cancelToken,
     ProgressCallback? onReceiveProgress,
-    ProgressCallback? onSendProgress,
   });
+
   Future<Response> post(
     String url, {
     Map<String, dynamic>? queryParameters,
@@ -18,12 +18,20 @@ abstract class NetworkClient {
     ProgressCallback? onReceiveProgress,
     ProgressCallback? onSendProgress,
   });
+
   Future<Response> put(
     String url, {
     Map<String, dynamic>? queryParameters,
+    Options? options,
     dynamic data,
   });
-  Future<Response> delete(String url, {Map<String, dynamic>? queryParameters});
+
+  Future<Response> delete(
+    String url, {
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+    CancelToken? cancelToken,
+  });
 }
 
 class NetworkClientImpl implements NetworkClient {
@@ -38,7 +46,6 @@ class NetworkClientImpl implements NetworkClient {
     Options? options,
     CancelToken? cancelToken,
     ProgressCallback? onReceiveProgress,
-    ProgressCallback? onSendProgress,
   }) async {
     return dio.get(
       url,
@@ -53,16 +60,25 @@ class NetworkClientImpl implements NetworkClient {
   Future<Response> post(
     String url, {
     Map<String, dynamic>? queryParameters,
-    data,
+    dynamic data,
     Options? options,
     CancelToken? cancelToken,
     ProgressCallback? onReceiveProgress,
     ProgressCallback? onSendProgress,
   }) async {
+    if (data is Map<String, dynamic>) {
+      final isMultipart =
+          options?.contentType == Headers.multipartFormDataContentType;
+
+      if (isMultipart) {
+        data = FormData.fromMap(data);
+      }
+    }
+
     return dio.post(
       url,
       queryParameters: queryParameters,
-      data: FormData.fromMap(data),
+      data: data,
       options: options,
       cancelToken: cancelToken,
       onReceiveProgress: onReceiveProgress,
@@ -74,16 +90,37 @@ class NetworkClientImpl implements NetworkClient {
   Future<Response> put(
     String url, {
     Map<String, dynamic>? queryParameters,
-    data,
+    Options? options,
+    dynamic data,
   }) async {
-    return dio.put(url, queryParameters: queryParameters, data: data);
+    if (data is Map<String, dynamic>) {
+      final isMultipart =
+          options?.contentType == Headers.multipartFormDataContentType;
+
+      if (isMultipart) {
+        data = FormData.fromMap(data);
+      }
+    }
+    return dio.put(
+      url,
+      queryParameters: queryParameters,
+      data: data,
+      options: options,
+    );
   }
 
   @override
   Future<Response> delete(
     String url, {
     Map<String, dynamic>? queryParameters,
+    Options? options,
+    CancelToken? cancelToken,
   }) async {
-    return dio.delete(url, queryParameters: queryParameters);
+    return dio.delete(
+      url,
+      queryParameters: queryParameters,
+      options: options,
+      cancelToken: cancelToken,
+    );
   }
 }
