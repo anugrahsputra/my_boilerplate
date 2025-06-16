@@ -1,3 +1,4 @@
+import 'package:logging/logging.dart';
 import 'package:my_boilerplate/core/core.dart';
 import 'package:my_boilerplate/features/auth/data/data.dart';
 
@@ -9,6 +10,7 @@ abstract class AuthDataSource {
 
 class AuthDataSourceImpl implements AuthDataSource {
   final NetworkClient dioClient;
+  final Logger log = Logger("Auth Data Source");
 
   AuthDataSourceImpl({required this.dioClient});
 
