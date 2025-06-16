@@ -7,9 +7,13 @@ import 'package:my_boilerplate/di.dart';
 import 'app.dart';
 
 Future<void> appInitialize() async {
-  AppLogging.initialize(showLog: kDebugMode);
+  AppLogging.initialize(showLog: true);
   Bloc.observer = AppBlocObserver();
   await setup();
 
   runApp(MyApp());
 }
+
+
+// eve.holt@reqres.in
+//     cityslicka
