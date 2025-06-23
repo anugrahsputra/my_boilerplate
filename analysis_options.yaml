@@ -26,3 +26,18 @@ linter:
 
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options
+analyzer:
+  plugins:
+    - dart_code_metrics
+
+dart_code_metrics:
+  metrics-exclude:
+    - test/**
+
+  rules:
+    - prefer-trailing-comma
+    - always_specify_types
+
+  metrics:
+    cyclomatic-complexity: 20
+    lines-of-code: 100
