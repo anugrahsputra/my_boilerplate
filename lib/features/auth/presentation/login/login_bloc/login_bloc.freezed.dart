@@ -177,6 +177,38 @@ as String,
 /// @nodoc
 
 
+class LoginOnError implements LoginEvent {
+  const LoginOnError();
+  
+
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoginOnError);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'LoginEvent.onError()';
+}
+
+
+}
+
+
+
+
+/// @nodoc
+
+
 class OnLogin implements LoginEvent {
   const OnLogin();
   
@@ -209,7 +241,7 @@ String toString() {
 /// @nodoc
 mixin _$LoginState {
 
- String get email; String get password; bool get isLoading; bool get isSuccess; String? get errorMessage;
+ Email get email; Password get password; FormzSubmissionStatus get status; bool get isValid; bool get hasSubmitted; String? get errorMessage;
 /// Create a copy of LoginState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -220,16 +252,16 @@ $LoginStateCopyWith<LoginState> get copyWith => _$LoginStateCopyWithImpl<LoginSt
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoginState&&(identical(other.email, email) || other.email == email)&&(identical(other.password, password) || other.password == password)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isSuccess, isSuccess) || other.isSuccess == isSuccess)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoginState&&(identical(other.email, email) || other.email == email)&&(identical(other.password, password) || other.password == password)&&(identical(other.status, status) || other.status == status)&&(identical(other.isValid, isValid) || other.isValid == isValid)&&(identical(other.hasSubmitted, hasSubmitted) || other.hasSubmitted == hasSubmitted)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,email,password,isLoading,isSuccess,errorMessage);
+int get hashCode => Object.hash(runtimeType,email,password,status,isValid,hasSubmitted,errorMessage);
 
 @override
 String toString() {
-  return 'LoginState(email: $email, password: $password, isLoading: $isLoading, isSuccess: $isSuccess, errorMessage: $errorMessage)';
+  return 'LoginState(email: $email, password: $password, status: $status, isValid: $isValid, hasSubmitted: $hasSubmitted, errorMessage: $errorMessage)';
 }
 
 
@@ -240,7 +272,7 @@ abstract mixin class $LoginStateCopyWith<$Res>  {
   factory $LoginStateCopyWith(LoginState value, $Res Function(LoginState) _then) = _$LoginStateCopyWithImpl;
 @useResult
 $Res call({
- String email, String password, bool isLoading, bool isSuccess, String? errorMessage
+ Email email, Password password, FormzSubmissionStatus status, bool isValid, bool hasSubmitted, String? errorMessage
 });
 
 
@@ -257,12 +289,13 @@ class _$LoginStateCopyWithImpl<$Res>
 
 /// Create a copy of LoginState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? email = null,Object? password = null,Object? isLoading = null,Object? isSuccess = null,Object? errorMessage = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? email = null,Object? password = null,Object? status = null,Object? isValid = null,Object? hasSubmitted = null,Object? errorMessage = freezed,}) {
   return _then(_self.copyWith(
 email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
-as String,password: null == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
-as String,isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
-as bool,isSuccess: null == isSuccess ? _self.isSuccess : isSuccess // ignore: cast_nullable_to_non_nullable
+as Email,password: null == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
+as Password,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as FormzSubmissionStatus,isValid: null == isValid ? _self.isValid : isValid // ignore: cast_nullable_to_non_nullable
+as bool,hasSubmitted: null == hasSubmitted ? _self.hasSubmitted : hasSubmitted // ignore: cast_nullable_to_non_nullable
 as bool,errorMessage: freezed == errorMessage ? _self.errorMessage : errorMessage // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
@@ -275,13 +308,14 @@ as String?,
 
 
 class _LoginState implements LoginState {
-  const _LoginState({required this.email, required this.password, required this.isLoading, required this.isSuccess, this.errorMessage});
+  const _LoginState({this.email = const Email.pure(), this.password = const Password.pure(), this.status = FormzSubmissionStatus.initial, this.isValid = false, this.hasSubmitted = false, this.errorMessage});
   
 
-@override final  String email;
-@override final  String password;
-@override final  bool isLoading;
-@override final  bool isSuccess;
+@override@JsonKey() final  Email email;
+@override@JsonKey() final  Password password;
+@override@JsonKey() final  FormzSubmissionStatus status;
+@override@JsonKey() final  bool isValid;
+@override@JsonKey() final  bool hasSubmitted;
 @override final  String? errorMessage;
 
 /// Create a copy of LoginState
@@ -294,16 +328,16 @@ _$LoginStateCopyWith<_LoginState> get copyWith => __$LoginStateCopyWithImpl<_Log
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LoginState&&(identical(other.email, email) || other.email == email)&&(identical(other.password, password) || other.password == password)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isSuccess, isSuccess) || other.isSuccess == isSuccess)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LoginState&&(identical(other.email, email) || other.email == email)&&(identical(other.password, password) || other.password == password)&&(identical(other.status, status) || other.status == status)&&(identical(other.isValid, isValid) || other.isValid == isValid)&&(identical(other.hasSubmitted, hasSubmitted) || other.hasSubmitted == hasSubmitted)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,email,password,isLoading,isSuccess,errorMessage);
+int get hashCode => Object.hash(runtimeType,email,password,status,isValid,hasSubmitted,errorMessage);
 
 @override
 String toString() {
-  return 'LoginState(email: $email, password: $password, isLoading: $isLoading, isSuccess: $isSuccess, errorMessage: $errorMessage)';
+  return 'LoginState(email: $email, password: $password, status: $status, isValid: $isValid, hasSubmitted: $hasSubmitted, errorMessage: $errorMessage)';
 }
 
 
@@ -314,7 +348,7 @@ abstract mixin class _$LoginStateCopyWith<$Res> implements $LoginStateCopyWith<$
   factory _$LoginStateCopyWith(_LoginState value, $Res Function(_LoginState) _then) = __$LoginStateCopyWithImpl;
 @override @useResult
 $Res call({
- String email, String password, bool isLoading, bool isSuccess, String? errorMessage
+ Email email, Password password, FormzSubmissionStatus status, bool isValid, bool hasSubmitted, String? errorMessage
 });
 
 
@@ -331,12 +365,13 @@ class __$LoginStateCopyWithImpl<$Res>
 
 /// Create a copy of LoginState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? email = null,Object? password = null,Object? isLoading = null,Object? isSuccess = null,Object? errorMessage = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? email = null,Object? password = null,Object? status = null,Object? isValid = null,Object? hasSubmitted = null,Object? errorMessage = freezed,}) {
   return _then(_LoginState(
 email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
-as String,password: null == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
-as String,isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
-as bool,isSuccess: null == isSuccess ? _self.isSuccess : isSuccess // ignore: cast_nullable_to_non_nullable
+as Email,password: null == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
+as Password,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as FormzSubmissionStatus,isValid: null == isValid ? _self.isValid : isValid // ignore: cast_nullable_to_non_nullable
+as bool,hasSubmitted: null == hasSubmitted ? _self.hasSubmitted : hasSubmitted // ignore: cast_nullable_to_non_nullable
 as bool,errorMessage: freezed == errorMessage ? _self.errorMessage : errorMessage // ignore: cast_nullable_to_non_nullable
 as String?,
   ));

@@ -28,8 +28,12 @@ class RegisterFields extends StatelessWidget {
     super.key,
     required this.emailController,
     required this.passwordController,
+    required this.nameController,
+    required this.phoneController,
   });
 
+  final TextEditingController nameController;
+  final TextEditingController phoneController;
   final TextEditingController emailController;
   final TextEditingController passwordController;
 
@@ -39,12 +43,22 @@ class RegisterFields extends StatelessWidget {
       spacing: 16.h,
       children: [
         DefaultFormField(
+          controller: nameController,
+          hintText: "Full Name",
+          keyboardType: TextInputType.name,
+          prefixIcon: const Icon(Icons.person),
+        ),
+        DefaultFormField(
+          controller: phoneController,
+          hintText: "Phone Number",
+          keyboardType: TextInputType.phone,
+          prefixIcon: const Icon(Icons.phone),
+        ),
+        DefaultFormField(
           controller: emailController,
           hintText: "Email",
           keyboardType: TextInputType.emailAddress,
           prefixIcon: const Icon(Icons.email),
-          onChanged: (val) =>
-              context.read<RegisterBloc>().add(RegisterOnEmailChanged(val)),
         ),
         DefaultFormField(
           controller: passwordController,
@@ -52,8 +66,6 @@ class RegisterFields extends StatelessWidget {
           hintText: "Password",
           keyboardType: TextInputType.visiblePassword,
           prefixIcon: const Icon(Icons.lock),
-          onChanged: (val) =>
-              context.read<RegisterBloc>().add(RegisterOnPasswordChanged(val)),
         ),
       ],
     );
@@ -61,20 +73,21 @@ class RegisterFields extends StatelessWidget {
 }
 
 class RegisterButton extends StatelessWidget {
-  const RegisterButton({super.key, required this.appNavigator});
+  const RegisterButton({super.key, required this.emailController, required this.passwordController});
 
-  final AppNavigator appNavigator;
+  final TextEditingController emailController;
+  final TextEditingController passwordController;
+
+
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<RegisterBloc, RegisterState>(
       builder: (context, state) {
         return DefaultButton(
-          onTap: ()=> context.read<RegisterBloc>().add(OnRegister()),
+          onTap: () => context.read<RegisterBloc>().add(OnRegister(emailController.text.trim(), passwordController.text.trim())),
           child: state.isLoading
-              ? CircularProgressIndicator(
-                  color: Theme.of(context).colorScheme.onPrimary,
-                )
+              ? CircularProgressIndicator(color: Theme.of(context).colorScheme.onPrimary)
               : Text(
                   "Register",
                   style: TextStyle(
@@ -103,10 +116,7 @@ class RegisterFooter extends StatelessWidget {
       child: RichText(
         text: TextSpan(
           text: "Already have an account? ",
-          style: TextStyle(
-            color: Theme.of(context).colorScheme.onSurface,
-            fontSize: 16.sp,
-          ),
+          style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontSize: 16.sp),
           children: [
             TextSpan(
               text: "Login",
@@ -115,8 +125,7 @@ class RegisterFooter extends StatelessWidget {
                 fontSize: 16.sp,
                 fontWeight: FontWeight.bold,
               ),
-              recognizer: TapGestureRecognizer()
-                ..onTap = () => navigator.back(context),
+              recognizer: TapGestureRecognizer()..onTap = () => navigator.back(context),
             ),
           ],
         ),

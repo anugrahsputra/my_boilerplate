@@ -20,6 +20,8 @@ class _RegisterViewState extends State<RegisterView> {
   final RegisterBloc registerBloc = di<RegisterBloc>();
   final AppNavigator appNavigator = di<AppNavigator>();
 
+  final nameController = TextEditingController();
+  final phoneController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
@@ -29,19 +31,13 @@ class _RegisterViewState extends State<RegisterView> {
       create: (context) => registerBloc,
       child: BlocListener<RegisterBloc, RegisterState>(
         listener: (context, state) {
-          if(state.errorMessage != null) {
+          if (state.errorMessage != null) {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(state.errorMessage!),
-                behavior: SnackBarBehavior.floating,
-              ),
+              SnackBar(content: Text(state.errorMessage!), behavior: SnackBarBehavior.floating),
             );
           } else if (state.isSuccess) {
             scaffoldMessengerKey.currentState?.showSnackBar(
-              SnackBar(
-                content: Text("Register Success"),
-                behavior: SnackBarBehavior.floating,
-              ),
+              SnackBar(content: Text("Register Success"), behavior: SnackBarBehavior.floating),
             );
             appNavigator.back(context);
           }
@@ -58,11 +54,16 @@ class _RegisterViewState extends State<RegisterView> {
                       RegisterHeader(),
                       SizedBox(height: 80.h),
                       RegisterFields(
+                        nameController: nameController,
+                        phoneController: phoneController,
                         emailController: emailController,
                         passwordController: passwordController,
                       ),
                       SizedBox(height: 16),
-                      RegisterButton(appNavigator: appNavigator),
+                      RegisterButton(
+                        emailController: emailController,
+                        passwordController: passwordController,
+                      ),
                     ]),
                   ),
                 ),

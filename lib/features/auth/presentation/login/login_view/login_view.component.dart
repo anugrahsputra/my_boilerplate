@@ -28,36 +28,35 @@ class AppIconHeader extends StatelessWidget {
 }
 
 class LoginFields extends StatelessWidget {
-  const LoginFields({
-    super.key,
-    required this.emailController,
-    required this.passwordController,
-  });
-
-  final TextEditingController emailController;
-  final TextEditingController passwordController;
+  const LoginFields({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final state = context.select((LoginBloc bloc) => bloc.state);
+
     return Column(
       spacing: 16.h,
       children: [
         DefaultFormField(
-          controller: emailController,
+          initialValue: state.email.value,
+          onChanged: (value) => context.read<LoginBloc>().add(LoginEvent.onEmailChanged(value)),
           hintText: "Email",
           keyboardType: TextInputType.emailAddress,
           prefixIcon: const Icon(Icons.email),
-          onChanged: (val) =>
-              context.read<LoginBloc>().add(LoginOnEmailChanged(val)),
+          errorText: (state.hasSubmitted || !state.email.isPure) && state.email.isNotValid
+              ? 'Email tidak valid'
+              : null,
         ),
         DefaultFormField(
-          controller: passwordController,
+          initialValue: state.password.value,
+          onChanged: (value) => context.read<LoginBloc>().add(LoginEvent.onPasswordChanged(value)),
           isPassword: true,
           hintText: "Password",
           keyboardType: TextInputType.visiblePassword,
           prefixIcon: const Icon(Icons.lock),
-          onChanged: (val) =>
-              context.read<LoginBloc>().add(LoginOnPasswordChanged(val)),
+          errorText: (state.hasSubmitted || !state.password.isPure) && state.password.isNotValid
+              ? 'Password kosong'
+              : null,
         ),
       ],
     );
@@ -65,19 +64,24 @@ class LoginFields extends StatelessWidget {
 }
 
 class LoginButton extends StatelessWidget {
-  const LoginButton({super.key, required this.onTap, required this.state});
-
-  final VoidCallback onTap;
-  final LoginState state;
+  const LoginButton({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return DefaultButton(
-      onTap: onTap,
+    final state = context.watch<LoginBloc>().state;
 
-      child: state.isLoading
-          ? CircularProgressIndicator(
-              color: Theme.of(context).colorScheme.onPrimary,
+    return DefaultButton(
+      onTap: (state.isValid && state.status != FormzSubmissionStatus.inProgress)
+          ? () => context.read<LoginBloc>().add(const LoginEvent.onLogin())
+          : null,
+      child: state.status == FormzSubmissionStatus.inProgress
+          ? SizedBox(
+              width: 20,
+              height: 20,
+              child: CircularProgressIndicator(
+                strokeWidth: 2,
+                color: Theme.of(context).colorScheme.onPrimary,
+              ),
             )
           : Text(
               "Login",
@@ -105,10 +109,7 @@ class LoginFooter extends StatelessWidget {
       child: RichText(
         text: TextSpan(
           text: "Don't have account? ",
-          style: TextStyle(
-            color: Theme.of(context).colorScheme.onSurface,
-            fontSize: 16.sp,
-          ),
+          style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontSize: 16.sp),
           children: [
             TextSpan(
               text: "Register",
@@ -117,8 +118,7 @@ class LoginFooter extends StatelessWidget {
                 fontSize: 16.sp,
                 fontWeight: FontWeight.bold,
               ),
-              recognizer: TapGestureRecognizer()
-                ..onTap = () => navigator.goToRegister(context),
+              recognizer: TapGestureRecognizer()..onTap = () => navigator.goToRegister(context),
             ),
           ],
         ),

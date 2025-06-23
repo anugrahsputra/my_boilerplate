@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:formz/formz.dart';
 import 'package:logging/logging.dart';
 import 'package:my_boilerplate/core/core.dart';
 import 'package:my_boilerplate/di.dart';
@@ -21,13 +22,8 @@ class _LoginViewState extends State<LoginView> {
   final LoginBloc loginBloc = di<LoginBloc>();
   final Logger log = Logger("Login View");
 
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
-
   @override
   void dispose() {
-    emailController.dispose();
-    passwordController.dispose();
     super.dispose();
   }
 
@@ -39,12 +35,10 @@ class _LoginViewState extends State<LoginView> {
         listener: (context, state) {
           if (state.errorMessage != null) {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(state.errorMessage!),
-                behavior: SnackBarBehavior.floating,
-              ),
+              SnackBar(content: Text(state.errorMessage!), behavior: SnackBarBehavior.floating),
             );
-          } else if (state.isSuccess) {
+            context.read<LoginBloc>().add(const LoginOnError());
+          } else if (state.status == FormzSubmissionStatus.success) {
             Future.microtask(() {
               log.info("Login Success");
             });
@@ -63,16 +57,9 @@ class _LoginViewState extends State<LoginView> {
                         delegate: SliverChildListDelegate([
                           AppIconHeader(),
                           SizedBox(height: 80.h),
-                          LoginFields(
-                            emailController: emailController,
-                            passwordController: passwordController,
-                          ),
+                          LoginFields(),
                           SizedBox(height: 16),
-                          LoginButton(
-                            state: state,
-                            onTap: () =>
-                                context.read<LoginBloc>().add(OnLogin()),
-                          ),
+                          LoginButton(),
                         ]),
                       ),
                     ),

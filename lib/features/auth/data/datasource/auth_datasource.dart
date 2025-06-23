@@ -21,6 +21,7 @@ class AuthDataSourceImpl implements AuthDataSource {
       data: loginReq.toJson(),
     );
 
+    log.info(response.data);
     return LoginRespDto.fromJson(response.data);
   }
 
