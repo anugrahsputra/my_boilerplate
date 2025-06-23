@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:dio_cache_interceptor_hive_store/dio_cache_interceptor_hive_store.dart';
 import 'package:get_it/get_it.dart';
+import 'package:http_certificate_pinning/http_certificate_pinning.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:my_boilerplate/core/core.dart';
 import 'package:my_boilerplate/features/auth/auth.dart';
@@ -37,6 +38,9 @@ Future<void> setup() async {
           )
           ..interceptors.addAll([
             NetworkInterceptor(),
+            CertificatePinningInterceptor(
+              allowedSHAFingerprints: ShaFingerprints.allowedSHAFingerprints,
+            ),
             DioCacheInterceptor(
               options: CacheOptions(
                 store: HiveCacheStore(dir.path, hiveBoxName: 'local'),
@@ -63,18 +67,12 @@ void _authLocator() {
     () => AuthRepositoryImpl(dataSource: di<AuthDataSource>()),
   );
 
-  di.registerLazySingleton<LoginUsecase>(
-    () => LoginUsecase(repository: di<AuthRepository>()),
-  );
+  di.registerLazySingleton<LoginUsecase>(() => LoginUsecase(repository: di<AuthRepository>()));
 
   di.registerLazySingleton<RegisterUsecase>(
     () => RegisterUsecase(repository: di<AuthRepository>()),
   );
 
-  di.registerFactory<LoginBloc>(
-    () => LoginBloc(loginUsecase: di<LoginUsecase>()),
-  );
-  di.registerFactory<RegisterBloc>(
-    () => RegisterBloc(registerUsecase: di<RegisterUsecase>()),
-  );
+  di.registerFactory<LoginBloc>(() => LoginBloc(loginUsecase: di<LoginUsecase>()));
+  di.registerFactory<RegisterBloc>(() => RegisterBloc(registerUsecase: di<RegisterUsecase>()));
 }
