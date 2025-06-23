@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class DefaultButton extends StatelessWidget {
   const DefaultButton({super.key, required this.onTap, required this.child});
 
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
   final Widget child;
 
   @override

@@ -4,7 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class DefaultFormField extends StatefulWidget {
   const DefaultFormField({
     super.key,
-    required this.controller,
+    this.controller,
+    this.initialValue,
+    this.errorText,
     this.hintText,
     this.isPassword = false,
     this.prefixIcon,
@@ -15,7 +17,9 @@ class DefaultFormField extends StatefulWidget {
     this.maxLines = 1,
   });
 
-  final TextEditingController controller;
+  final TextEditingController? controller;
+  final String? initialValue;
+  final String? errorText;
   final String? hintText;
   final bool isPassword;
   final bool obscureInitially;
@@ -41,15 +45,18 @@ class _DefaultFormFieldState extends State<DefaultFormField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      initialValue: widget.initialValue,
       controller: widget.controller,
       maxLines: widget.isPassword ? 1 : widget.maxLines,
       keyboardType: widget.keyboardType,
       obscureText: widget.isPassword ? _isObscure : false,
       validator: widget.validator,
       onChanged: widget.onChanged,
+
       decoration: InputDecoration(
         hintText: widget.hintText,
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.r)),
+        errorText: widget.errorText,
         prefixIcon: widget.prefixIcon,
         suffixIcon: widget.isPassword
             ? IconButton(
