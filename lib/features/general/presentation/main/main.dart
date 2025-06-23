@@ -1,0 +1,1 @@
+export 'main_view/main_view.dart';
