@@ -1,8 +1,14 @@
 PODS:
+  - Alamofire (5.9.1)
   - connectivity_plus (0.0.1):
     - Flutter
+  - CryptoSwift (1.8.4)
   - Flutter (1.0.0)
   - flutter_native_splash (2.4.3):
+    - Flutter
+  - http_certificate_pinning (3.0.0):
+    - Alamofire (~> 5.9.0)
+    - CryptoSwift
     - Flutter
   - path_provider_foundation (0.0.1):
     - Flutter
@@ -20,10 +26,16 @@ DEPENDENCIES:
   - connectivity_plus (from `.symlinks/plugins/connectivity_plus/ios`)
   - Flutter (from `Flutter`)
   - flutter_native_splash (from `.symlinks/plugins/flutter_native_splash/ios`)
+  - http_certificate_pinning (from `.symlinks/plugins/http_certificate_pinning/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
   - sqflite_darwin (from `.symlinks/plugins/sqflite_darwin/darwin`)
+
+SPEC REPOS:
+  trunk:
+    - Alamofire
+    - CryptoSwift
 
 EXTERNAL SOURCES:
   connectivity_plus:
@@ -32,6 +44,8 @@ EXTERNAL SOURCES:
     :path: Flutter
   flutter_native_splash:
     :path: ".symlinks/plugins/flutter_native_splash/ios"
+  http_certificate_pinning:
+    :path: ".symlinks/plugins/http_certificate_pinning/ios"
   path_provider_foundation:
     :path: ".symlinks/plugins/path_provider_foundation/darwin"
   permission_handler_apple:
@@ -42,9 +56,12 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/sqflite_darwin/darwin"
 
 SPEC CHECKSUMS:
+  Alamofire: f36a35757af4587d8e4f4bfa223ad10be2422b8c
   connectivity_plus: cb623214f4e1f6ef8fe7403d580fdad517d2f7dd
+  CryptoSwift: e64e11850ede528a02a0f3e768cec8e9d92ecb90
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_native_splash: c32d145d68aeda5502d5f543ee38c192065986cf
+  http_certificate_pinning: 133f28ad5c2d1ecda2581dd2d2cd9dc74da59012
   path_provider_foundation: 080d55be775b7414fd5a5ef3ac137b97b097e564
   permission_handler_apple: 4ed2196e43d0651e8ff7ca3483a069d469701f2d
   shared_preferences_foundation: 9e1978ff2562383bd5676f64ec4e9aa8fa06a6f7
