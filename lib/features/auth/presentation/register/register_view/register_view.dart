@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:formz/formz.dart';
 import 'package:my_boilerplate/app/app.dart';
 import 'package:my_boilerplate/core/core.dart';
 import 'package:my_boilerplate/di.dart';
@@ -35,7 +36,9 @@ class _RegisterViewState extends State<RegisterView> {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text(state.errorMessage!), behavior: SnackBarBehavior.floating),
             );
-          } else if (state.isSuccess) {
+
+            context.read<RegisterBloc>().add(const RegisterOnError());
+          } else if (state.status == FormzSubmissionStatus.success) {
             scaffoldMessengerKey.currentState?.showSnackBar(
               SnackBar(content: Text("Register Success"), behavior: SnackBarBehavior.floating),
             );
@@ -53,17 +56,9 @@ class _RegisterViewState extends State<RegisterView> {
                     delegate: SliverChildListDelegate([
                       RegisterHeader(),
                       SizedBox(height: 80.h),
-                      RegisterFields(
-                        nameController: nameController,
-                        phoneController: phoneController,
-                        emailController: emailController,
-                        passwordController: passwordController,
-                      ),
+                      RegisterFields(),
                       SizedBox(height: 16),
-                      RegisterButton(
-                        emailController: emailController,
-                        passwordController: passwordController,
-                      ),
+                      RegisterButton(),
                     ]),
                   ),
                 ),

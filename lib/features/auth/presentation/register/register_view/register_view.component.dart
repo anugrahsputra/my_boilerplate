@@ -24,48 +24,58 @@ class RegisterHeader extends StatelessWidget {
 }
 
 class RegisterFields extends StatelessWidget {
-  const RegisterFields({
-    super.key,
-    required this.emailController,
-    required this.passwordController,
-    required this.nameController,
-    required this.phoneController,
-  });
-
-  final TextEditingController nameController;
-  final TextEditingController phoneController;
-  final TextEditingController emailController;
-  final TextEditingController passwordController;
+  const RegisterFields({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final state = context.select((RegisterBloc bloc) => bloc.state);
+
     return Column(
       spacing: 16.h,
       children: [
         DefaultFormField(
-          controller: nameController,
+          initialValue: state.name.value,
+          onChanged: (value) => context.read<RegisterBloc>().add(RegisterOnNameChanged(value)),
           hintText: "Full Name",
           keyboardType: TextInputType.name,
           prefixIcon: const Icon(Icons.person),
+          errorText: (state.hasSubmitted || !state.name.isPure) && state.name.isNotValid
+              ? (state.name.error == NameValidationError.tooShort
+                    ? 'Nama terlalu pendek'
+                    : 'Nama tidak boleh kosong')
+              : null,
         ),
         DefaultFormField(
-          controller: phoneController,
+          initialValue: state.phoneNumber.value,
+          onChanged: (value) => context.read<RegisterBloc>().add(RegisterOnPhoneChanged(value)),
           hintText: "Phone Number",
           keyboardType: TextInputType.phone,
           prefixIcon: const Icon(Icons.phone),
+          errorText:
+              (state.hasSubmitted || !state.phoneNumber.isPure) && state.phoneNumber.isNotValid
+              ? 'Nomor HP tidak valid'
+              : null,
         ),
         DefaultFormField(
-          controller: emailController,
+          initialValue: state.email.value,
+          onChanged: (value) => context.read<RegisterBloc>().add(RegisterOnEmailChanged(value)),
           hintText: "Email",
           keyboardType: TextInputType.emailAddress,
           prefixIcon: const Icon(Icons.email),
+          errorText: (state.hasSubmitted || !state.email.isPure) && state.email.isNotValid
+              ? 'Email tidak valid'
+              : null,
         ),
         DefaultFormField(
-          controller: passwordController,
+          initialValue: state.password.value,
+          onChanged: (value) => context.read<RegisterBloc>().add(RegisterOnPasswordChanged(value)),
           isPassword: true,
           hintText: "Password",
           keyboardType: TextInputType.visiblePassword,
           prefixIcon: const Icon(Icons.lock),
+          errorText: (state.hasSubmitted || !state.password.isPure) && state.password.isNotValid
+              ? 'Password tidak boleh kosong'
+              : null,
         ),
       ],
     );
@@ -73,30 +83,31 @@ class RegisterFields extends StatelessWidget {
 }
 
 class RegisterButton extends StatelessWidget {
-  const RegisterButton({super.key, required this.emailController, required this.passwordController});
-
-  final TextEditingController emailController;
-  final TextEditingController passwordController;
-
-
+  const RegisterButton({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<RegisterBloc, RegisterState>(
-      builder: (context, state) {
-        return DefaultButton(
-          onTap: () => context.read<RegisterBloc>().add(OnRegister(emailController.text.trim(), passwordController.text.trim())),
-          child: state.isLoading
-              ? CircularProgressIndicator(color: Theme.of(context).colorScheme.onPrimary)
-              : Text(
-                  "Register",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    color: Theme.of(context).colorScheme.onPrimary,
-                  ),
-                ),
-        );
-      },
+    final state = context.watch<RegisterBloc>().state;
+    return DefaultButton(
+      onTap: (state.isValid && state.status != FormzSubmissionStatus.inProgress)
+          ? () => context.read<RegisterBloc>().add(const OnRegister())
+          : null,
+      child: state.status == FormzSubmissionStatus.inProgress
+          ? SizedBox(
+              width: 20,
+              height: 20,
+              child: CircularProgressIndicator(
+                strokeWidth: 2,
+                color: Theme.of(context).colorScheme.onPrimary,
+              ),
+            )
+          : Text(
+              "Register",
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
+                color: Theme.of(context).colorScheme.onPrimary,
+              ),
+            ),
     );
   }
 }

@@ -39,9 +39,7 @@ class _LoginViewState extends State<LoginView> {
             );
             context.read<LoginBloc>().add(const LoginOnError());
           } else if (state.status == FormzSubmissionStatus.success) {
-            Future.microtask(() {
-              log.info("Login Success");
-            });
+            appNavigator.goToMain(context);
           }
         },
         child: BlocBuilder<LoginBloc, LoginState>(

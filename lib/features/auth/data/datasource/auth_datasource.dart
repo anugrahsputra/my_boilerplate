@@ -1,11 +1,12 @@
+import 'package:dartz/dartz.dart';
 import 'package:logging/logging.dart';
 import 'package:my_boilerplate/core/core.dart';
 import 'package:my_boilerplate/features/auth/data/data.dart';
 
 abstract class AuthDataSource {
-  Future<LoginRespDto> login(LoginReqDto loginReq);
+  Future<Either<Failure, LoginRespDto>> login(LoginReqDto loginReq);
 
-  Future<RegisterRespDto> register(RegisterReqDto registerReq);
+  Future<Either<Failure, RegisterRespDto>> register(RegisterReqDto registerReq);
 }
 
 class AuthDataSourceImpl implements AuthDataSource {
@@ -15,23 +16,20 @@ class AuthDataSourceImpl implements AuthDataSource {
   AuthDataSourceImpl({required this.dioClient});
 
   @override
-  Future<LoginRespDto> login(LoginReqDto loginReq) async {
-    final response = await dioClient.post(
+  Future<Either<Failure, LoginRespDto>> login(LoginReqDto loginReq) async {
+    return await dioClient.postParsedSafe<LoginRespDto>(
       ApiEndpoints.login,
       data: loginReq.toJson(),
+      converter: LoginRespDto.fromJson,
     );
-
-    log.info(response.data);
-    return LoginRespDto.fromJson(response.data);
   }
 
   @override
-  Future<RegisterRespDto> register(RegisterReqDto registerReq) async {
-    final response = await dioClient.post(
+  Future<Either<Failure, RegisterRespDto>> register(RegisterReqDto registerReq) async {
+    return await dioClient.postParsedSafe<RegisterRespDto>(
       ApiEndpoints.register,
       data: registerReq.toJson(),
+      converter: RegisterRespDto.fromJson,
     );
-
-    return RegisterRespDto.fromJson(response.data);
   }
 }
