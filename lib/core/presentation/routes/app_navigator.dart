@@ -68,4 +68,10 @@ class AppNavigator {
 
     pushNamed(context, AppPages.register);
   }
+
+  void goToMain(BuildContext context) {
+    if(!canNavigate(context)) return;
+
+    pushNamedAndRemoveUntil(context, AppPages.main);
+  }
 }
