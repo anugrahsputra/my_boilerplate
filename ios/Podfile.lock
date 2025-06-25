@@ -10,11 +10,22 @@ PODS:
     - Alamofire (~> 5.9.0)
     - CryptoSwift
     - Flutter
+  - ObjectBox (4.3.0)
+  - objectbox_flutter_libs (0.0.1):
+    - Flutter
+    - ObjectBox (= 4.3.0)
+  - package_info_plus (0.4.5):
+    - Flutter
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
   - permission_handler_apple (9.3.0):
     - Flutter
+  - Sentry/HybridSDK (8.51.0)
+  - sentry_flutter (9.0.0):
+    - Flutter
+    - FlutterMacOS
+    - Sentry/HybridSDK (= 8.51.0)
   - shared_preferences_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
@@ -27,8 +38,11 @@ DEPENDENCIES:
   - Flutter (from `Flutter`)
   - flutter_native_splash (from `.symlinks/plugins/flutter_native_splash/ios`)
   - http_certificate_pinning (from `.symlinks/plugins/http_certificate_pinning/ios`)
+  - objectbox_flutter_libs (from `.symlinks/plugins/objectbox_flutter_libs/ios`)
+  - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
+  - sentry_flutter (from `.symlinks/plugins/sentry_flutter/ios`)
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
   - sqflite_darwin (from `.symlinks/plugins/sqflite_darwin/darwin`)
 
@@ -36,6 +50,8 @@ SPEC REPOS:
   trunk:
     - Alamofire
     - CryptoSwift
+    - ObjectBox
+    - Sentry
 
 EXTERNAL SOURCES:
   connectivity_plus:
@@ -46,10 +62,16 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_native_splash/ios"
   http_certificate_pinning:
     :path: ".symlinks/plugins/http_certificate_pinning/ios"
+  objectbox_flutter_libs:
+    :path: ".symlinks/plugins/objectbox_flutter_libs/ios"
+  package_info_plus:
+    :path: ".symlinks/plugins/package_info_plus/ios"
   path_provider_foundation:
     :path: ".symlinks/plugins/path_provider_foundation/darwin"
   permission_handler_apple:
     :path: ".symlinks/plugins/permission_handler_apple/ios"
+  sentry_flutter:
+    :path: ".symlinks/plugins/sentry_flutter/ios"
   shared_preferences_foundation:
     :path: ".symlinks/plugins/shared_preferences_foundation/darwin"
   sqflite_darwin:
@@ -62,8 +84,13 @@ SPEC CHECKSUMS:
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_native_splash: c32d145d68aeda5502d5f543ee38c192065986cf
   http_certificate_pinning: 133f28ad5c2d1ecda2581dd2d2cd9dc74da59012
+  ObjectBox: 7760fa9072adcffe102a6adf4646ca84ba70ab6b
+  objectbox_flutter_libs: 4014e38f57250b074b99893ae84579aba8f02876
+  package_info_plus: af8e2ca6888548050f16fa2f1938db7b5a5df499
   path_provider_foundation: 080d55be775b7414fd5a5ef3ac137b97b097e564
   permission_handler_apple: 4ed2196e43d0651e8ff7ca3483a069d469701f2d
+  Sentry: 861d70b4ff7c92bf6c21c70a8daab10ac7e7243c
+  sentry_flutter: ce38c4d9f9a6b9a2c23299928142b85419b3d203
   shared_preferences_foundation: 9e1978ff2562383bd5676f64ec4e9aa8fa06a6f7
   sqflite_darwin: 20b2a3a3b70e43edae938624ce550a3cbf66a3d0
 
