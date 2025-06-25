@@ -46,7 +46,7 @@ class NetworkClientImpl implements NetworkClient {
     Options? options,
     CancelToken? cancelToken,
     ProgressCallback? onReceiveProgress,
-  }) async {
+  }) {
     return dio.get(
       url,
       queryParameters: queryParameters,
@@ -65,11 +65,9 @@ class NetworkClientImpl implements NetworkClient {
     CancelToken? cancelToken,
     ProgressCallback? onReceiveProgress,
     ProgressCallback? onSendProgress,
-  }) async {
+  }) {
     if (data is Map<String, dynamic>) {
-      final isMultipart =
-          options?.contentType == Headers.multipartFormDataContentType;
-
+      final isMultipart = options?.contentType == Headers.multipartFormDataContentType;
       if (isMultipart) {
         data = FormData.fromMap(data);
       }
@@ -92,21 +90,15 @@ class NetworkClientImpl implements NetworkClient {
     Map<String, dynamic>? queryParameters,
     Options? options,
     dynamic data,
-  }) async {
+  }) {
     if (data is Map<String, dynamic>) {
-      final isMultipart =
-          options?.contentType == Headers.multipartFormDataContentType;
-
+      final isMultipart = options?.contentType == Headers.multipartFormDataContentType;
       if (isMultipart) {
         data = FormData.fromMap(data);
       }
     }
-    return dio.put(
-      url,
-      queryParameters: queryParameters,
-      data: data,
-      options: options,
-    );
+
+    return dio.put(url, queryParameters: queryParameters, data: data, options: options);
   }
 
   @override
@@ -115,7 +107,7 @@ class NetworkClientImpl implements NetworkClient {
     Map<String, dynamic>? queryParameters,
     Options? options,
     CancelToken? cancelToken,
-  }) async {
+  }) {
     return dio.delete(
       url,
       queryParameters: queryParameters,
