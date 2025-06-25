@@ -62,6 +62,10 @@ dependencies:
   flutter_screenutil: ^5.9.3
   http_certificate_pinning: ^3.0.1
   formz: ^0.8.0
+  sentry_flutter: ^9.0.0
+  sentry_dio: ^9.0.0
+  objectbox: ^4.3.0
+  objectbox_flutter_libs: ^4.3.0
 
 dev_dependencies:
   flutter_test:
