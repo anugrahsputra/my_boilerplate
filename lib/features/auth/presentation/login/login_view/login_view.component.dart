@@ -69,9 +69,10 @@ class LoginButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = context.watch<LoginBloc>().state;
-
+    final isButtonEnabled = (state.isValid && state.status != FormzSubmissionStatus.inProgress);
     return DefaultButton(
-      onTap: (state.isValid && state.status != FormzSubmissionStatus.inProgress)
+      isEnabled: isButtonEnabled,
+      onTap: isButtonEnabled
           ? () => context.read<LoginBloc>().add(const LoginEvent.onLogin())
           : null,
       child: state.status == FormzSubmissionStatus.inProgress

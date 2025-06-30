@@ -35,6 +35,7 @@ class RegisterFields extends StatelessWidget {
       children: [
         DefaultFormField(
           initialValue: state.name.value,
+
           onChanged: (value) => context.read<RegisterBloc>().add(RegisterOnNameChanged(value)),
           hintText: "Full Name",
           keyboardType: TextInputType.name,
@@ -88,10 +89,10 @@ class RegisterButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = context.watch<RegisterBloc>().state;
+    final isButtonEnabled = (state.isValid && state.status != FormzSubmissionStatus.inProgress);
     return DefaultButton(
-      onTap: (state.isValid && state.status != FormzSubmissionStatus.inProgress)
-          ? () => context.read<RegisterBloc>().add(const OnRegister())
-          : null,
+      isEnabled: isButtonEnabled,
+      onTap: isButtonEnabled ? () => context.read<RegisterBloc>().add(const OnRegister()) : null,
       child: state.status == FormzSubmissionStatus.inProgress
           ? SizedBox(
               width: 20,
