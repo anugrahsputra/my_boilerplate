@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DefaultButton extends StatelessWidget {
-  const DefaultButton({super.key, required this.onTap, required this.child, this.isEnabled = false});
+  const DefaultButton({
+    super.key,
+    required this.onTap,
+    required this.child,
+    this.isEnabled = false,
+  });
 
   final VoidCallback? onTap;
   final Widget child;
@@ -10,6 +15,9 @@ class DefaultButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final primaryColor = Theme.of(context).colorScheme.primary;
+    final isBtnEnabled = isEnabled ? primaryColor : primaryColor.withValues(alpha: 0.5);
+
     return Material(
       color: Colors.transparent,
       child: InkWell(
@@ -17,12 +25,9 @@ class DefaultButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(16.r),
         child: Ink(
           width: 1.sw,
-          height: 60.h,
+          height: 52.h,
           padding: EdgeInsets.all(10.h),
-          decoration: BoxDecoration(
-            color: isEnabled ? Theme.of(context).colorScheme.primary : Colors.grey,
-            borderRadius: BorderRadius.circular(16.r),
-          ),
+          decoration: BoxDecoration(color: isBtnEnabled, borderRadius: BorderRadius.circular(16.r)),
           child: Align(alignment: Alignment.center, child: child),
         ),
       ),

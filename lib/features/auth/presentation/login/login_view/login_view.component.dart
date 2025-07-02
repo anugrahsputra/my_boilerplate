@@ -77,8 +77,8 @@ class LoginButton extends StatelessWidget {
           : null,
       child: state.status == FormzSubmissionStatus.inProgress
           ? SizedBox(
-              width: 20,
-              height: 20,
+              width: 20.w,
+              height: 20.h,
               child: CircularProgressIndicator(
                 strokeWidth: 2,
                 color: Theme.of(context).colorScheme.onPrimary,
