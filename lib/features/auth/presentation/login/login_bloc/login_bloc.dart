@@ -28,20 +28,28 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     on<OnLogin>(_onLogin);
   }
 
-  void _loginOnEmailChanged(LoginOnEmailChanged event, Emitter<LoginState> emit) {
+  void _loginOnEmailChanged(
+    LoginOnEmailChanged event,
+    Emitter<LoginState> emit,
+  ) {
     final email = Email.dirty(event.email);
     final isValid = Formz.validate([email, state.password]);
     emit(state.copyWith(email: email, isValid: isValid));
   }
 
-  void _loginOnPasswordChanged(LoginOnPasswordChanged event, Emitter<LoginState> emit) {
+  void _loginOnPasswordChanged(
+    LoginOnPasswordChanged event,
+    Emitter<LoginState> emit,
+  ) {
     final password = Password.dirty(event.password);
     final isValid = Formz.validate([password, state.email]);
     emit(state.copyWith(password: password, isValid: isValid));
   }
 
   void _onError(LoginOnError event, Emitter<LoginState> emit) {
-    emit(state.copyWith(status: FormzSubmissionStatus.failure, errorMessage: null));
+    emit(
+      state.copyWith(status: FormzSubmissionStatus.failure, errorMessage: null),
+    );
   }
 
   void _onLogin(OnLogin event, Emitter<LoginState> emit) async {
@@ -49,7 +57,14 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     final password = Password.dirty(state.password.value);
     final isValid = Formz.validate([email, password]);
 
-    emit(state.copyWith(email: email, password: password, isValid: isValid, hasSubmitted: true));
+    emit(
+      state.copyWith(
+        email: email,
+        password: password,
+        isValid: isValid,
+        hasSubmitted: true,
+      ),
+    );
 
     if (!isValid) return;
 
@@ -60,8 +75,18 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
     log.info(loginReq.toJson());
     result.fold(
-      (l) => emit(state.copyWith(status: FormzSubmissionStatus.failure, errorMessage: l.message)),
-      (r) => emit(state.copyWith(status: FormzSubmissionStatus.success, errorMessage: null)),
+      (l) => emit(
+        state.copyWith(
+          status: FormzSubmissionStatus.failure,
+          errorMessage: l.message,
+        ),
+      ),
+      (r) => emit(
+        state.copyWith(
+          status: FormzSubmissionStatus.success,
+          errorMessage: null,
+        ),
+      ),
     );
   }
 }
