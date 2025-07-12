@@ -10,25 +10,30 @@ import '../../di.dart';
 class NetworkInterceptor extends Interceptor with InterceptorMixin {
   final Logger log = Logger("Dio Interceptor");
   Dio dio = di<Dio>(instanceName: "interceptor");
-  late final NetworkRequestRetrier requestRetrier;
+  final NetworkRequestRetrier requestRetrier;
 
-  NetworkInterceptor() {
-    requestRetrier = NetworkRequestRetrier(
-      dio: dio,
-      internetConnectionChecker: InternetConnectionChecker.createInstance(
-        checkInterval: const Duration(seconds: 5),
-        checkTimeout: const Duration(seconds: 5),
-      ),
-    );
-  }
+  NetworkInterceptor({NetworkRequestRetrier? requestRetrier})
+    : requestRetrier =
+          requestRetrier ??
+          NetworkRequestRetrier(
+            dio: di<Dio>(instanceName: "interceptor"),
+            internetConnectionChecker: InternetConnectionChecker.createInstance(
+              checkInterval: const Duration(seconds: 5),
+              checkTimeout: const Duration(seconds: 5),
+            ),
+          );
 
   String _formatRequestBody(dynamic data) {
     try {
       if (data is Map || data is List) {
         return const JsonEncoder.withIndent('  ').convert(data);
       } else if (data is FormData) {
-        final fields = data.fields.map((e) => '${e.key}: ${e.value}').join(', ');
-        final files = data.files.map((e) => '${e.key}: ${e.value.filename}').join(', ');
+        final fields = data.fields
+            .map((e) => '${e.key}: ${e.value}')
+            .join(', ');
+        final files = data.files
+            .map((e) => '${e.key}: ${e.value.filename}')
+            .join(', ');
         return 'FormData: { fields: {$fields}, files: {$files} }';
       } else {
         return data.toString();
