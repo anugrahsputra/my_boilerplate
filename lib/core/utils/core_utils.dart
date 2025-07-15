@@ -4,3 +4,4 @@ export 'debouncer.dart';
 export 'json_logging.dart';
 export 'parser.dart';
 export 'sha_fingerprints.dart';
+export 'store_key.dart';

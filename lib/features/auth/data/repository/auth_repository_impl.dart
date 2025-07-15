@@ -6,14 +6,18 @@ import 'package:my_boilerplate/features/auth/data/datasource/auth_datasource.dar
 
 class AuthRepositoryImpl implements AuthRepository {
   final AuthDataSource dataSource;
+  final LocalStorageManager localStorageManager;
   final Logger log = Logger("Auth Repository");
 
-  AuthRepositoryImpl({required this.dataSource});
+  AuthRepositoryImpl({required this.dataSource, required this.localStorageManager});
 
   @override
   Future<Either<Failure, Login>> login(LoginReqDto loginReq) async {
     final result = await dataSource.login(loginReq);
-    return result.fold((failure) => Left(failure), (data) => Right(data.toLogin()));
+    return result.fold((failure) => Left(failure), (data) {
+      localStorageManager.writeToStorage("token", data.token);
+      return Right(data.toLogin());
+    });
   }
 
   @override

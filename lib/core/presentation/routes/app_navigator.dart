@@ -57,6 +57,12 @@ class AppNavigator {
     );
   }
 
+  void goToSplash(BuildContext context) {
+    if(!canNavigate(context))  return;
+
+    pushNamedAndRemoveUntil(context, AppPages.splash);
+  }
+
   void goToLogin(BuildContext context) {
    if(!canNavigate(context))  return;
 
