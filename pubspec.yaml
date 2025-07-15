@@ -37,8 +37,8 @@ dependencies:
   bloc: ^9.0.0
   dartz: ^0.10.1
   dio: ^5.8.0+1
-  dio_cache_interceptor: ^3.5.1
-  dio_cache_interceptor_hive_store: ^4.0.0
+  dio_cache_interceptor: ^4.0.3
+  http_cache_hive_store: ^5.0.1
   equatable: ^2.0.7
   flutter_bloc: ^9.1.1
   flutter_native_splash: ^2.4.6
@@ -66,6 +66,9 @@ dependencies:
   sentry_dio: ^9.0.0
   objectbox: ^4.3.0
   objectbox_flutter_libs: ^4.3.0
+  flutter_secure_storage: ^9.2.4
+  encrypt: ^5.0.3
+  hive_flutter: ^1.1.0
 
 dev_dependencies:
   flutter_test:
@@ -76,7 +79,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^5.0.0
+  flutter_lints: ^6.0.0
   build_runner: ^2.4.15
   freezed: ^3.0.6
   json_serializable: ^6.9.5
