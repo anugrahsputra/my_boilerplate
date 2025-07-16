@@ -5,12 +5,14 @@ import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:encrypt/encrypt.dart' as encrypt;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
-import 'package:http_cache_hive_store/http_cache_hive_store.dart';import 'package:http_certificate_pinning/http_certificate_pinning.dart';
+import 'package:http_cache_hive_store/http_cache_hive_store.dart';
+import 'package:http_certificate_pinning/http_certificate_pinning.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:my_boilerplate/core/core.dart';
 import 'package:my_boilerplate/features/auth/auth.dart';
 import 'package:my_boilerplate/features/auth/data/datasource/auth_datasource.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:sentry_dio/sentry_dio.dart';
 
 import 'app/app_cubit.dart';
 
@@ -52,6 +54,7 @@ Future<void> setup() async {
               sendTimeout: const Duration(seconds: 35),
             ),
           )
+          ..addSentry(captureFailedRequests: true)
           ..interceptors.addAll([
             NetworkInterceptor(),
             CertificatePinningInterceptor(
