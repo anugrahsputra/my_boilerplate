@@ -69,6 +69,7 @@ dependencies:
   flutter_secure_storage: ^9.2.4
   encrypt: ^5.0.3
   hive_flutter: ^1.1.0
+  sentry_logging: ^9.4.1
 
 dev_dependencies:
   flutter_test:
