@@ -15,6 +15,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:sentry_dio/sentry_dio.dart';
 
 import 'app/app_cubit.dart';
+import 'features/general/general.dart';
 
 final di = GetIt.instance;
 
@@ -95,6 +96,7 @@ Future<void> setup() async {
   di.registerFactory<AppCubit>(() => AppCubit(localStorageManager: di<LocalStorageManager>()));
 
   _authLocator();
+  _mainLocator();
 }
 
 void _authLocator() {
@@ -117,4 +119,8 @@ void _authLocator() {
 
   di.registerFactory<LoginBloc>(() => LoginBloc(loginUsecase: di<LoginUsecase>()));
   di.registerFactory<RegisterBloc>(() => RegisterBloc(registerUsecase: di<RegisterUsecase>()));
+}
+
+void _mainLocator() {
+  di.registerFactory<MainCubit>(() => MainCubit());
 }
