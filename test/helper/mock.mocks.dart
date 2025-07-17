@@ -367,13 +367,6 @@ class MockNetworkInterceptor extends _i1.Mock
   );
 
   @override
-  set requestRetrier(_i4.NetworkRequestRetrier? _requestRetrier) =>
-      super.noSuchMethod(
-        Invocation.setter(#requestRetrier, _requestRetrier),
-        returnValueForMissingStub: null,
-      );
-
-  @override
   void onRequest(
     _i2.RequestOptions? options,
     _i2.RequestInterceptorHandler? handler,
