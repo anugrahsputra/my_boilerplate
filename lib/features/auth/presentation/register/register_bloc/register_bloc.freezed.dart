@@ -1,6 +1,5 @@
-// dart format width=80
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -41,6 +40,166 @@ class $RegisterEventCopyWith<$Res>  {
 $RegisterEventCopyWith(RegisterEvent _, $Res Function(RegisterEvent) __);
 }
 
+
+/// Adds pattern-matching-related methods to [RegisterEvent].
+extension RegisterEventPatterns on RegisterEvent {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( RegisterOnNameChanged value)?  onNameChanged,TResult Function( RegisterOnPhoneChanged value)?  onPhoneChanged,TResult Function( RegisterOnEmailChanged value)?  onEmailChanged,TResult Function( RegisterOnPasswordChanged value)?  onPasswordChanged,TResult Function( RegisterOnError value)?  onError,TResult Function( OnRegister value)?  onRegister,required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case RegisterOnNameChanged() when onNameChanged != null:
+return onNameChanged(_that);case RegisterOnPhoneChanged() when onPhoneChanged != null:
+return onPhoneChanged(_that);case RegisterOnEmailChanged() when onEmailChanged != null:
+return onEmailChanged(_that);case RegisterOnPasswordChanged() when onPasswordChanged != null:
+return onPasswordChanged(_that);case RegisterOnError() when onError != null:
+return onError(_that);case OnRegister() when onRegister != null:
+return onRegister(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( RegisterOnNameChanged value)  onNameChanged,required TResult Function( RegisterOnPhoneChanged value)  onPhoneChanged,required TResult Function( RegisterOnEmailChanged value)  onEmailChanged,required TResult Function( RegisterOnPasswordChanged value)  onPasswordChanged,required TResult Function( RegisterOnError value)  onError,required TResult Function( OnRegister value)  onRegister,}){
+final _that = this;
+switch (_that) {
+case RegisterOnNameChanged():
+return onNameChanged(_that);case RegisterOnPhoneChanged():
+return onPhoneChanged(_that);case RegisterOnEmailChanged():
+return onEmailChanged(_that);case RegisterOnPasswordChanged():
+return onPasswordChanged(_that);case RegisterOnError():
+return onError(_that);case OnRegister():
+return onRegister(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( RegisterOnNameChanged value)?  onNameChanged,TResult? Function( RegisterOnPhoneChanged value)?  onPhoneChanged,TResult? Function( RegisterOnEmailChanged value)?  onEmailChanged,TResult? Function( RegisterOnPasswordChanged value)?  onPasswordChanged,TResult? Function( RegisterOnError value)?  onError,TResult? Function( OnRegister value)?  onRegister,}){
+final _that = this;
+switch (_that) {
+case RegisterOnNameChanged() when onNameChanged != null:
+return onNameChanged(_that);case RegisterOnPhoneChanged() when onPhoneChanged != null:
+return onPhoneChanged(_that);case RegisterOnEmailChanged() when onEmailChanged != null:
+return onEmailChanged(_that);case RegisterOnPasswordChanged() when onPasswordChanged != null:
+return onPasswordChanged(_that);case RegisterOnError() when onError != null:
+return onError(_that);case OnRegister() when onRegister != null:
+return onRegister(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( String name)?  onNameChanged,TResult Function( String phoneNumber)?  onPhoneChanged,TResult Function( String email)?  onEmailChanged,TResult Function( String password)?  onPasswordChanged,TResult Function()?  onError,TResult Function()?  onRegister,required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case RegisterOnNameChanged() when onNameChanged != null:
+return onNameChanged(_that.name);case RegisterOnPhoneChanged() when onPhoneChanged != null:
+return onPhoneChanged(_that.phoneNumber);case RegisterOnEmailChanged() when onEmailChanged != null:
+return onEmailChanged(_that.email);case RegisterOnPasswordChanged() when onPasswordChanged != null:
+return onPasswordChanged(_that.password);case RegisterOnError() when onError != null:
+return onError();case OnRegister() when onRegister != null:
+return onRegister();case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( String name)  onNameChanged,required TResult Function( String phoneNumber)  onPhoneChanged,required TResult Function( String email)  onEmailChanged,required TResult Function( String password)  onPasswordChanged,required TResult Function()  onError,required TResult Function()  onRegister,}) {final _that = this;
+switch (_that) {
+case RegisterOnNameChanged():
+return onNameChanged(_that.name);case RegisterOnPhoneChanged():
+return onPhoneChanged(_that.phoneNumber);case RegisterOnEmailChanged():
+return onEmailChanged(_that.email);case RegisterOnPasswordChanged():
+return onPasswordChanged(_that.password);case RegisterOnError():
+return onError();case OnRegister():
+return onRegister();case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( String name)?  onNameChanged,TResult? Function( String phoneNumber)?  onPhoneChanged,TResult? Function( String email)?  onEmailChanged,TResult? Function( String password)?  onPasswordChanged,TResult? Function()?  onError,TResult? Function()?  onRegister,}) {final _that = this;
+switch (_that) {
+case RegisterOnNameChanged() when onNameChanged != null:
+return onNameChanged(_that.name);case RegisterOnPhoneChanged() when onPhoneChanged != null:
+return onPhoneChanged(_that.phoneNumber);case RegisterOnEmailChanged() when onEmailChanged != null:
+return onEmailChanged(_that.email);case RegisterOnPasswordChanged() when onPasswordChanged != null:
+return onPasswordChanged(_that.password);case RegisterOnError() when onError != null:
+return onError();case OnRegister() when onRegister != null:
+return onRegister();case _:
+  return null;
+
+}
+}
+
+}
 
 /// @nodoc
 
@@ -437,6 +596,136 @@ as String?,
 
 }
 
+
+/// Adds pattern-matching-related methods to [RegisterState].
+extension RegisterStatePatterns on RegisterState {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _RegisterState value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _RegisterState() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _RegisterState value)  $default,){
+final _that = this;
+switch (_that) {
+case _RegisterState():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _RegisterState value)?  $default,){
+final _that = this;
+switch (_that) {
+case _RegisterState() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( Name name,  PhoneNumber phoneNumber,  Email email,  Password password,  FormzSubmissionStatus status,  bool isValid,  bool hasSubmitted,  String? errorMessage)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _RegisterState() when $default != null:
+return $default(_that.name,_that.phoneNumber,_that.email,_that.password,_that.status,_that.isValid,_that.hasSubmitted,_that.errorMessage);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( Name name,  PhoneNumber phoneNumber,  Email email,  Password password,  FormzSubmissionStatus status,  bool isValid,  bool hasSubmitted,  String? errorMessage)  $default,) {final _that = this;
+switch (_that) {
+case _RegisterState():
+return $default(_that.name,_that.phoneNumber,_that.email,_that.password,_that.status,_that.isValid,_that.hasSubmitted,_that.errorMessage);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( Name name,  PhoneNumber phoneNumber,  Email email,  Password password,  FormzSubmissionStatus status,  bool isValid,  bool hasSubmitted,  String? errorMessage)?  $default,) {final _that = this;
+switch (_that) {
+case _RegisterState() when $default != null:
+return $default(_that.name,_that.phoneNumber,_that.email,_that.password,_that.status,_that.isValid,_that.hasSubmitted,_that.errorMessage);case _:
+  return null;
+
+}
+}
+
+}
 
 /// @nodoc
 
