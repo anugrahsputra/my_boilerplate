@@ -46,3 +46,4 @@ app.*.map.json
 
 coverage
 test/.test_cov.dart
+test/helper/mock.mocks.dart
