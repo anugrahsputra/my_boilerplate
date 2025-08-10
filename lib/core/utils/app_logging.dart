@@ -51,7 +51,6 @@ abstract class AppLogging {
         log(formattedMessage + errorString + stackTraceString, name: name);
 
         // Also print to terminal (Neovim, CLI, etc.)
-        debugPrint('[$name] $formattedMessage$errorString$stackTraceString');
       });
 
       AppLogging.isInitialize = true;

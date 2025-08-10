@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:http_certificate_pinning/http_certificate_pinning.dart';
 import 'package:my_boilerplate/core/core.dart';
 
 Future<Either<Failure, T>> safeCall<T>(Future<T> Function() call) async {
@@ -23,6 +26,12 @@ Future<Either<Failure, T>> safeCall<T>(Future<T> Function() call) async {
       return Left(RequestFailure(message: error.message));
     } else if (error is AuthFailure) {
       return Left(AuthFailure(message: error.message));
+    } else if (error is CertificateException) {
+      return Left(CertificateFailure(message: error.message));
+    } else if (error is CertificateCouldNotBeVerifiedException) {
+      return Left(CertificateFailure(message: error.toString()));
+    } else if (error is CertificateNotVerifiedException) {
+      return Left(CertificateFailure(message: error.toString()));
     } else {
       return const Left(UnknownFailure(message: "Unknown Dio error"));
     }

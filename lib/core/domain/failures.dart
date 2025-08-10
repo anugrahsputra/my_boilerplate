@@ -3,9 +3,7 @@ import 'package:equatable/equatable.dart';
 abstract class Failure extends Equatable {
   final String message;
 
-  const Failure({required this.message});
-
-  @override
+  const Failure({required this.message});@override
   List<Object?> get props => [message];
 }
 
@@ -39,6 +37,10 @@ class RequestFailure extends Failure {
 
 class DatabaseFailure extends Failure {
   const DatabaseFailure({required super.message});
+}
+
+class CertificateFailure extends Failure {
+  const CertificateFailure({required super.message});
 }
 
 class UnknownFailure extends Failure {

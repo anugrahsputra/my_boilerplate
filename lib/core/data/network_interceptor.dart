@@ -11,7 +11,6 @@ class NetworkInterceptor extends Interceptor with InterceptorMixin {
   final Logger log = Logger("Dio Interceptor");
   Dio dio = di<Dio>(instanceName: "interceptor");
   LocalStorageManager localStoreManager = di<LocalStorageManager>(
-    instanceName: "interceptor",
   );
   final NetworkRequestRetrier requestRetrier;
   bool _isRefreshing = false;
