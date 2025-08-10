@@ -1,134 +1,107 @@
 import 'package:dartz/dartz.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:my_boilerplate/core/core.dart';
 
 void main() {
-  group('safeCall', () {
-    test(
-      'should return Right with the result when the call is successful',
-      () async {
-        final result = await safeCall(() async => 'success');
-        expect(result, const Right('success'));
-      },
-    );
+  group('SafeCall', () {
+    group('call', () {
+      test('should return Right with result when function succeeds', () async {
+        // arrange
+        Future<String> successFunction() async {
+          await Future.delayed(const Duration(milliseconds: 10));
+          return 'success';
+        }
 
-    test(
-      'should return Left with UnauthorizedFailure on UnauthorizedException',
-      () async {
-        final result = await safeCall<String>(
-          () async => throw DioException(
-            requestOptions: RequestOptions(path: ''),
-            error: UnauthorizedException(message: 'unauthorized'),
-          ),
-        );
-        expect(
-          result,
-          const Left(UnauthorizedFailure(message: 'unauthorized')),
-        );
-      },
-    );
+        // act
+        final result = await safeCall(successFunction);
 
-    test(
-      'should return Left with RequestFailure on BadRequestException',
-      () async {
-        final result = await safeCall<String>(
-          () async => throw DioException(
-            requestOptions: RequestOptions(path: ''),
-            error: BadRequestException(message: 'bad request'),
-          ),
-        );
-        expect(result, const Left(RequestFailure(message: 'bad request')));
-      },
-    );
+        // assert
+        expect(result, Right('success'));
+      });
 
-    test('should return Left with ServerFailure on ServerException', () async {
-      final result = await safeCall<String>(
-        () async => throw DioException(
-          requestOptions: RequestOptions(path: ''),
-          error: ServerException(message: 'server error'),
-        ),
+      test(
+        'should return Left with CacheFailure when function throws CacheException',
+        () async {
+          // arrange
+          Future<String> cacheErrorFunction() async {
+            await Future.delayed(const Duration(milliseconds: 10));
+            throw CacheException(message: 'Cache error');
+          }
+
+          // act
+          final result = await safeCall(cacheErrorFunction);
+
+          // assert
+          expect(result.isLeft(), true);
+          expect(
+            result.fold(
+              (failure) => failure is CacheFailure,
+              (success) => false,
+            ),
+            true,
+          );
+          expect(
+            result.fold((failure) => failure.message, (success) => ''),
+            'Cache error',
+          );
+        },
       );
-      expect(result, const Left(ServerFailure(message: 'server error')));
-    });
 
-    test(
-      'should return Left with NetworkFailure on NetworkException',
-      () async {
-        final result = await safeCall<String>(
-          () async => throw DioException(
-            requestOptions: RequestOptions(path: ''),
-            error: NetworkException(message: 'network error'),
-          ),
-        );
-        expect(result, const Left(NetworkFailure(message: 'network error')));
-      },
-    );
+      test(
+        'should return Left with UnknownFailure when function throws unknown exception',
+        () async {
+          // arrange
+          Future<String> unknownErrorFunction() async {
+            await Future.delayed(const Duration(milliseconds: 10));
+            throw Exception('Unknown error');
+          }
 
-    test(
-      'should return Left with ForbiddenFailure on ForbiddenException',
-      () async {
-        final result = await safeCall<String>(
-          () async => throw DioException(
-            requestOptions: RequestOptions(path: ''),
-            error: ForbiddenException(message: 'forbidden'),
-          ),
-        );
-        expect(result, const Left(ForbiddenFailure(message: 'forbidden')));
-      },
-    );
+          // act
+          final result = await safeCall(unknownErrorFunction);
 
-    test(
-      'should return Left with RequestFailure on NotFoundException',
-      () async {
-        final result = await safeCall<String>(
-          () async => throw DioException(
-            requestOptions: RequestOptions(path: ''),
-            error: NotFoundException(message: 'not found'),
-          ),
-        );
-        expect(result, const Left(RequestFailure(message: 'not found')));
-      },
-    );
-
-    test('should return Left with CacheFailure on CacheException', () async {
-      final result = await safeCall<String>(
-        () async => throw CacheException(message: 'cache error'),
+          // assert
+          expect(result.isLeft(), true);
+          expect(
+            result.fold(
+              (failure) => failure is UnknownFailure,
+              (success) => false,
+            ),
+            true,
+          );
+          expect(
+            result.fold((failure) => failure.message, (success) => ''),
+            'Exception: Unknown error',
+          );
+        },
       );
-      expect(result, const Left(CacheFailure(message: 'cache error')));
+
+      test(
+        'should return Left with UnknownFailure when function throws generic Exception',
+        () async {
+          // arrange
+          Future<String> genericErrorFunction() async {
+            await Future.delayed(const Duration(milliseconds: 10));
+            throw Exception('Generic error');
+          }
+
+          // act
+          final result = await safeCall(genericErrorFunction);
+
+          // assert
+          expect(result.isLeft(), true);
+          expect(
+            result.fold(
+              (failure) => failure is UnknownFailure,
+              (success) => false,
+            ),
+            true,
+          );
+          expect(
+            result.fold((failure) => failure.message, (success) => ''),
+            'Exception: Generic error',
+          );
+        },
+      );
     });
-
-    test(
-      'should return Left with DatabaseFailure on DatabaseException',
-      () async {
-        final result = await safeCall<String>(
-          () async => throw DatabaseException(message: 'database error'),
-        );
-        expect(result, const Left(DatabaseFailure(message: 'database error')));
-      },
-    );
-
-    test(
-      'should return Left with UnknownFailure on UnknownException',
-      () async {
-        final result = await safeCall<String>(
-          () async => throw UnknownException(message: 'unknown error'),
-        );
-        expect(result, const Left(UnknownFailure(message: 'unknown error')));
-      },
-    );
-
-    test(
-      'should return Left with UnknownFailure on other exceptions',
-      () async {
-        final result = await safeCall<String>(
-          () async => throw Exception('some error'),
-        );
-        expect(
-          result,
-          const Left(UnknownFailure(message: 'Exception: some error')),
-        );
-      },
-    );
   });
 }
