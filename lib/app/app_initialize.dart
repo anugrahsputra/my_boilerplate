@@ -9,7 +9,7 @@ import 'app.dart';
 
 Future<void> appInitialize() async {
   AppLogging.initialize(showLog: true);
-  Bloc.observer = AppBlocObserver();
+  // Bloc.observer = AppBlocObserver();
   await setup();
 
   await SentryFlutter.init((options) {
