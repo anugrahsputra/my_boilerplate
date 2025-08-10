@@ -35,15 +35,22 @@ class StoreKey {
       decrypt: (List<int> bytes) async {
         final iv = encrypt.IV(Uint8List.fromList(bytes.sublist(0, 16)));
         final encryptedData = Uint8List.fromList(bytes.sublist(16));
-        final encrypter = encrypt.Encrypter(encrypt.AES(encrypt.Key.fromUtf8(key)));
+        final encrypter = encrypt.Encrypter(
+          encrypt.AES(encrypt.Key.fromUtf8(key)),
+        );
         final encrypted = encrypt.Encrypted(encryptedData);
         final decryptedBytes = encrypter.decryptBytes(encrypted, iv: iv);
         return decryptedBytes;
       },
       encrypt: (List<int> bytes) async {
         final iv = encrypt.IV.fromSecureRandom(16);
-        final encrypter = encrypt.Encrypter(encrypt.AES(encrypt.Key.fromUtf8(key)));
-        final encrypted = encrypter.encryptBytes(Uint8List.fromList(bytes), iv: iv);
+        final encrypter = encrypt.Encrypter(
+          encrypt.AES(encrypt.Key.fromUtf8(key)),
+        );
+        final encrypted = encrypter.encryptBytes(
+          Uint8List.fromList(bytes),
+          iv: iv,
+        );
         return [...iv.bytes, ...encrypted.bytes];
       },
     );

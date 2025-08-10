@@ -73,17 +73,29 @@ Future<void> setup() async {
                   encrypt: (byte) async {
                     final key = await di<StoreKey>().getStoredKey();
                     final iv = encrypt.IV.fromSecureRandom(16);
-                    final encrypter = encrypt.Encrypter(encrypt.AES(encrypt.Key.fromUtf8(key)));
-                    final encrypted = encrypter.encryptBytes(Uint8List.fromList(byte), iv: iv);
+                    final encrypter = encrypt.Encrypter(
+                      encrypt.AES(encrypt.Key.fromUtf8(key)),
+                    );
+                    final encrypted = encrypter.encryptBytes(
+                      Uint8List.fromList(byte),
+                      iv: iv,
+                    );
                     return [...iv.bytes, ...encrypted.bytes];
                   },
                   decrypt: (byte) async {
                     final key = await di<StoreKey>().getStoredKey();
-                    final iv = encrypt.IV(Uint8List.fromList(byte.sublist(0, 16)));
+                    final iv = encrypt.IV(
+                      Uint8List.fromList(byte.sublist(0, 16)),
+                    );
                     final encryptedData = Uint8List.fromList(byte.sublist(16));
-                    final encrypter = encrypt.Encrypter(encrypt.AES(encrypt.Key.fromUtf8(key)));
+                    final encrypter = encrypt.Encrypter(
+                      encrypt.AES(encrypt.Key.fromUtf8(key)),
+                    );
                     final encrypted = encrypt.Encrypted(encryptedData);
-                    final decryptedBytes = encrypter.decryptBytes(encrypted, iv: iv);
+                    final decryptedBytes = encrypter.decryptBytes(
+                      encrypted,
+                      iv: iv,
+                    );
                     return decryptedBytes;
                   },
                 ),
@@ -93,7 +105,9 @@ Future<void> setup() async {
   );
 
   /* -----------------> App <-----------------*/
-  di.registerFactory<AppCubit>(() => AppCubit(localStorageManager: di<LocalStorageManager>()));
+  di.registerFactory<AppCubit>(
+    () => AppCubit(localStorageManager: di<LocalStorageManager>()),
+  );
 
   _authLocator();
   _mainLocator();
@@ -111,14 +125,20 @@ void _authLocator() {
     ),
   );
 
-  di.registerLazySingleton<LoginUsecase>(() => LoginUsecase(repository: di<AuthRepository>()));
+  di.registerLazySingleton<LoginUsecase>(
+    () => LoginUsecase(repository: di<AuthRepository>()),
+  );
 
   di.registerLazySingleton<RegisterUsecase>(
     () => RegisterUsecase(repository: di<AuthRepository>()),
   );
 
-  di.registerFactory<LoginBloc>(() => LoginBloc(loginUsecase: di<LoginUsecase>()));
-  di.registerFactory<RegisterBloc>(() => RegisterBloc(registerUsecase: di<RegisterUsecase>()));
+  di.registerFactory<LoginBloc>(
+    () => LoginBloc(loginUsecase: di<LoginUsecase>()),
+  );
+  di.registerFactory<RegisterBloc>(
+    () => RegisterBloc(registerUsecase: di<RegisterUsecase>()),
+  );
 }
 
 void _mainLocator() {

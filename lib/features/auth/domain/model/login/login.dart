@@ -4,6 +4,5 @@ part 'login.freezed.dart';
 
 @freezed
 abstract class Login with _$Login {
-  const factory Login({required String token}) =
-      _Login;
+  const factory Login({required String token}) = _Login;
 }

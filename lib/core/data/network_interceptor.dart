@@ -10,7 +10,12 @@ import '../../di.dart';
 class NetworkInterceptor extends Interceptor with InterceptorMixin {
   final Logger log = Logger("Dio Interceptor");
   Dio dio = di<Dio>(instanceName: "interceptor");
+  LocalStorageManager localStoreManager = di<LocalStorageManager>(
+    instanceName: "interceptor",
+  );
   final NetworkRequestRetrier requestRetrier;
+  bool _isRefreshing = false;
+  final List<Function()> _retryQueue = [];
 
   NetworkInterceptor({NetworkRequestRetrier? requestRetrier})
     : requestRetrier =
@@ -41,6 +46,43 @@ class NetworkInterceptor extends Interceptor with InterceptorMixin {
     } catch (e) {
       return 'Could not format request body: $e';
     }
+  }
+
+  Future<String?> _refreshToken() async {
+    final refreshToken = await localStoreManager.readFromStorage(
+      "refresh_token",
+    );
+    if (refreshToken == null) return null;
+
+    try {
+      final response = await dio.post(
+        '/auth/refresh',
+        data: {'refresh_token': refreshToken},
+      );
+
+      final newAccessToken = response.data['access_token'];
+      final newRefreshToken = response.data['refresh_token'];
+
+      await localStoreManager.writeToStorage("access_token", newAccessToken);
+      await localStoreManager.writeToStorage("refresh_token", newRefreshToken);
+      return newAccessToken;
+    } catch (e) {
+      log.severe("Token refresh failed: $e");
+      return null;
+    }
+  }
+
+  Future<Response> _retryRequest(RequestOptions requestOptions) async {
+    final options = Options(
+      method: requestOptions.method,
+      headers: requestOptions.headers,
+    );
+    return dio.request(
+      requestOptions.path,
+      data: requestOptions.data,
+      queryParameters: requestOptions.queryParameters,
+      options: options,
+    );
   }
 
   @override
@@ -81,12 +123,56 @@ class NetworkInterceptor extends Interceptor with InterceptorMixin {
         ),
       );
     } else if (isUnauthorized(err)) {
-      return handler.reject(
-        DioException(
-          requestOptions: err.requestOptions,
-          error: UnauthorizedException(message: err.response!.data["error"]),
-        ),
-      );
+      if (_isRefreshing) {
+        _retryQueue.add(() async {
+          final retryResponse = await dio.fetch(err.requestOptions);
+          handler.resolve(retryResponse);
+        });
+        return;
+      }
+
+      _isRefreshing = true;
+
+      try {
+        final newToken = await _refreshToken();
+        _isRefreshing = false;
+
+        if (newToken != null) {
+          final newToken = await _refreshToken();
+          _isRefreshing = false;
+
+          if (newToken != null) {
+            for (final retry in _retryQueue) {
+              await retry();
+            }
+            _retryQueue.clear();
+
+            // Retry original request
+            final cloneReq = await _retryRequest(err.requestOptions);
+            return handler.resolve(cloneReq);
+          } else {
+            await localStoreManager.deleteFromStorage("access_token");
+            await localStoreManager.deleteFromStorage("refresh_token");
+            return handler.reject(
+              DioException(
+                requestOptions: err.requestOptions,
+                error: UnauthorizedException(message: "Session expired"),
+              ),
+            );
+          }
+        }
+      } catch (e) {
+        _isRefreshing = false;
+        await localStoreManager.deleteFromStorage("access_token");
+        await localStoreManager.deleteFromStorage("refresh_token");
+
+        return handler.reject(
+          DioException(
+            requestOptions: err.requestOptions,
+            error: UnauthorizedException(message: err.response!.data["error"]),
+          ),
+        );
+      }
     } else if (isForbidden(err)) {
       return handler.reject(
         DioException(

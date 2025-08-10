@@ -11,6 +11,6 @@ abstract class RegisterReqDto with _$RegisterReqDto {
     required String password,
   }) = _RegisterReqDto;
 
-  factory RegisterReqDto.fromJson(Map<String, dynamic> json) => _$RegisterReqDtoFromJson(json);
-
+  factory RegisterReqDto.fromJson(Map<String, dynamic> json) =>
+      _$RegisterReqDtoFromJson(json);
 }

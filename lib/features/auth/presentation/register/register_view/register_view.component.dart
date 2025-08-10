@@ -36,11 +36,14 @@ class RegisterFields extends StatelessWidget {
         DefaultFormField(
           initialValue: state.name.value,
 
-          onChanged: (value) => context.read<RegisterBloc>().add(RegisterOnNameChanged(value)),
+          onChanged: (value) =>
+              context.read<RegisterBloc>().add(RegisterOnNameChanged(value)),
           hintText: "Full Name",
           keyboardType: TextInputType.name,
           prefixIcon: const Icon(Icons.person),
-          errorText: (state.hasSubmitted || !state.name.isPure) && state.name.isNotValid
+          errorText:
+              (state.hasSubmitted || !state.name.isPure) &&
+                  state.name.isNotValid
               ? (state.name.error == NameValidationError.tooShort
                     ? 'Nama terlalu pendek'
                     : 'Nama tidak boleh kosong')
@@ -48,33 +51,42 @@ class RegisterFields extends StatelessWidget {
         ),
         DefaultFormField(
           initialValue: state.phoneNumber.value,
-          onChanged: (value) => context.read<RegisterBloc>().add(RegisterOnPhoneChanged(value)),
+          onChanged: (value) =>
+              context.read<RegisterBloc>().add(RegisterOnPhoneChanged(value)),
           hintText: "Phone Number",
           keyboardType: TextInputType.phone,
           prefixIcon: const Icon(Icons.phone),
           errorText:
-              (state.hasSubmitted || !state.phoneNumber.isPure) && state.phoneNumber.isNotValid
+              (state.hasSubmitted || !state.phoneNumber.isPure) &&
+                  state.phoneNumber.isNotValid
               ? 'Nomor HP tidak valid'
               : null,
         ),
         DefaultFormField(
           initialValue: state.email.value,
-          onChanged: (value) => context.read<RegisterBloc>().add(RegisterOnEmailChanged(value)),
+          onChanged: (value) =>
+              context.read<RegisterBloc>().add(RegisterOnEmailChanged(value)),
           hintText: "Email",
           keyboardType: TextInputType.emailAddress,
           prefixIcon: const Icon(Icons.email),
-          errorText: (state.hasSubmitted || !state.email.isPure) && state.email.isNotValid
+          errorText:
+              (state.hasSubmitted || !state.email.isPure) &&
+                  state.email.isNotValid
               ? 'Email tidak valid'
               : null,
         ),
         DefaultFormField(
           initialValue: state.password.value,
-          onChanged: (value) => context.read<RegisterBloc>().add(RegisterOnPasswordChanged(value)),
+          onChanged: (value) => context.read<RegisterBloc>().add(
+            RegisterOnPasswordChanged(value),
+          ),
           isPassword: true,
           hintText: "Password",
           keyboardType: TextInputType.visiblePassword,
           prefixIcon: const Icon(Icons.lock),
-          errorText: (state.hasSubmitted || !state.password.isPure) && state.password.isNotValid
+          errorText:
+              (state.hasSubmitted || !state.password.isPure) &&
+                  state.password.isNotValid
               ? 'Password tidak boleh kosong'
               : null,
         ),
@@ -89,10 +101,13 @@ class RegisterButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = context.watch<RegisterBloc>().state;
-    final isButtonEnabled = (state.isValid && state.status != FormzSubmissionStatus.inProgress);
+    final isButtonEnabled =
+        (state.isValid && state.status != FormzSubmissionStatus.inProgress);
     return DefaultButton(
       isEnabled: isButtonEnabled,
-      onTap: isButtonEnabled ? () => context.read<RegisterBloc>().add(const OnRegister()) : null,
+      onTap: isButtonEnabled
+          ? () => context.read<RegisterBloc>().add(const OnRegister())
+          : null,
       child: state.status == FormzSubmissionStatus.inProgress
           ? SizedBox(
               width: 20,
@@ -128,7 +143,10 @@ class RegisterFooter extends StatelessWidget {
       child: RichText(
         text: TextSpan(
           text: "Already have an account? ",
-          style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontSize: 16.sp),
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.onSurface,
+            fontSize: 16.sp,
+          ),
           children: [
             TextSpan(
               text: "Login",
@@ -137,7 +155,8 @@ class RegisterFooter extends StatelessWidget {
                 fontSize: 16.sp,
                 fontWeight: FontWeight.bold,
               ),
-              recognizer: TapGestureRecognizer()..onTap = () => navigator.back(context),
+              recognizer: TapGestureRecognizer()
+                ..onTap = () => navigator.back(context),
             ),
           ],
         ),

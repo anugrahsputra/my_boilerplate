@@ -58,25 +58,25 @@ class AppNavigator {
   }
 
   void goToSplash(BuildContext context) {
-    if(!canNavigate(context))  return;
+    if (!canNavigate(context)) return;
 
     pushNamedAndRemoveUntil(context, AppPages.splash);
   }
 
   void goToLogin(BuildContext context) {
-   if(!canNavigate(context))  return;
+    if (!canNavigate(context)) return;
 
-   pushNamedAndRemoveUntil(context, AppPages.login);
+    pushNamedAndRemoveUntil(context, AppPages.login);
   }
 
   void goToRegister(BuildContext context) {
-    if(!canNavigate(context))  return;
+    if (!canNavigate(context)) return;
 
     pushNamed(context, AppPages.register);
   }
 
   void goToMain(BuildContext context) {
-    if(!canNavigate(context)) return;
+    if (!canNavigate(context)) return;
 
     pushNamedAndRemoveUntil(context, AppPages.main);
   }

@@ -15,12 +15,20 @@ class LocalStorageManagerImpl extends LocalStorageManager {
 
   @override
   Future<void> deleteFromStorage(String key) async {
-    await storage.delete(key: key, aOptions: _getAndroidOptions(), iOptions: _getIOSOptions());
+    await storage.delete(
+      key: key,
+      aOptions: _getAndroidOptions(),
+      iOptions: _getIOSOptions(),
+    );
   }
 
   @override
   Future<String?> readFromStorage(String key) async {
-    return await storage.read(key: key, aOptions: _getAndroidOptions(), iOptions: _getIOSOptions());
+    return await storage.read(
+      key: key,
+      aOptions: _getAndroidOptions(),
+      iOptions: _getIOSOptions(),
+    );
   }
 
   @override
@@ -33,7 +41,8 @@ class LocalStorageManagerImpl extends LocalStorageManager {
     );
   }
 
-  AndroidOptions _getAndroidOptions() => const AndroidOptions(encryptedSharedPreferences: true);
+  AndroidOptions _getAndroidOptions() =>
+      const AndroidOptions(encryptedSharedPreferences: true);
 
   IOSOptions _getIOSOptions() => const IOSOptions(
     accountName: _accountName,

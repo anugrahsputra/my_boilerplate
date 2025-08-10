@@ -26,10 +26,6 @@ abstract class MainTab with _$MainTab {
     profile: () => Icons.person,
   );
 
-  int get index => when(
-    home: () => 0,
-    search: () => 1,
-    favorite: () => 2,
-    profile: () => 3,
-  );
+  int get index =>
+      when(home: () => 0, search: () => 1, favorite: () => 2, profile: () => 3);
 }

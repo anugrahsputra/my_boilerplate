@@ -60,17 +60,17 @@ class _DefaultFormFieldState extends State<DefaultFormField> {
         prefixIcon: widget.prefixIcon,
         suffixIcon: widget.isPassword
             ? IconButton(
-          icon: Icon(
-            _isObscure ? Icons.visibility_off : Icons.visibility,
-            size: 24.sp,
-            color: Theme.of(context).colorScheme.primary,
-          ),
-          onPressed: () {
-            setState(() {
-              _isObscure = !_isObscure;
-            });
-          },
-        )
+                icon: Icon(
+                  _isObscure ? Icons.visibility_off : Icons.visibility,
+                  size: 24.sp,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+                onPressed: () {
+                  setState(() {
+                    _isObscure = !_isObscure;
+                  });
+                },
+              )
             : null,
       ),
     );

@@ -39,22 +39,29 @@ class LoginFields extends StatelessWidget {
       children: [
         DefaultFormField(
           initialValue: state.email.value,
-          onChanged: (value) => context.read<LoginBloc>().add(LoginEvent.onEmailChanged(value)),
+          onChanged: (value) =>
+              context.read<LoginBloc>().add(LoginEvent.onEmailChanged(value)),
           hintText: "Email",
           keyboardType: TextInputType.emailAddress,
           prefixIcon: const Icon(Icons.email),
-          errorText: (state.hasSubmitted || !state.email.isPure) && state.email.isNotValid
+          errorText:
+              (state.hasSubmitted || !state.email.isPure) &&
+                  state.email.isNotValid
               ? 'Email tidak valid'
               : null,
         ),
         DefaultFormField(
           initialValue: state.password.value,
-          onChanged: (value) => context.read<LoginBloc>().add(LoginEvent.onPasswordChanged(value)),
+          onChanged: (value) => context.read<LoginBloc>().add(
+            LoginEvent.onPasswordChanged(value),
+          ),
           isPassword: true,
           hintText: "Password",
           keyboardType: TextInputType.visiblePassword,
           prefixIcon: const Icon(Icons.lock),
-          errorText: (state.hasSubmitted || !state.password.isPure) && state.password.isNotValid
+          errorText:
+              (state.hasSubmitted || !state.password.isPure) &&
+                  state.password.isNotValid
               ? 'Password kosong'
               : null,
         ),
@@ -69,7 +76,8 @@ class LoginButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = context.watch<LoginBloc>().state;
-    final isButtonEnabled = (state.isValid && state.status != FormzSubmissionStatus.inProgress);
+    final isButtonEnabled =
+        (state.isValid && state.status != FormzSubmissionStatus.inProgress);
     return DefaultButton(
       isEnabled: isButtonEnabled,
       onTap: isButtonEnabled
@@ -110,7 +118,10 @@ class LoginFooter extends StatelessWidget {
       child: RichText(
         text: TextSpan(
           text: "Don't have account? ",
-          style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontSize: 16.sp),
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.onSurface,
+            fontSize: 16.sp,
+          ),
           children: [
             TextSpan(
               text: "Register",
@@ -119,7 +130,8 @@ class LoginFooter extends StatelessWidget {
                 fontSize: 16.sp,
                 fontWeight: FontWeight.bold,
               ),
-              recognizer: TapGestureRecognizer()..onTap = () => navigator.goToRegister(context),
+              recognizer: TapGestureRecognizer()
+                ..onTap = () => navigator.goToRegister(context),
             ),
           ],
         ),

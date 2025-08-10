@@ -21,8 +21,8 @@ mixin InterceptorMixin on Interceptor {
 
   bool isConnectionError(DioException err) {
     return (err.type == DioExceptionType.unknown &&
-        err.error != null &&
-        err.error is SocketException) ||
+            err.error != null &&
+            err.error is SocketException) ||
         (err.type == DioExceptionType.connectionError ||
             err.type == DioExceptionType.connectionTimeout);
   }

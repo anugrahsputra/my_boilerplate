@@ -67,7 +67,8 @@ class NetworkClientImpl implements NetworkClient {
     ProgressCallback? onSendProgress,
   }) {
     if (data is Map<String, dynamic>) {
-      final isMultipart = options?.contentType == Headers.multipartFormDataContentType;
+      final isMultipart =
+          options?.contentType == Headers.multipartFormDataContentType;
       if (isMultipart) {
         data = FormData.fromMap(data);
       }
@@ -92,13 +93,19 @@ class NetworkClientImpl implements NetworkClient {
     dynamic data,
   }) {
     if (data is Map<String, dynamic>) {
-      final isMultipart = options?.contentType == Headers.multipartFormDataContentType;
+      final isMultipart =
+          options?.contentType == Headers.multipartFormDataContentType;
       if (isMultipart) {
         data = FormData.fromMap(data);
       }
     }
 
-    return dio.put(url, queryParameters: queryParameters, data: data, options: options);
+    return dio.put(
+      url,
+      queryParameters: queryParameters,
+      data: data,
+      options: options,
+    );
   }
 
   @override

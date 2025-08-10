@@ -16,7 +16,9 @@ class DefaultButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).colorScheme.primary;
-    final isBtnEnabled = isEnabled ? primaryColor : primaryColor.withValues(alpha: 0.5);
+    final isBtnEnabled = isEnabled
+        ? primaryColor
+        : primaryColor.withValues(alpha: 0.5);
 
     return Material(
       color: Colors.transparent,
@@ -27,7 +29,10 @@ class DefaultButton extends StatelessWidget {
           width: 1.sw,
           height: 52.h,
           padding: EdgeInsets.all(10.h),
-          decoration: BoxDecoration(color: isBtnEnabled, borderRadius: BorderRadius.circular(16.r)),
+          decoration: BoxDecoration(
+            color: isBtnEnabled,
+            borderRadius: BorderRadius.circular(16.r),
+          ),
           child: Align(alignment: Alignment.center, child: child),
         ),
       ),

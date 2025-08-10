@@ -9,7 +9,10 @@ class AuthRepositoryImpl implements AuthRepository {
   final LocalStorageManager localStorageManager;
   final Logger log = Logger("Auth Repository");
 
-  AuthRepositoryImpl({required this.dataSource, required this.localStorageManager});
+  AuthRepositoryImpl({
+    required this.dataSource,
+    required this.localStorageManager,
+  });
 
   @override
   Future<Either<Failure, Login>> login(LoginReqDto loginReq) async {
@@ -23,6 +26,9 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<Either<Failure, Register>> register(RegisterReqDto registerReq) async {
     final result = await dataSource.register(registerReq);
-    return result.fold((failure) => Left(failure), (data) => Right(data.toRegister()));
+    return result.fold(
+      (failure) => Left(failure),
+      (data) => Right(data.toRegister()),
+    );
   }
 }

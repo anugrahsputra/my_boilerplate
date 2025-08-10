@@ -12,7 +12,11 @@ extension NetworkClientParsed on NetworkClient {
     Options? options,
     bool useIsolate = true,
   }) async {
-    final response = await get(url, queryParameters: queryParameters, options: options);
+    final response = await get(
+      url,
+      queryParameters: queryParameters,
+      options: options,
+    );
 
     final data = response.data;
     if (data is! Map<String, dynamic>) {
@@ -31,7 +35,11 @@ extension NetworkClientParsed on NetworkClient {
     Options? options,
     bool useIsolate = true,
   }) async {
-    final response = await get(url, queryParameters: queryParameters, options: options);
+    final response = await get(
+      url,
+      queryParameters: queryParameters,
+      options: options,
+    );
 
     final data = response.data;
 

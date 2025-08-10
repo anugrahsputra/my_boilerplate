@@ -8,6 +8,6 @@ abstract class LoginState with _$LoginState {
     @Default(FormzSubmissionStatus.initial) FormzSubmissionStatus status,
     @Default(false) bool isValid,
     @Default(false) bool hasSubmitted,
-    String? errorMessage
+    String? errorMessage,
   }) = _LoginState;
 }

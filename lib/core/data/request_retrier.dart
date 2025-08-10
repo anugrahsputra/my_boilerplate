@@ -7,7 +7,10 @@ class NetworkRequestRetrier {
   final Dio dio;
   final InternetConnectionChecker internetConnectionChecker;
 
-  NetworkRequestRetrier({required this.dio, required this.internetConnectionChecker});
+  NetworkRequestRetrier({
+    required this.dio,
+    required this.internetConnectionChecker,
+  });
 
   Future<Response> retryRequest(RequestOptions requestOptions) {
     late StreamSubscription subscription;

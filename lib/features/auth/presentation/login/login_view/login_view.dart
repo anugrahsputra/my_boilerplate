@@ -35,7 +35,10 @@ class _LoginViewState extends State<LoginView> {
         listener: (context, state) {
           if (state.errorMessage != null) {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.errorMessage!), behavior: SnackBarBehavior.floating),
+              SnackBar(
+                content: Text(state.errorMessage!),
+                behavior: SnackBarBehavior.floating,
+              ),
             );
             context.read<LoginBloc>().add(const LoginOnError());
           } else if (state.status == FormzSubmissionStatus.success) {

@@ -25,7 +25,9 @@ class AuthDataSourceImpl implements AuthDataSource {
   }
 
   @override
-  Future<Either<Failure, RegisterRespDto>> register(RegisterReqDto registerReq) async {
+  Future<Either<Failure, RegisterRespDto>> register(
+    RegisterReqDto registerReq,
+  ) async {
     return await dioClient.postParsedSafe<RegisterRespDto>(
       ApiEndpoints.register,
       data: registerReq.toJson(),

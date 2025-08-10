@@ -34,13 +34,19 @@ class _RegisterViewState extends State<RegisterView> {
         listener: (context, state) {
           if (state.errorMessage != null) {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.errorMessage!), behavior: SnackBarBehavior.floating),
+              SnackBar(
+                content: Text(state.errorMessage!),
+                behavior: SnackBarBehavior.floating,
+              ),
             );
 
             context.read<RegisterBloc>().add(const RegisterOnError());
           } else if (state.status == FormzSubmissionStatus.success) {
             scaffoldMessengerKey.currentState?.showSnackBar(
-              SnackBar(content: Text("Register Success"), behavior: SnackBarBehavior.floating),
+              SnackBar(
+                content: Text("Register Success"),
+                behavior: SnackBarBehavior.floating,
+              ),
             );
             appNavigator.back(context);
           }

@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-
 class Parser {
   static T? get<T>(dynamic object) {
     try {
@@ -13,7 +12,7 @@ class Parser {
   static Map<String, dynamic>? getMap(dynamic data) {
     try {
       final Map<String, dynamic> result =
-      jsonDecode(data) as Map<String, dynamic>;
+          jsonDecode(data) as Map<String, dynamic>;
 
       return result;
     } catch (_) {

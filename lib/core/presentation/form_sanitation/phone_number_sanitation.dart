@@ -1,6 +1,6 @@
 import 'package:formz/formz.dart';
 
-enum PhoneNumberValidationError { empty, invalid}
+enum PhoneNumberValidationError { empty, invalid }
 
 class PhoneNumber extends FormzInput<String, PhoneNumberValidationError> {
   const PhoneNumber.pure() : super.pure('');
@@ -13,6 +13,8 @@ class PhoneNumber extends FormzInput<String, PhoneNumberValidationError> {
     if (value.trim().isEmpty) {
       return PhoneNumberValidationError.empty;
     }
-    return _phoneRegExp.hasMatch(value) ? null : PhoneNumberValidationError.invalid;
+    return _phoneRegExp.hasMatch(value)
+        ? null
+        : PhoneNumberValidationError.invalid;
   }
 }

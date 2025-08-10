@@ -38,22 +38,24 @@ class _MainViewState extends State<MainView> {
         child: BlocBuilder<MainCubit, MainState>(
           builder: (context, state) {
             return Scaffold(
-              body: Stack(
-                children: [
-                  IndexedStack(
-                    index: state.currentIndex,
-                    children: MainState.allTabs
-                        .map((tab) => state.pages[tab] ?? const SizedBox.shrink())
-                        .toList(),
-                  ),
-                ],
+              body: IndexedStack(
+                index: state.currentIndex,
+                children: MainState.allTabs
+                    .map((tab) => state.pages[tab] ?? const SizedBox.shrink())
+                    .toList(),
               ),
               bottomNavigationBar: BottomNavigationBar(
                 type: BottomNavigationBarType.fixed,
                 currentIndex: state.currentIndex,
-                onTap: (index) => context.read<MainCubit>().changeTabByIndex(index),
+                onTap: (index) =>
+                    context.read<MainCubit>().changeTabByIndex(index),
                 items: MainState.allTabs
-                    .map((tab) => BottomNavigationBarItem(icon: Icon(tab.icon), label: tab.label))
+                    .map(
+                      (tab) => BottomNavigationBarItem(
+                        icon: Icon(tab.icon),
+                        label: tab.label,
+                      ),
+                    )
                     .toList(),
               ),
             );
@@ -64,6 +66,7 @@ class _MainViewState extends State<MainView> {
   }
 }
 
+// mock views
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
 

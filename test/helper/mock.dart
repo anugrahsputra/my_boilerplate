@@ -19,4 +19,3 @@ export 'mock.mocks.dart';
   MockSpec<ErrorInterceptorHandler>(),
 ])
 void main(List<String> args) {}
-
