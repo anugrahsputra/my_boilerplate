@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 
-import '../../core.dart';
+import 'package:my_boilerplate/core/core.dart';
 
 class AppNavigator {
-  final Logger log = Logger("App Navigator");
+  final Logger log = Logger('App Navigator');
 
   bool canPop(BuildContext context) => Navigator.of(context).canPop();
 
   bool isCurrentPage(BuildContext context) {
-    return ModalRoute.of(context)?.isCurrent == true;
+    return ModalRoute.of(context)?.isCurrent ?? false;
   }
 
   bool canNavigate(BuildContext context) {
     if (context.mounted) {
       return true;
     } else {
-      log.warning("Cannot navigate because the context is unmounted");
+      log.warning('Cannot navigate because the context is unmounted');
       return false;
     }
   }

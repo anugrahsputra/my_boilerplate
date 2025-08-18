@@ -8,10 +8,10 @@ import 'package:logging/logging.dart';
 import 'package:my_boilerplate/core/core.dart';
 
 class StoreKey {
-  final LocalStorageManager localStorageManager;
-  final Logger log = Logger("Local storage manager");
 
   StoreKey({required this.localStorageManager});
+  final LocalStorageManager localStorageManager;
+  final Logger log = Logger('Local storage manager');
 
   Future<String> generateKey() async {
     final random = Random.secure();
@@ -22,9 +22,9 @@ class StoreKey {
   }
 
   Future<String> getStoredKey() async {
-    String? key = await localStorageManager.readFromStorage('encryption_key');
+    var key = await localStorageManager.readFromStorage('encryption_key');
     key ??= await generateKey();
-    log.info("Stored key: $key");
+    log.info('Stored key: $key');
 
     return key;
   }

@@ -3,9 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DefaultButton extends StatelessWidget {
   const DefaultButton({
-    super.key,
-    required this.onTap,
-    required this.child,
+    required this.onTap, required this.child, super.key,
     this.isEnabled = false,
   });
 
@@ -33,7 +31,7 @@ class DefaultButton extends StatelessWidget {
             color: isBtnEnabled,
             borderRadius: BorderRadius.circular(16.r),
           ),
-          child: Align(alignment: Alignment.center, child: child),
+          child: Align(child: child),
         ),
       ),
     );

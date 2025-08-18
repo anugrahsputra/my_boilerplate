@@ -4,17 +4,16 @@ import 'package:dio/dio.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 class NetworkRequestRetrier {
-  final Dio dio;
-  final InternetConnectionChecker internetConnectionChecker;
-
   NetworkRequestRetrier({
     required this.dio,
     required this.internetConnectionChecker,
   });
+  final Dio dio;
+  final InternetConnectionChecker internetConnectionChecker;
 
-  Future<Response> retryRequest(RequestOptions requestOptions) {
-    late StreamSubscription subscription;
-    final completer = Completer<Response>();
+  Future<Response<T>> retryRequest<T>(RequestOptions requestOptions) {
+    late StreamSubscription<InternetConnectionStatus> subscription;
+    final completer = Completer<Response<T>>();
 
     subscription = internetConnectionChecker.onStatusChange.listen((status) {
       if (status == InternetConnectionStatus.connected) {

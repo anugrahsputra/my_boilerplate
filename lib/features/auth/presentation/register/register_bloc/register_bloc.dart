@@ -12,10 +12,8 @@ part 'register_event.dart';
 part 'register_state.dart';
 
 class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
-  final RegisterUsecase registerUsecase;
-  final Logger log = Logger("Register Bloc");
 
-  RegisterBloc({required this.registerUsecase}) : super(RegisterState()) {
+  RegisterBloc({required this.registerUsecase}) : super(const RegisterState()) {
     on<RegisterOnNameChanged>(_onNameChanged);
     on<RegisterOnPhoneChanged>(_onPhoneChanged);
     on<RegisterOnEmailChanged>(_onEmailChanged);
@@ -23,6 +21,8 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     on<RegisterOnError>(_onError);
     on<OnRegister>(_onRegister);
   }
+  final RegisterUsecase registerUsecase;
+  final Logger log = Logger('Register Bloc');
 
   void _onNameChanged(
     RegisterOnNameChanged event,

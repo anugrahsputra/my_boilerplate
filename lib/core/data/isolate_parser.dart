@@ -4,10 +4,10 @@ import 'package:my_boilerplate/core/core.dart';
 
 // use this for single object response
 class IsolateParser<T> {
-  final Map<String, dynamic> json;
-  final ResponseConverter<T> converter;
 
   IsolateParser(this.json, this.converter);
+  final Map<String, dynamic> json;
+  final ResponseConverter<T> converter;
 
   Future<T> parseInBackground() async {
     final port = ReceivePort();
@@ -26,19 +26,19 @@ class IsolateParser<T> {
 }
 
 class _ParserPayload<T> {
+
+  _ParserPayload(this.json, this.converter, this.sendPort);
   final Map<String, dynamic> json;
   final ResponseConverter<T> converter;
   final SendPort sendPort;
-
-  _ParserPayload(this.json, this.converter, this.sendPort);
 }
 
 // use this for list if response is a list of objects
 class IsolateListParser<T> {
-  final List<dynamic> jsonList;
-  final T Function(Map<String, dynamic>) converter;
 
   IsolateListParser(this.jsonList, this.converter);
+  final List<dynamic> jsonList;
+  final T Function(Map<String, dynamic>) converter;
 
   Future<List<T>> parseInBackground() async {
     final port = ReceivePort();
@@ -60,9 +60,9 @@ class IsolateListParser<T> {
 }
 
 class _ListParserPayload<T> {
+
+  _ListParserPayload(this.jsonList, this.converter, this.sendPort);
   final List<dynamic> jsonList;
   final T Function(Map<String, dynamic>) converter;
   final SendPort sendPort;
-
-  _ListParserPayload(this.jsonList, this.converter, this.sendPort);
 }

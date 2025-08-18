@@ -27,16 +27,13 @@ abstract class AppLogging {
           case Level.FINER:
           case Level.FINEST:
             levelColor = _fineColor;
-            break;
           case Level.SEVERE:
           case Level.SHOUT:
           case Level.WARNING:
             levelColor = _severeColor;
-            break;
           case Level.INFO:
           case Level.CONFIG:
             levelColor = _infoColor;
-            break;
           default:
             levelColor = '';
         }

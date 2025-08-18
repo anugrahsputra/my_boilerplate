@@ -15,8 +15,8 @@ class MainView extends StatefulWidget {
 }
 
 class _MainViewState extends State<MainView> {
-  final appCubit = di<AppCubit>();
-  final mainCubit = di<MainCubit>();
+  final AppCubit appCubit = di<AppCubit>();
+  final MainCubit mainCubit = di<MainCubit>();
 
   @override
   Widget build(BuildContext context) {
@@ -73,8 +73,8 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Home")),
-      body: Center(child: Text("Home View")),
+      appBar: AppBar(title: const Text('Home')),
+      body: const Center(child: Text('Home View')),
     );
   }
 }
@@ -85,8 +85,8 @@ class SearchView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Search")),
-      body: Center(child: Text("Search View")),
+      appBar: AppBar(title: const Text('Search')),
+      body: const Center(child: Text('Search View')),
     );
   }
 }
@@ -97,8 +97,8 @@ class FavoriteView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Favorite")),
-      body: Center(child: Text("Favorite View")),
+      appBar: AppBar(title: const Text('Favorite')),
+      body: const Center(child: Text('Favorite View')),
     );
   }
 }
@@ -109,8 +109,8 @@ class ProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Profile")),
-      body: Center(child: Text("Profile View")),
+      appBar: AppBar(title: const Text('Profile')),
+      body: const Center(child: Text('Profile View')),
     );
   }
 }

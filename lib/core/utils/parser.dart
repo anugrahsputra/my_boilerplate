@@ -3,7 +3,7 @@ import 'dart:convert';
 class Parser {
   static T? get<T>(dynamic object) {
     try {
-      return object;
+      return object as T?;
     } catch (e) {
       return null;
     }
@@ -11,8 +11,9 @@ class Parser {
 
   static Map<String, dynamic>? getMap(dynamic data) {
     try {
-      final Map<String, dynamic> result =
-          jsonDecode(data) as Map<String, dynamic>;
+      final result =
+          jsonDecode(data is String ? data : data.toString())
+              as Map<String, dynamic>;
 
       return result;
     } catch (_) {

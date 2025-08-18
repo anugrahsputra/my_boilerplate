@@ -10,12 +10,12 @@ class RegisterHeader extends StatelessWidget {
       children: [
         Image.asset(IconPath.appIcon, width: 80.w),
         Text(
-          "Register",
+          'Register',
           style: TextStyle(fontSize: 30.sp, fontWeight: FontWeight.bold),
         ),
 
-        Text(
-          "Please Sign Up to contiue using the app",
+        const Text(
+          'Please Sign Up to contiue using the app',
           style: TextStyle(fontWeight: FontWeight.w500),
         ),
       ],
@@ -38,7 +38,7 @@ class RegisterFields extends StatelessWidget {
 
           onChanged: (value) =>
               context.read<RegisterBloc>().add(RegisterOnNameChanged(value)),
-          hintText: "Full Name",
+          hintText: 'Full Name',
           keyboardType: TextInputType.name,
           prefixIcon: const Icon(Icons.person),
           errorText:
@@ -53,7 +53,7 @@ class RegisterFields extends StatelessWidget {
           initialValue: state.phoneNumber.value,
           onChanged: (value) =>
               context.read<RegisterBloc>().add(RegisterOnPhoneChanged(value)),
-          hintText: "Phone Number",
+          hintText: 'Phone Number',
           keyboardType: TextInputType.phone,
           prefixIcon: const Icon(Icons.phone),
           errorText:
@@ -66,7 +66,7 @@ class RegisterFields extends StatelessWidget {
           initialValue: state.email.value,
           onChanged: (value) =>
               context.read<RegisterBloc>().add(RegisterOnEmailChanged(value)),
-          hintText: "Email",
+          hintText: 'Email',
           keyboardType: TextInputType.emailAddress,
           prefixIcon: const Icon(Icons.email),
           errorText:
@@ -81,7 +81,7 @@ class RegisterFields extends StatelessWidget {
             RegisterOnPasswordChanged(value),
           ),
           isPassword: true,
-          hintText: "Password",
+          hintText: 'Password',
           keyboardType: TextInputType.visiblePassword,
           prefixIcon: const Icon(Icons.lock),
           errorText:
@@ -102,7 +102,7 @@ class RegisterButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final state = context.watch<RegisterBloc>().state;
     final isButtonEnabled =
-        (state.isValid && state.status != FormzSubmissionStatus.inProgress);
+        state.isValid && state.status != FormzSubmissionStatus.inProgress;
     return DefaultButton(
       isEnabled: isButtonEnabled,
       onTap: isButtonEnabled
@@ -118,7 +118,7 @@ class RegisterButton extends StatelessWidget {
               ),
             )
           : Text(
-              "Register",
+              'Register',
               style: TextStyle(
                 fontWeight: FontWeight.w600,
                 color: Theme.of(context).colorScheme.onPrimary,
@@ -129,7 +129,7 @@ class RegisterButton extends StatelessWidget {
 }
 
 class RegisterFooter extends StatelessWidget {
-  const RegisterFooter({super.key, required this.navigator});
+  const RegisterFooter({required this.navigator, super.key});
 
   final AppNavigator navigator;
 
@@ -142,14 +142,14 @@ class RegisterFooter extends StatelessWidget {
       padding: EdgeInsets.all(16.w),
       child: RichText(
         text: TextSpan(
-          text: "Already have an account? ",
+          text: 'Already have an account? ',
           style: TextStyle(
             color: Theme.of(context).colorScheme.onSurface,
             fontSize: 16.sp,
           ),
           children: [
             TextSpan(
-              text: "Login",
+              text: 'Login',
               style: TextStyle(
                 color: Theme.of(context).colorScheme.primary,
                 fontSize: 16.sp,

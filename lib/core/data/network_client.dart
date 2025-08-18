@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 
 abstract class NetworkClient {
-  Future<Response> get(
+  Future<Response<T>> get<T>(
     String url, {
     Map<String, dynamic>? queryParameters,
     Options? options,
@@ -9,7 +9,7 @@ abstract class NetworkClient {
     ProgressCallback? onReceiveProgress,
   });
 
-  Future<Response> post(
+  Future<Response<T>> post<T>(
     String url, {
     Map<String, dynamic>? queryParameters,
     dynamic data,
@@ -19,14 +19,14 @@ abstract class NetworkClient {
     ProgressCallback? onSendProgress,
   });
 
-  Future<Response> put(
+  Future<Response<T>> put<T>(
     String url, {
     Map<String, dynamic>? queryParameters,
     Options? options,
     dynamic data,
   });
 
-  Future<Response> delete(
+  Future<Response<T>> delete<T>(
     String url, {
     Map<String, dynamic>? queryParameters,
     Options? options,
@@ -35,12 +35,11 @@ abstract class NetworkClient {
 }
 
 class NetworkClientImpl implements NetworkClient {
+  NetworkClientImpl({required this.dio});
   final Dio dio;
 
-  NetworkClientImpl({required this.dio});
-
   @override
-  Future<Response> get(
+  Future<Response<T>> get<T>(
     String url, {
     Map<String, dynamic>? queryParameters,
     Options? options,
@@ -57,7 +56,7 @@ class NetworkClientImpl implements NetworkClient {
   }
 
   @override
-  Future<Response> post(
+  Future<Response<T>> post<T>(
     String url, {
     Map<String, dynamic>? queryParameters,
     dynamic data,
@@ -86,7 +85,7 @@ class NetworkClientImpl implements NetworkClient {
   }
 
   @override
-  Future<Response> put(
+  Future<Response<T>> put<T>(
     String url, {
     Map<String, dynamic>? queryParameters,
     Options? options,
@@ -109,7 +108,7 @@ class NetworkClientImpl implements NetworkClient {
   }
 
   @override
-  Future<Response> delete(
+  Future<Response<T>> delete<T>(
     String url, {
     Map<String, dynamic>? queryParameters,
     Options? options,

@@ -6,7 +6,7 @@ class Email extends FormzInput<String, EmailValidationError> {
   const Email.pure() : super.pure('');
   const Email.dirty([super.value = '']) : super.dirty();
 
-  static final _regex = RegExp(r"^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$");
+  static final _regex = RegExp(r'^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$');
 
   @override
   EmailValidationError? validator(String value) {

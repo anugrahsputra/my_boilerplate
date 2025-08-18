@@ -43,8 +43,8 @@ class _RegisterViewState extends State<RegisterView> {
             context.read<RegisterBloc>().add(const RegisterOnError());
           } else if (state.status == FormzSubmissionStatus.success) {
             scaffoldMessengerKey.currentState?.showSnackBar(
-              SnackBar(
-                content: Text("Register Success"),
+              const SnackBar(
+                content: Text('Register Success'),
                 behavior: SnackBarBehavior.floating,
               ),
             );
@@ -60,11 +60,11 @@ class _RegisterViewState extends State<RegisterView> {
                   padding: EdgeInsets.all(16.w),
                   sliver: SliverList(
                     delegate: SliverChildListDelegate([
-                      RegisterHeader(),
+                      const RegisterHeader(),
                       SizedBox(height: 80.h),
-                      RegisterFields(),
-                      SizedBox(height: 16),
-                      RegisterButton(),
+                      const RegisterFields(),
+                      const SizedBox(height: 16),
+                      const RegisterButton(),
                     ]),
                   ),
                 ),
@@ -74,7 +74,7 @@ class _RegisterViewState extends State<RegisterView> {
                   fillOverscroll: true,
                   child: Column(
                     children: [
-                      Spacer(),
+                      const Spacer(),
                       RegisterFooter(navigator: appNavigator),
                     ],
                   ),

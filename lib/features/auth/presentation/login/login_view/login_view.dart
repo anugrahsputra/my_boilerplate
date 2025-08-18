@@ -20,7 +20,7 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> {
   final AppNavigator appNavigator = di<AppNavigator>();
   final LoginBloc loginBloc = di<LoginBloc>();
-  final Logger log = Logger("Login View");
+  final Logger log = Logger('Login View');
 
   @override
   void dispose() {
@@ -56,11 +56,11 @@ class _LoginViewState extends State<LoginView> {
                       padding: EdgeInsets.all(16.w),
                       sliver: SliverList(
                         delegate: SliverChildListDelegate([
-                          AppIconHeader(),
+                          const AppIconHeader(),
                           SizedBox(height: 80.h),
-                          LoginFields(),
-                          SizedBox(height: 16),
-                          LoginButton(),
+                          const LoginFields(),
+                          const SizedBox(height: 16),
+                          const LoginButton(),
                         ]),
                       ),
                     ),
@@ -69,7 +69,7 @@ class _LoginViewState extends State<LoginView> {
                       fillOverscroll: true,
                       child: Column(
                         children: [
-                          Spacer(),
+                          const Spacer(),
                           LoginFooter(navigator: appNavigator),
                         ],
                       ),

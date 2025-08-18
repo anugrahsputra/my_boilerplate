@@ -13,7 +13,6 @@ class MainCubit extends Cubit<MainState> {
   MainCubit()
     : super(
         MainState(
-          currentTab: const MainTab.home(),
           pages: {
             const MainTab.home(): const HomeView(),
             const MainTab.search(): const SearchView(),

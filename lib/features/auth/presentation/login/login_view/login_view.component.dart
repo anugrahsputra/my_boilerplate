@@ -8,17 +8,16 @@ class AppIconHeader extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 16),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Image.asset(IconPath.appIcon, width: 80.w),
           Text(
-            "Login",
+            'Login',
             style: TextStyle(fontSize: 30.sp, fontWeight: FontWeight.bold),
           ),
 
-          Text(
-            "Please Login to contiue using the app",
+          const Text(
+            'Please Login to contiue using the app',
             style: TextStyle(fontWeight: FontWeight.w500),
           ),
         ],
@@ -41,7 +40,7 @@ class LoginFields extends StatelessWidget {
           initialValue: state.email.value,
           onChanged: (value) =>
               context.read<LoginBloc>().add(LoginEvent.onEmailChanged(value)),
-          hintText: "Email",
+          hintText: 'Email',
           keyboardType: TextInputType.emailAddress,
           prefixIcon: const Icon(Icons.email),
           errorText:
@@ -56,7 +55,7 @@ class LoginFields extends StatelessWidget {
             LoginEvent.onPasswordChanged(value),
           ),
           isPassword: true,
-          hintText: "Password",
+          hintText: 'Password',
           keyboardType: TextInputType.visiblePassword,
           prefixIcon: const Icon(Icons.lock),
           errorText:
@@ -77,7 +76,7 @@ class LoginButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final state = context.watch<LoginBloc>().state;
     final isButtonEnabled =
-        (state.isValid && state.status != FormzSubmissionStatus.inProgress);
+        state.isValid && state.status != FormzSubmissionStatus.inProgress;
     return DefaultButton(
       isEnabled: isButtonEnabled,
       onTap: isButtonEnabled
@@ -93,7 +92,7 @@ class LoginButton extends StatelessWidget {
               ),
             )
           : Text(
-              "Login",
+              'Login',
               style: TextStyle(
                 fontWeight: FontWeight.w600,
                 color: Theme.of(context).colorScheme.onPrimary,
@@ -104,7 +103,7 @@ class LoginButton extends StatelessWidget {
 }
 
 class LoginFooter extends StatelessWidget {
-  const LoginFooter({super.key, required this.navigator});
+  const LoginFooter({required this.navigator, super.key});
 
   final AppNavigator navigator;
 
@@ -124,7 +123,7 @@ class LoginFooter extends StatelessWidget {
           ),
           children: [
             TextSpan(
-              text: "Register",
+              text: 'Register',
               style: TextStyle(
                 color: Theme.of(context).colorScheme.primary,
                 fontSize: 16.sp,

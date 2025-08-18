@@ -28,6 +28,6 @@ mixin InterceptorMixin on Interceptor {
   }
 
   bool isUnknownError(DioException err) {
-    return (err.type == DioExceptionType.unknown && err.error == null);
+    return err.type == DioExceptionType.unknown && err.error == null;
   }
 }

@@ -9,9 +9,9 @@ abstract class LocalStorageManager {
 }
 
 class LocalStorageManagerImpl extends LocalStorageManager {
-  final FlutterSecureStorage storage;
 
   LocalStorageManagerImpl({required this.storage});
+  final FlutterSecureStorage storage;
 
   @override
   Future<void> deleteFromStorage(String key) async {
@@ -24,7 +24,7 @@ class LocalStorageManagerImpl extends LocalStorageManager {
 
   @override
   Future<String?> readFromStorage(String key) async {
-    return await storage.read(
+    return storage.read(
       key: key,
       aOptions: _getAndroidOptions(),
       iOptions: _getIOSOptions(),
@@ -49,5 +49,5 @@ class LocalStorageManagerImpl extends LocalStorageManager {
     accessibility: KeychainAccessibility.first_unlock,
   );
 
-  static const String _accountName = "boilerplate";
+  static const String _accountName = 'boilerplate';
 }

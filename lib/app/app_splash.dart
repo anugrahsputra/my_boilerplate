@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../core/core.dart';
-import '../di.dart';
-import 'app_cubit.dart';
+import 'package:my_boilerplate/app/app_cubit.dart';
+import 'package:my_boilerplate/core/core.dart';
+import 'package:my_boilerplate/di.dart';
 
 class AppSplash extends StatefulWidget {
   const AppSplash({super.key});
@@ -13,7 +12,7 @@ class AppSplash extends StatefulWidget {
 }
 
 class _AppSplashState extends State<AppSplash> {
-  final appNavigator = di<AppNavigator>();
+  final AppNavigator appNavigator = di<AppNavigator>();
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +27,7 @@ class _AppSplashState extends State<AppSplash> {
           }
         },
 
-        child: Center(child: CircularProgressIndicator()),
+        child: const Center(child: CircularProgressIndicator()),
       ),
     );
   }

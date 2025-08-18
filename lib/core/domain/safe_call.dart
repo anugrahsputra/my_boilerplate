@@ -33,7 +33,7 @@ Future<Either<Failure, T>> safeCall<T>(Future<T> Function() call) async {
     } else if (error is CertificateNotVerifiedException) {
       return Left(CertificateFailure(message: error.toString()));
     } else {
-      return const Left(UnknownFailure(message: "Unknown Dio error"));
+      return const Left(UnknownFailure(message: 'Unknown Dio error'));
     }
   } on CacheException catch (e) {
     return Left(CacheFailure(message: e.message));

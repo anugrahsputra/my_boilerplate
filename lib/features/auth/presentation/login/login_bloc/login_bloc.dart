@@ -12,10 +12,8 @@ part 'login_event.dart';
 part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  final LoginUsecase loginUsecase;
-  final Logger log = Logger("Login Bloc");
 
-  LoginBloc({required this.loginUsecase}) : super(LoginState()) {
+  LoginBloc({required this.loginUsecase}) : super(const LoginState()) {
     on<LoginOnEmailChanged>(
       _loginOnEmailChanged,
       transformer: debounce(const Duration(milliseconds: 500)),
@@ -27,6 +25,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     on<LoginOnError>(_onError);
     on<OnLogin>(_onLogin);
   }
+  final LoginUsecase loginUsecase;
+  final Logger log = Logger('Login Bloc');
 
   void _loginOnEmailChanged(
     LoginOnEmailChanged event,
@@ -52,7 +52,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     );
   }
 
-  void _onLogin(OnLogin event, Emitter<LoginState> emit) async {
+  Future<void> _onLogin(OnLogin event, Emitter<LoginState> emit) async {
     final email = Email.dirty(state.email.value);
     final password = Password.dirty(state.password.value);
     final isValid = Formz.validate([email, password]);

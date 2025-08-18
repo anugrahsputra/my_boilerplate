@@ -20,7 +20,7 @@ extension NetworkClientParsed on NetworkClient {
 
     final data = response.data;
     if (data is! Map<String, dynamic>) {
-      throw Exception("Invalid response format");
+      throw Exception('Invalid response format');
     }
 
     return useIsolate
@@ -44,7 +44,7 @@ extension NetworkClientParsed on NetworkClient {
     final data = response.data;
 
     if (data is! List) {
-      throw Exception("Expected list but got ${data.runtimeType}");
+      throw Exception('Expected list but got ${data.runtimeType}');
     }
 
     return useIsolate
@@ -69,7 +69,7 @@ extension NetworkClientParsed on NetworkClient {
 
     final responseData = response.data;
     if (responseData is! Map<String, dynamic>) {
-      throw Exception("Invalid response format");
+      throw Exception('Invalid response format');
     }
 
     return useIsolate
