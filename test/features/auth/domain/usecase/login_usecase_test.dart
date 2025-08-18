@@ -18,8 +18,8 @@ void main() {
   group('LoginUsecase', () {
     const testEmail = 'test@example.com';
     const testPassword = 'password123';
-    final testLoginReq = LoginReqDto(email: testEmail, password: testPassword);
-    final testLoginModel = Login(token: 'test_token');
+    const testLoginReq = LoginReqDto(email: testEmail, password: testPassword);
+    const testLoginModel = Login(token: 'test_token');
 
     test(
       'should return Login model when repository call is successful',
@@ -27,13 +27,13 @@ void main() {
         // arrange
         when(
           mockAuthRepository.login(testLoginReq),
-        ).thenAnswer((_) async => Right(testLoginModel));
+        ).thenAnswer((_) async => const Right(testLoginModel));
 
         // act
         final result = await loginUsecase.execute(testLoginReq);
 
         // assert
-        expect(result, Right(testLoginModel));
+        expect(result, const Right(testLoginModel));
         verify(mockAuthRepository.login(testLoginReq));
         verifyNoMoreInteractions(mockAuthRepository);
       },
@@ -41,16 +41,16 @@ void main() {
 
     test('should return ServerFailure when repository call fails', () async {
       // arrange
-      final serverFailure = ServerFailure(message: 'Server error');
+      const serverFailure = ServerFailure(message: 'Server error');
       when(
         mockAuthRepository.login(testLoginReq),
-      ).thenAnswer((_) async => Left(serverFailure));
+      ).thenAnswer((_) async => const Left(serverFailure));
 
       // act
       final result = await loginUsecase.execute(testLoginReq);
 
       // assert
-      expect(result, Left(serverFailure));
+      expect(result, const Left(serverFailure));
       verify(mockAuthRepository.login(testLoginReq));
       verifyNoMoreInteractions(mockAuthRepository);
     });
@@ -59,16 +59,16 @@ void main() {
       'should return NetworkFailure when repository call fails with network error',
       () async {
         // arrange
-        final networkFailure = NetworkFailure(message: 'Network error');
+        const networkFailure = NetworkFailure(message: 'Network error');
         when(
           mockAuthRepository.login(testLoginReq),
-        ).thenAnswer((_) async => Left(networkFailure));
+        ).thenAnswer((_) async => const Left(networkFailure));
 
         // act
         final result = await loginUsecase.execute(testLoginReq);
 
         // assert
-        expect(result, Left(networkFailure));
+        expect(result, const Left(networkFailure));
         verify(mockAuthRepository.login(testLoginReq));
         verifyNoMoreInteractions(mockAuthRepository);
       },
@@ -78,18 +78,18 @@ void main() {
       'should return UnauthorizedFailure when repository call fails with unauthorized error',
       () async {
         // arrange
-        final unauthorizedFailure = UnauthorizedFailure(
+        const unauthorizedFailure = UnauthorizedFailure(
           message: 'Unauthorized',
         );
         when(
           mockAuthRepository.login(testLoginReq),
-        ).thenAnswer((_) async => Left(unauthorizedFailure));
+        ).thenAnswer((_) async => const Left(unauthorizedFailure));
 
         // act
         final result = await loginUsecase.execute(testLoginReq);
 
         // assert
-        expect(result, Left(unauthorizedFailure));
+        expect(result, const Left(unauthorizedFailure));
         verify(mockAuthRepository.login(testLoginReq));
         verifyNoMoreInteractions(mockAuthRepository);
       },
@@ -99,16 +99,16 @@ void main() {
       'should return CacheFailure when repository call fails with cache error',
       () async {
         // arrange
-        final cacheFailure = CacheFailure(message: 'Cache error');
+        const cacheFailure = CacheFailure(message: 'Cache error');
         when(
           mockAuthRepository.login(testLoginReq),
-        ).thenAnswer((_) async => Left(cacheFailure));
+        ).thenAnswer((_) async => const Left(cacheFailure));
 
         // act
         final result = await loginUsecase.execute(testLoginReq);
 
         // assert
-        expect(result, Left(cacheFailure));
+        expect(result, const Left(cacheFailure));
         verify(mockAuthRepository.login(testLoginReq));
         verifyNoMoreInteractions(mockAuthRepository);
       },
@@ -118,16 +118,16 @@ void main() {
       'should return UnknownFailure when repository call fails with unknown error',
       () async {
         // arrange
-        final unknownFailure = UnknownFailure(message: 'Unknown error');
+        const unknownFailure = UnknownFailure(message: 'Unknown error');
         when(
           mockAuthRepository.login(testLoginReq),
-        ).thenAnswer((_) async => Left(unknownFailure));
+        ).thenAnswer((_) async => const Left(unknownFailure));
 
         // act
         final result = await loginUsecase.execute(testLoginReq);
 
         // assert
-        expect(result, Left(unknownFailure));
+        expect(result, const Left(unknownFailure));
         verify(mockAuthRepository.login(testLoginReq));
         verifyNoMoreInteractions(mockAuthRepository);
       },
@@ -137,21 +137,21 @@ void main() {
       // arrange
       const differentEmail = 'different@example.com';
       const differentPassword = 'different123';
-      final differentLoginReq = LoginReqDto(
+      const differentLoginReq = LoginReqDto(
         email: differentEmail,
         password: differentPassword,
       );
-      final differentLoginModel = Login(token: 'different_token');
+      const differentLoginModel = Login(token: 'different_token');
 
       when(
         mockAuthRepository.login(differentLoginReq),
-      ).thenAnswer((_) async => Right(differentLoginModel));
+      ).thenAnswer((_) async => const Right(differentLoginModel));
 
       // act
       final result = await loginUsecase.execute(differentLoginReq);
 
       // assert
-      expect(result, Right(differentLoginModel));
+      expect(result, const Right(differentLoginModel));
       verify(mockAuthRepository.login(differentLoginReq));
       verifyNoMoreInteractions(mockAuthRepository);
     });
@@ -160,21 +160,21 @@ void main() {
       // arrange
       const emptyEmail = '';
       const emptyPassword = '';
-      final emptyLoginReq = LoginReqDto(
+      const emptyLoginReq = LoginReqDto(
         email: emptyEmail,
         password: emptyPassword,
       );
-      final emptyLoginModel = Login(token: 'empty_token');
+      const emptyLoginModel = Login(token: 'empty_token');
 
       when(
         mockAuthRepository.login(emptyLoginReq),
-      ).thenAnswer((_) async => Right(emptyLoginModel));
+      ).thenAnswer((_) async => const Right(emptyLoginModel));
 
       // act
       final result = await loginUsecase.execute(emptyLoginReq);
 
       // assert
-      expect(result, Right(emptyLoginModel));
+      expect(result, const Right(emptyLoginModel));
       verify(mockAuthRepository.login(emptyLoginReq));
       verifyNoMoreInteractions(mockAuthRepository);
     });

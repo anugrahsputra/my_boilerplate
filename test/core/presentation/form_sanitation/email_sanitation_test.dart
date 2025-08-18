@@ -28,7 +28,7 @@ void main() {
       test(
         'should return empty value when dirty constructor is used with empty string',
         () {
-          expect(const Email.dirty('').value, '');
+          expect(const Email.dirty().value, '');
         },
       );
     });
@@ -76,7 +76,7 @@ void main() {
       );
 
       test('should return error when value is empty', () {
-        expect(const Email.dirty('').error, EmailValidationError.invalid);
+        expect(const Email.dirty().error, EmailValidationError.invalid);
       });
 
       test('should return error when value is invalid email format', () {
@@ -154,7 +154,7 @@ void main() {
       });
 
       test('should return same value when value is empty', () {
-        expect(const Email.dirty('').value, '');
+        expect(const Email.dirty().value, '');
       });
     });
 
@@ -168,7 +168,7 @@ void main() {
       });
 
       test('should return false when value is empty', () {
-        expect(const Email.dirty('').isValid, false);
+        expect(const Email.dirty().isValid, false);
       });
     });
 
@@ -182,7 +182,7 @@ void main() {
       });
 
       test('should return true when value is empty', () {
-        expect(const Email.dirty('').isNotValid, true);
+        expect(const Email.dirty().isNotValid, true);
       });
     });
   });

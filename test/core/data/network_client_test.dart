@@ -25,7 +25,7 @@ void main() {
           onReceiveProgress: anyNamed('onReceiveProgress'),
         ),
       ).thenAnswer(
-        (_) async => Response(requestOptions: RequestOptions(path: '')),
+        (_) async => Response(requestOptions: RequestOptions()),
       );
 
       await networkClient.get('test_url');
@@ -45,7 +45,7 @@ void main() {
           onSendProgress: anyNamed('onSendProgress'),
         ),
       ).thenAnswer(
-        (_) async => Response(requestOptions: RequestOptions(path: '')),
+        (_) async => Response(requestOptions: RequestOptions()),
       );
 
       await networkClient.post('test_url', data: {'key': 'value'});
@@ -62,7 +62,7 @@ void main() {
           options: anyNamed('options'),
         ),
       ).thenAnswer(
-        (_) async => Response(requestOptions: RequestOptions(path: '')),
+        (_) async => Response(requestOptions: RequestOptions()),
       );
 
       await networkClient.put('test_url', data: {'key': 'value'});
@@ -79,7 +79,7 @@ void main() {
           cancelToken: anyNamed('cancelToken'),
         ),
       ).thenAnswer(
-        (_) async => Response(requestOptions: RequestOptions(path: '')),
+        (_) async => Response(requestOptions: RequestOptions()),
       );
 
       await networkClient.delete('test_url');
@@ -98,7 +98,7 @@ void main() {
     test('getParsed should return parsed data', () async {
       when(mockNetworkClient.get(any)).thenAnswer(
         (_) async => Response(
-          requestOptions: RequestOptions(path: ''),
+          requestOptions: RequestOptions(),
           data: {'key': 'value'},
         ),
       );
@@ -114,7 +114,7 @@ void main() {
     test('postParsed should return parsed data', () async {
       when(mockNetworkClient.post(any, data: anyNamed('data'))).thenAnswer(
         (_) async => Response(
-          requestOptions: RequestOptions(path: ''),
+          requestOptions: RequestOptions(),
           data: {'key': 'value'},
         ),
       );
@@ -122,7 +122,7 @@ void main() {
       final result = await mockNetworkClient.postParsed(
         'test_url',
         converter: (json) => json['key'],
-        data: {},
+        data: <String, dynamic>{},
       );
 
       expect(result, 'value');

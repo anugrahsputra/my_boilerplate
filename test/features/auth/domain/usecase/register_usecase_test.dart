@@ -18,11 +18,11 @@ void main() {
   group('RegisterUsecase', () {
     const testEmail = 'test@example.com';
     const testPassword = 'password123';
-    final testRegisterReq = RegisterReqDto(
+    const testRegisterReq = RegisterReqDto(
       email: testEmail,
       password: testPassword,
     );
-    final testRegisterModel = Register(id: 1, token: 'test_token');
+    const testRegisterModel = Register(id: 1, token: 'test_token');
 
     test(
       'should return Register model when repository call is successful',
@@ -30,13 +30,13 @@ void main() {
         // arrange
         when(
           mockAuthRepository.register(testRegisterReq),
-        ).thenAnswer((_) async => Right(testRegisterModel));
+        ).thenAnswer((_) async => const Right(testRegisterModel));
 
         // act
         final result = await registerUsecase.execute(testRegisterReq);
 
         // assert
-        expect(result, Right(testRegisterModel));
+        expect(result, const Right(testRegisterModel));
         verify(mockAuthRepository.register(testRegisterReq));
         verifyNoMoreInteractions(mockAuthRepository);
       },
@@ -44,16 +44,16 @@ void main() {
 
     test('should return ServerFailure when repository call fails', () async {
       // arrange
-      final serverFailure = ServerFailure(message: 'Server error');
+      const serverFailure = ServerFailure(message: 'Server error');
       when(
         mockAuthRepository.register(testRegisterReq),
-      ).thenAnswer((_) async => Left(serverFailure));
+      ).thenAnswer((_) async => const Left(serverFailure));
 
       // act
       final result = await registerUsecase.execute(testRegisterReq);
 
       // assert
-      expect(result, Left(serverFailure));
+      expect(result, const Left(serverFailure));
       verify(mockAuthRepository.register(testRegisterReq));
       verifyNoMoreInteractions(mockAuthRepository);
     });
@@ -62,16 +62,16 @@ void main() {
       'should return NetworkFailure when repository call fails with network error',
       () async {
         // arrange
-        final networkFailure = NetworkFailure(message: 'Network error');
+        const networkFailure = NetworkFailure(message: 'Network error');
         when(
           mockAuthRepository.register(testRegisterReq),
-        ).thenAnswer((_) async => Left(networkFailure));
+        ).thenAnswer((_) async => const Left(networkFailure));
 
         // act
         final result = await registerUsecase.execute(testRegisterReq);
 
         // assert
-        expect(result, Left(networkFailure));
+        expect(result, const Left(networkFailure));
         verify(mockAuthRepository.register(testRegisterReq));
         verifyNoMoreInteractions(mockAuthRepository);
       },
@@ -81,18 +81,18 @@ void main() {
       'should return UnauthorizedFailure when repository call fails with unauthorized error',
       () async {
         // arrange
-        final unauthorizedFailure = UnauthorizedFailure(
+        const unauthorizedFailure = UnauthorizedFailure(
           message: 'Unauthorized',
         );
         when(
           mockAuthRepository.register(testRegisterReq),
-        ).thenAnswer((_) async => Left(unauthorizedFailure));
+        ).thenAnswer((_) async => const Left(unauthorizedFailure));
 
         // act
         final result = await registerUsecase.execute(testRegisterReq);
 
         // assert
-        expect(result, Left(unauthorizedFailure));
+        expect(result, const Left(unauthorizedFailure));
         verify(mockAuthRepository.register(testRegisterReq));
         verifyNoMoreInteractions(mockAuthRepository);
       },
@@ -102,16 +102,16 @@ void main() {
       'should return CacheFailure when repository call fails with cache error',
       () async {
         // arrange
-        final cacheFailure = CacheFailure(message: 'Cache error');
+        const cacheFailure = CacheFailure(message: 'Cache error');
         when(
           mockAuthRepository.register(testRegisterReq),
-        ).thenAnswer((_) async => Left(cacheFailure));
+        ).thenAnswer((_) async => const Left(cacheFailure));
 
         // act
         final result = await registerUsecase.execute(testRegisterReq);
 
         // assert
-        expect(result, Left(cacheFailure));
+        expect(result, const Left(cacheFailure));
         verify(mockAuthRepository.register(testRegisterReq));
         verifyNoMoreInteractions(mockAuthRepository);
       },
@@ -121,16 +121,16 @@ void main() {
       'should return UnknownFailure when repository call fails with unknown error',
       () async {
         // arrange
-        final unknownFailure = UnknownFailure(message: 'Unknown error');
+        const unknownFailure = UnknownFailure(message: 'Unknown error');
         when(
           mockAuthRepository.register(testRegisterReq),
-        ).thenAnswer((_) async => Left(unknownFailure));
+        ).thenAnswer((_) async => const Left(unknownFailure));
 
         // act
         final result = await registerUsecase.execute(testRegisterReq);
 
         // assert
-        expect(result, Left(unknownFailure));
+        expect(result, const Left(unknownFailure));
         verify(mockAuthRepository.register(testRegisterReq));
         verifyNoMoreInteractions(mockAuthRepository);
       },
@@ -140,21 +140,21 @@ void main() {
       // arrange
       const differentEmail = 'different@example.com';
       const differentPassword = 'different123';
-      final differentRegisterReq = RegisterReqDto(
+      const differentRegisterReq = RegisterReqDto(
         email: differentEmail,
         password: differentPassword,
       );
-      final differentRegisterModel = Register(id: 2, token: 'different_token');
+      const differentRegisterModel = Register(id: 2, token: 'different_token');
 
       when(
         mockAuthRepository.register(differentRegisterReq),
-      ).thenAnswer((_) async => Right(differentRegisterModel));
+      ).thenAnswer((_) async => const Right(differentRegisterModel));
 
       // act
       final result = await registerUsecase.execute(differentRegisterReq);
 
       // assert
-      expect(result, Right(differentRegisterModel));
+      expect(result, const Right(differentRegisterModel));
       verify(mockAuthRepository.register(differentRegisterReq));
       verifyNoMoreInteractions(mockAuthRepository);
     });
@@ -163,42 +163,42 @@ void main() {
       // arrange
       const emptyEmail = '';
       const emptyPassword = '';
-      final emptyRegisterReq = RegisterReqDto(
+      const emptyRegisterReq = RegisterReqDto(
         email: emptyEmail,
         password: emptyPassword,
       );
-      final emptyRegisterModel = Register(id: 3, token: 'empty_token');
+      const emptyRegisterModel = Register(id: 3, token: 'empty_token');
 
       when(
         mockAuthRepository.register(emptyRegisterReq),
-      ).thenAnswer((_) async => Right(emptyRegisterModel));
+      ).thenAnswer((_) async => const Right(emptyRegisterModel));
 
       // act
       final result = await registerUsecase.execute(emptyRegisterReq);
 
       // assert
-      expect(result, Right(emptyRegisterModel));
+      expect(result, const Right(emptyRegisterModel));
       verify(mockAuthRepository.register(emptyRegisterReq));
       verifyNoMoreInteractions(mockAuthRepository);
     });
 
     test('should handle different user IDs', () async {
       // arrange
-      final registerReqWithId = RegisterReqDto(
+      const registerReqWithId = RegisterReqDto(
         email: testEmail,
         password: testPassword,
       );
-      final registerModelWithId = Register(id: 999, token: 'high_id_token');
+      const registerModelWithId = Register(id: 999, token: 'high_id_token');
 
       when(
         mockAuthRepository.register(registerReqWithId),
-      ).thenAnswer((_) async => Right(registerModelWithId));
+      ).thenAnswer((_) async => const Right(registerModelWithId));
 
       // act
       final result = await registerUsecase.execute(registerReqWithId);
 
       // assert
-      expect(result, Right(registerModelWithId));
+      expect(result, const Right<Failure, Register>(registerModelWithId));
       expect(result.fold((failure) => null, (success) => success.id), 999);
       verify(mockAuthRepository.register(registerReqWithId));
       verifyNoMoreInteractions(mockAuthRepository);

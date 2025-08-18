@@ -24,8 +24,8 @@ void main() {
   group('LoginBloc', () {
     const testEmail = 'test@example.com';
     const testPassword = 'password123';
-    final testLoginReq = LoginReqDto(email: testEmail, password: testPassword);
-    final testLoginModel = Login(token: 'test_token');
+    const testLoginReq = LoginReqDto(email: testEmail, password: testPassword);
+    const testLoginModel = Login(token: 'test_token');
 
     test('initial state should be LoginState with default values', () {
       expect(loginBloc.state, const LoginState());
@@ -34,11 +34,10 @@ void main() {
     blocTest<LoginBloc, LoginState>(
       'emits state with updated email when LoginOnEmailChanged is added',
       build: () => loginBloc,
-      act: (bloc) => bloc.add(LoginEvent.onEmailChanged(testEmail)),
+      act: (bloc) => bloc.add(const LoginEvent.onEmailChanged(testEmail)),
       expect: () => [
-        LoginState(
+        const LoginState(
           email: Email.dirty(testEmail),
-          isValid: false, // password is still pure
         ),
       ],
     );
@@ -46,11 +45,10 @@ void main() {
     blocTest<LoginBloc, LoginState>(
       'emits state with updated password when LoginOnPasswordChanged is added',
       build: () => loginBloc,
-      act: (bloc) => bloc.add(LoginEvent.onPasswordChanged(testPassword)),
+      act: (bloc) => bloc.add(const LoginEvent.onPasswordChanged(testPassword)),
       expect: () => [
-        LoginState(
+        const LoginState(
           password: Password.dirty(testPassword),
-          isValid: false, // email is still pure
         ),
       ],
     );
@@ -59,12 +57,12 @@ void main() {
       'emits state with isValid true when both email and password are valid',
       build: () => loginBloc,
       act: (bloc) {
-        bloc.add(LoginEvent.onEmailChanged(testEmail));
-        bloc.add(LoginEvent.onPasswordChanged(testPassword));
+        bloc.add(const LoginEvent.onEmailChanged(testEmail));
+        bloc.add(const LoginEvent.onPasswordChanged(testPassword));
       },
       expect: () => [
-        LoginState(email: Email.dirty(testEmail), isValid: false),
-        LoginState(
+        const LoginState(email: Email.dirty(testEmail)),
+        const LoginState(
           email: Email.dirty(testEmail),
           password: Password.dirty(testPassword),
           isValid: true,
@@ -77,39 +75,39 @@ void main() {
       build: () {
         when(
           mockLoginUsecase.execute(testLoginReq),
-        ).thenAnswer((_) async => Left(ServerFailure(message: 'Server error')));
+        ).thenAnswer((_) async => const Left(ServerFailure(message: 'Server error')));
         return loginBloc;
       },
       act: (bloc) async {
-        bloc.add(LoginEvent.onEmailChanged(testEmail));
+        bloc.add(const LoginEvent.onEmailChanged(testEmail));
         await bloc.stream.firstWhere((s) => s.email.value == testEmail);
 
-        bloc.add(LoginEvent.onPasswordChanged(testPassword));
+        bloc.add(const LoginEvent.onPasswordChanged(testPassword));
         await bloc.stream.firstWhere((s) => s.password.value == testPassword);
 
-        bloc.add(LoginEvent.onLogin());
+        bloc.add(const LoginEvent.onLogin());
       },
       expect: () => [
-        LoginState(email: Email.dirty(testEmail), isValid: false),
-        LoginState(
+        const LoginState(email: Email.dirty(testEmail)),
+        const LoginState(
           email: Email.dirty(testEmail),
           password: Password.dirty(testPassword),
           isValid: true,
         ),
-        LoginState(
+        const LoginState(
           email: Email.dirty(testEmail),
           password: Password.dirty(testPassword),
           isValid: true,
           hasSubmitted: true,
         ),
-        LoginState(
+        const LoginState(
           email: Email.dirty(testEmail),
           password: Password.dirty(testPassword),
           isValid: true,
           hasSubmitted: true,
           status: FormzSubmissionStatus.inProgress,
         ),
-        LoginState(
+        const LoginState(
           email: Email.dirty(testEmail),
           password: Password.dirty(testPassword),
           isValid: true,
@@ -125,45 +123,44 @@ void main() {
       build: () {
         when(
           mockLoginUsecase.execute(testLoginReq),
-        ).thenAnswer((_) async => Right(testLoginModel));
+        ).thenAnswer((_) async => const Right(testLoginModel));
         return loginBloc;
       },
       act: (bloc) async {
-        bloc.add(LoginEvent.onEmailChanged(testEmail));
+        bloc.add(const LoginEvent.onEmailChanged(testEmail));
 
         await bloc.stream.firstWhere((s) => s.email.value == testEmail);
-        bloc.add(LoginEvent.onPasswordChanged(testPassword));
+        bloc.add(const LoginEvent.onPasswordChanged(testPassword));
 
         await bloc.stream.firstWhere((s) => s.password.value == testPassword);
-        bloc.add(LoginEvent.onLogin());
+        bloc.add(const LoginEvent.onLogin());
       },
       expect: () => [
-        LoginState(email: Email.dirty(testEmail), isValid: false),
-        LoginState(
+        const LoginState(email: Email.dirty(testEmail)),
+        const LoginState(
           email: Email.dirty(testEmail),
           password: Password.dirty(testPassword),
           isValid: true,
         ),
-        LoginState(
+        const LoginState(
           email: Email.dirty(testEmail),
           password: Password.dirty(testPassword),
           isValid: true,
           hasSubmitted: true,
         ),
-        LoginState(
+        const LoginState(
           email: Email.dirty(testEmail),
           password: Password.dirty(testPassword),
           isValid: true,
           hasSubmitted: true,
           status: FormzSubmissionStatus.inProgress,
         ),
-        LoginState(
+        const LoginState(
           email: Email.dirty(testEmail),
           password: Password.dirty(testPassword),
           isValid: true,
           hasSubmitted: true,
           status: FormzSubmissionStatus.success,
-          errorMessage: null,
         ),
       ],
     );
@@ -172,13 +169,12 @@ void main() {
       'does not call login usecase when form is invalid',
       build: () => loginBloc,
       act: (bloc) async {
-        bloc.add(LoginEvent.onLogin());
+        bloc.add(const LoginEvent.onLogin());
       },
       expect: () => [
-        LoginState(
-          email: Email.dirty(''),
-          password: Password.dirty(''),
-          isValid: false,
+        const LoginState(
+          email: Email.dirty(),
+          password: Password.dirty(),
           hasSubmitted: true,
         ),
       ],
@@ -190,13 +186,13 @@ void main() {
     blocTest<LoginBloc, LoginState>(
       'emits state with error cleared when LoginOnError is added',
       build: () => loginBloc,
-      seed: () => LoginState(
+      seed: () => const LoginState(
         status: FormzSubmissionStatus.failure,
         errorMessage: 'Previous error',
       ),
-      act: (bloc) => bloc.add(LoginEvent.onError()),
+      act: (bloc) => bloc.add(const LoginEvent.onError()),
       expect: () => [
-        LoginState(status: FormzSubmissionStatus.failure, errorMessage: null),
+        const LoginState(status: FormzSubmissionStatus.failure),
       ],
     );
 
@@ -204,40 +200,40 @@ void main() {
       'emits state with NetworkFailure when login fails with network error',
       build: () {
         when(mockLoginUsecase.execute(testLoginReq)).thenAnswer(
-          (_) async => Left(NetworkFailure(message: 'Network error')),
+          (_) async => const Left(NetworkFailure(message: 'Network error')),
         );
         return loginBloc;
       },
       act: (bloc) async {
-        bloc.add(LoginEvent.onEmailChanged(testEmail));
+        bloc.add(const LoginEvent.onEmailChanged(testEmail));
 
         await bloc.stream.firstWhere((s) => s.email.value == testEmail);
-        bloc.add(LoginEvent.onPasswordChanged(testPassword));
+        bloc.add(const LoginEvent.onPasswordChanged(testPassword));
 
         await bloc.stream.firstWhere((s) => s.password.value == testPassword);
-        bloc.add(LoginEvent.onLogin());
+        bloc.add(const LoginEvent.onLogin());
       },
       expect: () => [
-        LoginState(email: Email.dirty(testEmail), isValid: false),
-        LoginState(
+        const LoginState(email: Email.dirty(testEmail)),
+        const LoginState(
           email: Email.dirty(testEmail),
           password: Password.dirty(testPassword),
           isValid: true,
         ),
-        LoginState(
+        const LoginState(
           email: Email.dirty(testEmail),
           password: Password.dirty(testPassword),
           isValid: true,
           hasSubmitted: true,
         ),
-        LoginState(
+        const LoginState(
           email: Email.dirty(testEmail),
           password: Password.dirty(testPassword),
           isValid: true,
           hasSubmitted: true,
           status: FormzSubmissionStatus.inProgress,
         ),
-        LoginState(
+        const LoginState(
           email: Email.dirty(testEmail),
           password: Password.dirty(testPassword),
           isValid: true,
@@ -252,40 +248,40 @@ void main() {
       'emits state with UnauthorizedFailure when login fails with unauthorized error',
       build: () {
         when(mockLoginUsecase.execute(testLoginReq)).thenAnswer(
-          (_) async => Left(UnauthorizedFailure(message: 'Unauthorized')),
+          (_) async => const Left(UnauthorizedFailure(message: 'Unauthorized')),
         );
         return loginBloc;
       },
       act: (bloc) async {
-        bloc.add(LoginEvent.onEmailChanged(testEmail));
+        bloc.add(const LoginEvent.onEmailChanged(testEmail));
 
         await bloc.stream.firstWhere((s) => s.email.value == testEmail);
-        bloc.add(LoginEvent.onPasswordChanged(testPassword));
+        bloc.add(const LoginEvent.onPasswordChanged(testPassword));
 
         await bloc.stream.firstWhere((s) => s.password.value == testPassword);
-        bloc.add(LoginEvent.onLogin());
+        bloc.add(const LoginEvent.onLogin());
       },
       expect: () => [
-        LoginState(email: Email.dirty(testEmail), isValid: false),
-        LoginState(
+        const LoginState(email: Email.dirty(testEmail)),
+        const LoginState(
           email: Email.dirty(testEmail),
           password: Password.dirty(testPassword),
           isValid: true,
         ),
-        LoginState(
+        const LoginState(
           email: Email.dirty(testEmail),
           password: Password.dirty(testPassword),
           isValid: true,
           hasSubmitted: true,
         ),
-        LoginState(
+        const LoginState(
           email: Email.dirty(testEmail),
           password: Password.dirty(testPassword),
           isValid: true,
           hasSubmitted: true,
           status: FormzSubmissionStatus.inProgress,
         ),
-        LoginState(
+        const LoginState(
           email: Email.dirty(testEmail),
           password: Password.dirty(testPassword),
           isValid: true,
@@ -299,25 +295,25 @@ void main() {
     blocTest<LoginBloc, LoginState>(
       'handles invalid email format',
       build: () => loginBloc,
-      act: (bloc) => bloc.add(LoginEvent.onEmailChanged('invalid-email')),
+      act: (bloc) => bloc.add(const LoginEvent.onEmailChanged('invalid-email')),
       expect: () => [
-        LoginState(email: Email.dirty('invalid-email'), isValid: false),
+        const LoginState(email: Email.dirty('invalid-email')),
       ],
     );
 
     blocTest<LoginBloc, LoginState>(
       'handles empty password',
       build: () => loginBloc,
-      act: (bloc) => bloc.add(LoginEvent.onPasswordChanged('')),
-      expect: () => [LoginState(password: Password.dirty(''), isValid: false)],
+      act: (bloc) => bloc.add(const LoginEvent.onPasswordChanged('')),
+      expect: () => [const LoginState(password: Password.dirty())],
     );
 
     blocTest<LoginBloc, LoginState>(
       'handles short password',
       build: () => loginBloc,
-      act: (bloc) => bloc.add(LoginEvent.onPasswordChanged('123')),
+      act: (bloc) => bloc.add(const LoginEvent.onPasswordChanged('123')),
       expect: () => [
-        LoginState(password: Password.dirty('123'), isValid: false),
+        const LoginState(password: Password.dirty('123')),
       ],
     );
   });

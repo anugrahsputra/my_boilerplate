@@ -18,9 +18,9 @@ void main() {
 
     test('isBadRequest should return true for status code 400', () {
       final error = DioException(
-        requestOptions: RequestOptions(path: ''),
+        requestOptions: RequestOptions(),
         response: Response(
-          requestOptions: RequestOptions(path: ''),
+          requestOptions: RequestOptions(),
           statusCode: 400,
         ),
       );
@@ -29,9 +29,9 @@ void main() {
 
     test('isUnauthorized should return true for status code 401', () {
       final error = DioException(
-        requestOptions: RequestOptions(path: ''),
+        requestOptions: RequestOptions(),
         response: Response(
-          requestOptions: RequestOptions(path: ''),
+          requestOptions: RequestOptions(),
           statusCode: 401,
         ),
       );
@@ -40,9 +40,9 @@ void main() {
 
     test('isForbidden should return true for status code 403', () {
       final error = DioException(
-        requestOptions: RequestOptions(path: ''),
+        requestOptions: RequestOptions(),
         response: Response(
-          requestOptions: RequestOptions(path: ''),
+          requestOptions: RequestOptions(),
           statusCode: 403,
         ),
       );
@@ -51,9 +51,9 @@ void main() {
 
     test('isNotFound should return true for status code 404', () {
       final error = DioException(
-        requestOptions: RequestOptions(path: ''),
+        requestOptions: RequestOptions(),
         response: Response(
-          requestOptions: RequestOptions(path: ''),
+          requestOptions: RequestOptions(),
           statusCode: 404,
         ),
       );
@@ -62,7 +62,7 @@ void main() {
 
     test('isConnectionError should return true for connection error', () {
       final error = DioException(
-        requestOptions: RequestOptions(path: ''),
+        requestOptions: RequestOptions(),
         type: DioExceptionType.connectionError,
       );
       expect(interceptor.isConnectionError(error), isTrue);
@@ -70,8 +70,7 @@ void main() {
 
     test('isUnknownError should return true for unknown error', () {
       final error = DioException(
-        requestOptions: RequestOptions(path: ''),
-        type: DioExceptionType.unknown,
+        requestOptions: RequestOptions(),
       );
       expect(interceptor.isUnknownError(error), isTrue);
     });

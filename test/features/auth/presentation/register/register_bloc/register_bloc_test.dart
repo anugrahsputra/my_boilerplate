@@ -26,11 +26,11 @@ void main() {
     const testPhoneNumber = '081234567890';
     const testEmail = 'test@example.com';
     const testPassword = 'password123';
-    final testRegisterReq = RegisterReqDto(
+    const testRegisterReq = RegisterReqDto(
       email: testEmail,
       password: testPassword,
     );
-    final testRegisterModel = Register(id: 1, token: 'test_token');
+    const testRegisterModel = Register(id: 1, token: 'test_token');
 
     test('initial state should be RegisterState with default values', () {
       expect(registerBloc.state, const RegisterState());
@@ -39,11 +39,10 @@ void main() {
     blocTest<RegisterBloc, RegisterState>(
       'emits state with updated email when RegisterOnEmailChanged is added',
       build: () => registerBloc,
-      act: (bloc) => bloc.add(RegisterEvent.onEmailChanged(testEmail)),
+      act: (bloc) => bloc.add(const RegisterEvent.onEmailChanged(testEmail)),
       expect: () => [
-        RegisterState(
+        const RegisterState(
           email: Email.dirty(testEmail),
-          isValid: false, // password is still pure
         ),
       ],
     );
@@ -51,11 +50,10 @@ void main() {
     blocTest<RegisterBloc, RegisterState>(
       'emits state with updated password when RegisterOnPasswordChanged is added',
       build: () => registerBloc,
-      act: (bloc) => bloc.add(RegisterEvent.onPasswordChanged(testPassword)),
+      act: (bloc) => bloc.add(const RegisterEvent.onPasswordChanged(testPassword)),
       expect: () => [
-        RegisterState(
+        const RegisterState(
           password: Password.dirty(testPassword),
-          isValid: false, // email is still pure
         ),
       ],
     );
@@ -64,30 +62,27 @@ void main() {
       'emits state with isValid true when all fields are valid',
       build: () => registerBloc,
       act: (bloc) {
-        bloc.add(RegisterEvent.onNameChanged('John Doe'));
-        bloc.add(RegisterEvent.onPhoneChanged('+1234567890'));
-        bloc.add(RegisterEvent.onEmailChanged(testEmail));
-        bloc.add(RegisterEvent.onPasswordChanged(testPassword));
+        bloc.add(const RegisterEvent.onNameChanged('John Doe'));
+        bloc.add(const RegisterEvent.onPhoneChanged('+1234567890'));
+        bloc.add(const RegisterEvent.onEmailChanged(testEmail));
+        bloc.add(const RegisterEvent.onPasswordChanged(testPassword));
       },
       expect: () => [
-        RegisterState(name: Name.dirty('John Doe'), isValid: false),
-        RegisterState(
+        const RegisterState(name: Name.dirty('John Doe')),
+        const RegisterState(
           name: Name.dirty('John Doe'),
           phoneNumber: PhoneNumber.dirty('+1234567890'),
-          isValid: false,
         ),
-        RegisterState(
+        const RegisterState(
           name: Name.dirty('John Doe'),
           phoneNumber: PhoneNumber.dirty('+1234567890'),
           email: Email.dirty(testEmail),
-          isValid: false,
         ),
-        RegisterState(
+        const RegisterState(
           name: Name.dirty('John Doe'),
           phoneNumber: PhoneNumber.dirty('+1234567890'),
           email: Email.dirty(testEmail),
           password: Password.dirty(testPassword),
-          isValid: false,
         ),
       ],
     );
@@ -97,46 +92,44 @@ void main() {
       build: () {
         when(
           mockRegisterUsecase.execute(testRegisterReq),
-        ).thenAnswer((_) async => Left(ServerFailure(message: 'Server error')));
+        ).thenAnswer((_) async => const Left(ServerFailure(message: 'Server error')));
         return registerBloc;
       },
       act: (bloc) async {
-        bloc.add(RegisterEvent.onNameChanged(testName));
+        bloc.add(const RegisterEvent.onNameChanged(testName));
         await bloc.stream.firstWhere((s) => s.name.value == testName);
 
-        bloc.add(RegisterEvent.onPhoneChanged(testPhoneNumber));
+        bloc.add(const RegisterEvent.onPhoneChanged(testPhoneNumber));
         await bloc.stream.firstWhere(
           (s) => s.phoneNumber.value == testPhoneNumber,
         );
 
-        bloc.add(RegisterEvent.onEmailChanged(testEmail));
+        bloc.add(const RegisterEvent.onEmailChanged(testEmail));
         await bloc.stream.firstWhere((s) => s.email.value == testEmail);
 
-        bloc.add(RegisterEvent.onPasswordChanged(testPassword));
+        bloc.add(const RegisterEvent.onPasswordChanged(testPassword));
         await bloc.stream.firstWhere((s) => s.password.value == testPassword);
-        bloc.add(RegisterEvent.onRegister());
+        bloc.add(const RegisterEvent.onRegister());
       },
       expect: () => [
-        RegisterState(name: Name.dirty(testName), isValid: false),
-        RegisterState(
+        const RegisterState(name: Name.dirty(testName)),
+        const RegisterState(
           name: Name.dirty(testName),
           phoneNumber: PhoneNumber.dirty(testPhoneNumber),
-          isValid: false,
         ),
-        RegisterState(
+        const RegisterState(
           name: Name.dirty(testName),
           phoneNumber: PhoneNumber.dirty(testPhoneNumber),
           email: Email.dirty(testEmail),
-          isValid: false,
         ),
-        RegisterState(
+        const RegisterState(
           name: Name.dirty(testName),
           phoneNumber: PhoneNumber.dirty(testPhoneNumber),
           email: Email.dirty(testEmail),
           password: Password.dirty(testPassword),
           isValid: true,
         ),
-        RegisterState(
+        const RegisterState(
           name: Name.dirty(testName),
           phoneNumber: PhoneNumber.dirty(testPhoneNumber),
           email: Email.dirty(testEmail),
@@ -144,7 +137,7 @@ void main() {
           isValid: true,
           hasSubmitted: true,
         ),
-        RegisterState(
+        const RegisterState(
           name: Name.dirty(testName),
           phoneNumber: PhoneNumber.dirty(testPhoneNumber),
           email: Email.dirty(testEmail),
@@ -153,7 +146,7 @@ void main() {
           hasSubmitted: true,
           status: FormzSubmissionStatus.inProgress,
         ),
-        RegisterState(
+        const RegisterState(
           name: Name.dirty(testName),
           phoneNumber: PhoneNumber.dirty(testPhoneNumber),
           email: Email.dirty(testEmail),
@@ -171,37 +164,35 @@ void main() {
       build: () {
         when(
           mockRegisterUsecase.execute(testRegisterReq),
-        ).thenAnswer((_) async => Right(testRegisterModel));
+        ).thenAnswer((_) async => const Right(testRegisterModel));
         return registerBloc;
       },
       act: (bloc) {
-        bloc.add(RegisterEvent.onNameChanged(testName));
-        bloc.add(RegisterEvent.onPhoneChanged(testPhoneNumber));
-        bloc.add(RegisterEvent.onEmailChanged(testEmail));
-        bloc.add(RegisterEvent.onPasswordChanged(testPassword));
-        bloc.add(RegisterEvent.onRegister());
+        bloc.add(const RegisterEvent.onNameChanged(testName));
+        bloc.add(const RegisterEvent.onPhoneChanged(testPhoneNumber));
+        bloc.add(const RegisterEvent.onEmailChanged(testEmail));
+        bloc.add(const RegisterEvent.onPasswordChanged(testPassword));
+        bloc.add(const RegisterEvent.onRegister());
       },
       expect: () => [
-        RegisterState(name: Name.dirty(testName), isValid: false),
-        RegisterState(
+        const RegisterState(name: Name.dirty(testName)),
+        const RegisterState(
           name: Name.dirty(testName),
           phoneNumber: PhoneNumber.dirty(testPhoneNumber),
-          isValid: false,
         ),
-        RegisterState(
+        const RegisterState(
           name: Name.dirty(testName),
           phoneNumber: PhoneNumber.dirty(testPhoneNumber),
           email: Email.dirty(testEmail),
-          isValid: false,
         ),
-        RegisterState(
+        const RegisterState(
           name: Name.dirty(testName),
           phoneNumber: PhoneNumber.dirty(testPhoneNumber),
           email: Email.dirty(testEmail),
           password: Password.dirty(testPassword),
           isValid: true,
         ),
-        RegisterState(
+        const RegisterState(
           name: Name.dirty(testName),
           phoneNumber: PhoneNumber.dirty(testPhoneNumber),
           email: Email.dirty(testEmail),
@@ -209,7 +200,7 @@ void main() {
           isValid: true,
           hasSubmitted: true,
         ),
-        RegisterState(
+        const RegisterState(
           name: Name.dirty(testName),
           phoneNumber: PhoneNumber.dirty(testPhoneNumber),
           email: Email.dirty(testEmail),
@@ -218,7 +209,7 @@ void main() {
           hasSubmitted: true,
           status: FormzSubmissionStatus.inProgress,
         ),
-        RegisterState(
+        const RegisterState(
           name: Name.dirty(testName),
           phoneNumber: PhoneNumber.dirty(testPhoneNumber),
           email: Email.dirty(testEmail),
@@ -226,7 +217,6 @@ void main() {
           isValid: true,
           hasSubmitted: true,
           status: FormzSubmissionStatus.success,
-          errorMessage: null,
         ),
       ],
     );
@@ -234,14 +224,13 @@ void main() {
     blocTest<RegisterBloc, RegisterState>(
       'does not call register usecase when form is invalid',
       build: () => registerBloc,
-      act: (bloc) => bloc.add(RegisterEvent.onRegister()),
+      act: (bloc) => bloc.add(const RegisterEvent.onRegister()),
       expect: () => [
-        RegisterState(
-          name: Name.dirty(''),
-          phoneNumber: PhoneNumber.dirty(''),
-          email: Email.dirty(''),
-          password: Password.dirty(''),
-          isValid: false,
+        const RegisterState(
+          name: Name.dirty(),
+          phoneNumber: PhoneNumber.dirty(),
+          email: Email.dirty(),
+          password: Password.dirty(),
           hasSubmitted: true,
         ),
       ],
@@ -253,15 +242,14 @@ void main() {
     blocTest<RegisterBloc, RegisterState>(
       'emits state with error cleared when RegisterOnError is added',
       build: () => registerBloc,
-      seed: () => RegisterState(
+      seed: () => const RegisterState(
         status: FormzSubmissionStatus.failure,
         errorMessage: 'Previous error',
       ),
-      act: (bloc) => bloc.add(RegisterEvent.onError()),
+      act: (bloc) => bloc.add(const RegisterEvent.onError()),
       expect: () => [
-        RegisterState(
+        const RegisterState(
           status: FormzSubmissionStatus.failure,
-          errorMessage: null,
         ),
       ],
     );
@@ -270,38 +258,36 @@ void main() {
       'emits state with NetworkFailure when register fails with network error',
       build: () {
         when(mockRegisterUsecase.execute(testRegisterReq)).thenAnswer(
-          (_) async => Left(NetworkFailure(message: 'Network error')),
+          (_) async => const Left(NetworkFailure(message: 'Network error')),
         );
         return registerBloc;
       },
       act: (bloc) {
-        bloc.add(RegisterEvent.onNameChanged(testName));
-        bloc.add(RegisterEvent.onPhoneChanged(testPhoneNumber));
-        bloc.add(RegisterEvent.onEmailChanged(testEmail));
-        bloc.add(RegisterEvent.onPasswordChanged(testPassword));
-        bloc.add(RegisterEvent.onRegister());
+        bloc.add(const RegisterEvent.onNameChanged(testName));
+        bloc.add(const RegisterEvent.onPhoneChanged(testPhoneNumber));
+        bloc.add(const RegisterEvent.onEmailChanged(testEmail));
+        bloc.add(const RegisterEvent.onPasswordChanged(testPassword));
+        bloc.add(const RegisterEvent.onRegister());
       },
       expect: () => [
-        RegisterState(name: Name.dirty(testName), isValid: false),
-        RegisterState(
+        const RegisterState(name: Name.dirty(testName)),
+        const RegisterState(
           name: Name.dirty(testName),
           phoneNumber: PhoneNumber.dirty(testPhoneNumber),
-          isValid: false,
         ),
-        RegisterState(
+        const RegisterState(
           name: Name.dirty(testName),
           phoneNumber: PhoneNumber.dirty(testPhoneNumber),
           email: Email.dirty(testEmail),
-          isValid: false,
         ),
-        RegisterState(
+        const RegisterState(
           name: Name.dirty(testName),
           phoneNumber: PhoneNumber.dirty(testPhoneNumber),
           email: Email.dirty(testEmail),
           password: Password.dirty(testPassword),
           isValid: true,
         ),
-        RegisterState(
+        const RegisterState(
           name: Name.dirty(testName),
           phoneNumber: PhoneNumber.dirty(testPhoneNumber),
           email: Email.dirty(testEmail),
@@ -309,7 +295,7 @@ void main() {
           isValid: true,
           hasSubmitted: true,
         ),
-        RegisterState(
+        const RegisterState(
           name: Name.dirty(testName),
           phoneNumber: PhoneNumber.dirty(testPhoneNumber),
           email: Email.dirty(testEmail),
@@ -318,7 +304,7 @@ void main() {
           hasSubmitted: true,
           status: FormzSubmissionStatus.inProgress,
         ),
-        RegisterState(
+        const RegisterState(
           name: Name.dirty(testName),
           phoneNumber: PhoneNumber.dirty(testPhoneNumber),
           email: Email.dirty(testEmail),
@@ -335,38 +321,36 @@ void main() {
       'emits state with UnauthorizedFailure when register fails with unauthorized error',
       build: () {
         when(mockRegisterUsecase.execute(testRegisterReq)).thenAnswer(
-          (_) async => Left(UnauthorizedFailure(message: 'Unauthorized')),
+          (_) async => const Left(UnauthorizedFailure(message: 'Unauthorized')),
         );
         return registerBloc;
       },
       act: (bloc) {
-        bloc.add(RegisterEvent.onNameChanged(testName));
-        bloc.add(RegisterEvent.onPhoneChanged(testPhoneNumber));
-        bloc.add(RegisterEvent.onEmailChanged(testEmail));
-        bloc.add(RegisterEvent.onPasswordChanged(testPassword));
-        bloc.add(RegisterEvent.onRegister());
+        bloc.add(const RegisterEvent.onNameChanged(testName));
+        bloc.add(const RegisterEvent.onPhoneChanged(testPhoneNumber));
+        bloc.add(const RegisterEvent.onEmailChanged(testEmail));
+        bloc.add(const RegisterEvent.onPasswordChanged(testPassword));
+        bloc.add(const RegisterEvent.onRegister());
       },
       expect: () => [
-        RegisterState(name: Name.dirty(testName), isValid: false),
-        RegisterState(
+        const RegisterState(name: Name.dirty(testName)),
+        const RegisterState(
           name: Name.dirty(testName),
           phoneNumber: PhoneNumber.dirty(testPhoneNumber),
-          isValid: false,
         ),
-        RegisterState(
+        const RegisterState(
           name: Name.dirty(testName),
           phoneNumber: PhoneNumber.dirty(testPhoneNumber),
           email: Email.dirty(testEmail),
-          isValid: false,
         ),
-        RegisterState(
+        const RegisterState(
           name: Name.dirty(testName),
           phoneNumber: PhoneNumber.dirty(testPhoneNumber),
           email: Email.dirty(testEmail),
           password: Password.dirty(testPassword),
           isValid: true,
         ),
-        RegisterState(
+        const RegisterState(
           name: Name.dirty(testName),
           phoneNumber: PhoneNumber.dirty(testPhoneNumber),
           email: Email.dirty(testEmail),
@@ -374,7 +358,7 @@ void main() {
           isValid: true,
           hasSubmitted: true,
         ),
-        RegisterState(
+        const RegisterState(
           name: Name.dirty(testName),
           phoneNumber: PhoneNumber.dirty(testPhoneNumber),
           email: Email.dirty(testEmail),
@@ -383,7 +367,7 @@ void main() {
           hasSubmitted: true,
           status: FormzSubmissionStatus.inProgress,
         ),
-        RegisterState(
+        const RegisterState(
           name: Name.dirty(testName),
           phoneNumber: PhoneNumber.dirty(testPhoneNumber),
           email: Email.dirty(testEmail),
@@ -399,67 +383,65 @@ void main() {
     blocTest<RegisterBloc, RegisterState>(
       'handles invalid email format',
       build: () => registerBloc,
-      act: (bloc) => bloc.add(RegisterEvent.onEmailChanged('invalid-email')),
+      act: (bloc) => bloc.add(const RegisterEvent.onEmailChanged('invalid-email')),
       expect: () => [
-        RegisterState(email: Email.dirty('invalid-email'), isValid: false),
+        const RegisterState(email: Email.dirty('invalid-email')),
       ],
     );
 
     blocTest<RegisterBloc, RegisterState>(
       'handles empty password',
       build: () => registerBloc,
-      act: (bloc) => bloc.add(RegisterEvent.onPasswordChanged('')),
+      act: (bloc) => bloc.add(const RegisterEvent.onPasswordChanged('')),
       expect: () => [
-        RegisterState(password: Password.dirty(''), isValid: false),
+        const RegisterState(password: Password.dirty()),
       ],
     );
 
     blocTest<RegisterBloc, RegisterState>(
       'handles short password',
       build: () => registerBloc,
-      act: (bloc) => bloc.add(RegisterEvent.onPasswordChanged('123')),
+      act: (bloc) => bloc.add(const RegisterEvent.onPasswordChanged('123')),
       expect: () => [
-        RegisterState(password: Password.dirty('123'), isValid: false),
+        const RegisterState(password: Password.dirty('123')),
       ],
     );
 
     blocTest<RegisterBloc, RegisterState>(
       'handles different user IDs in successful registration',
       build: () {
-        final registerModelWithId = Register(id: 999, token: 'high_id_token');
+        const registerModelWithId = Register(id: 999, token: 'high_id_token');
         when(
           mockRegisterUsecase.execute(testRegisterReq),
-        ).thenAnswer((_) async => Right(registerModelWithId));
+        ).thenAnswer((_) async => const Right(registerModelWithId));
         return registerBloc;
       },
       act: (bloc) {
-        bloc.add(RegisterEvent.onNameChanged(testName));
-        bloc.add(RegisterEvent.onPhoneChanged(testPhoneNumber));
-        bloc.add(RegisterEvent.onEmailChanged(testEmail));
-        bloc.add(RegisterEvent.onPasswordChanged(testPassword));
-        bloc.add(RegisterEvent.onRegister());
+        bloc.add(const RegisterEvent.onNameChanged(testName));
+        bloc.add(const RegisterEvent.onPhoneChanged(testPhoneNumber));
+        bloc.add(const RegisterEvent.onEmailChanged(testEmail));
+        bloc.add(const RegisterEvent.onPasswordChanged(testPassword));
+        bloc.add(const RegisterEvent.onRegister());
       },
       expect: () => [
-        RegisterState(name: Name.dirty(testName), isValid: false),
-        RegisterState(
+        const RegisterState(name: Name.dirty(testName)),
+        const RegisterState(
           name: Name.dirty(testName),
           phoneNumber: PhoneNumber.dirty(testPhoneNumber),
-          isValid: false,
         ),
-        RegisterState(
+        const RegisterState(
           name: Name.dirty(testName),
           phoneNumber: PhoneNumber.dirty(testPhoneNumber),
           email: Email.dirty(testEmail),
-          isValid: false,
         ),
-        RegisterState(
+        const RegisterState(
           name: Name.dirty(testName),
           phoneNumber: PhoneNumber.dirty(testPhoneNumber),
           email: Email.dirty(testEmail),
           password: Password.dirty(testPassword),
           isValid: true,
         ),
-        RegisterState(
+        const RegisterState(
           name: Name.dirty(testName),
           phoneNumber: PhoneNumber.dirty(testPhoneNumber),
           email: Email.dirty(testEmail),
@@ -467,7 +449,7 @@ void main() {
           isValid: true,
           hasSubmitted: true,
         ),
-        RegisterState(
+        const RegisterState(
           name: Name.dirty(testName),
           phoneNumber: PhoneNumber.dirty(testPhoneNumber),
           email: Email.dirty(testEmail),
@@ -476,7 +458,7 @@ void main() {
           hasSubmitted: true,
           status: FormzSubmissionStatus.inProgress,
         ),
-        RegisterState(
+        const RegisterState(
           name: Name.dirty(testName),
           phoneNumber: PhoneNumber.dirty(testPhoneNumber),
           email: Email.dirty(testEmail),
@@ -484,7 +466,6 @@ void main() {
           isValid: true,
           hasSubmitted: true,
           status: FormzSubmissionStatus.success,
-          errorMessage: null,
         ),
       ],
     );

@@ -16,7 +16,7 @@ void main() {
         final result = await safeCall(successFunction);
 
         // assert
-        expect(result, Right('success'));
+        expect(result, const Right('success'));
       });
 
       test(

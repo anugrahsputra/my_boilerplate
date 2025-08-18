@@ -23,9 +23,9 @@ void main() {
   group('AuthRepositoryImpl', () {
     const testEmail = 'test@example.com';
     const testPassword = 'password123';
-    final testLoginReq = LoginReqDto(email: testEmail, password: testPassword);
-    final testLoginResp = LoginRespDto(token: 'test_token');
-    final testLoginModel = Login(token: 'test_token');
+    const testLoginReq = LoginReqDto(email: testEmail, password: testPassword);
+    const testLoginResp = LoginRespDto(token: 'test_token');
+    const testLoginModel = Login(token: 'test_token');
 
     group('login', () {
       test(
@@ -34,10 +34,10 @@ void main() {
           // arrange
           when(
             mockAuthDataSource.login(testLoginReq),
-          ).thenAnswer((_) async => Right(testLoginResp));
+          ).thenAnswer((_) async => const Right(testLoginResp));
           when(
             mockLocalStorageManager.writeToStorage(
-              "token",
+              'token',
               testLoginResp.token,
             ),
           ).thenAnswer((_) async {});
@@ -46,7 +46,7 @@ void main() {
           final result = await authRepository.login(testLoginReq);
 
           // assert
-          expect(result, Right(testLoginModel));
+          expect(result, const Right(testLoginModel));
           verify(mockAuthDataSource.login(testLoginReq));
           verify(
             mockLocalStorageManager.writeToStorage(any, testLoginResp.token),
@@ -61,14 +61,14 @@ void main() {
         () async {
           // arrange
           when(mockAuthDataSource.login(testLoginReq)).thenAnswer(
-            (_) async => Left(ServerFailure(message: 'Server error')),
+            (_) async => const Left(ServerFailure(message: 'Server error')),
           );
 
           // act
           final result = await authRepository.login(testLoginReq);
 
           // assert
-          expect(result, Left(ServerFailure(message: 'Server error')));
+          expect(result, const Left(ServerFailure(message: 'Server error')));
           verify(mockAuthDataSource.login(testLoginReq));
           verifyNoMoreInteractions(mockAuthDataSource);
           verifyNever(mockLocalStorageManager.writeToStorage(any, any));
@@ -80,14 +80,14 @@ void main() {
         () async {
           // arrange
           when(mockAuthDataSource.login(testLoginReq)).thenAnswer(
-            (_) async => Left(NetworkFailure(message: 'Network error')),
+            (_) async => const Left(NetworkFailure(message: 'Network error')),
           );
 
           // act
           final result = await authRepository.login(testLoginReq);
 
           // assert
-          expect(result, Left(NetworkFailure(message: 'Network error')));
+          expect(result, const Left(NetworkFailure(message: 'Network error')));
           verify(mockAuthDataSource.login(testLoginReq));
           verifyNoMoreInteractions(mockAuthDataSource);
           verifyNever(mockLocalStorageManager.writeToStorage(any, any));
@@ -99,14 +99,14 @@ void main() {
         () async {
           // arrange
           when(mockAuthDataSource.login(testLoginReq)).thenAnswer(
-            (_) async => Left(UnauthorizedFailure(message: 'Unauthorized')),
+            (_) async => const Left(UnauthorizedFailure(message: 'Unauthorized')),
           );
 
           // act
           final result = await authRepository.login(testLoginReq);
 
           // assert
-          expect(result, Left(UnauthorizedFailure(message: 'Unauthorized')));
+          expect(result, const Left(UnauthorizedFailure(message: 'Unauthorized')));
           verify(mockAuthDataSource.login(testLoginReq));
           verifyNoMoreInteractions(mockAuthDataSource);
           verifyNever(mockLocalStorageManager.writeToStorage(any, any));
@@ -116,15 +116,15 @@ void main() {
       group('register', () {
         const testRegisterEmail = 'register@example.com';
         const testRegisterPassword = 'register123';
-        final testRegisterReq = RegisterReqDto(
+        const testRegisterReq = RegisterReqDto(
           email: testRegisterEmail,
           password: testRegisterPassword,
         );
-        final testRegisterResp = RegisterRespDto(
+        const testRegisterResp = RegisterRespDto(
           id: 2,
           token: 'register_token',
         );
-        final testRegisterModel = Register(id: 2, token: 'register_token');
+        const testRegisterModel = Register(id: 2, token: 'register_token');
 
         test(
           'should return Register model when data source call is successful',
@@ -132,7 +132,7 @@ void main() {
             // arrange
             when(
               mockAuthDataSource.register(testRegisterReq),
-            ).thenAnswer((_) async => Right(testRegisterResp));
+            ).thenAnswer((_) async => const Right(testRegisterResp));
             when(
               mockLocalStorageManager.writeToStorage(
                 any,
@@ -144,7 +144,7 @@ void main() {
             final result = await authRepository.register(testRegisterReq);
 
             // assert
-            expect(result, Right(testRegisterModel));
+            expect(result, const Right(testRegisterModel));
             verify(mockAuthDataSource.register(testRegisterReq));
             verifyNever(
               mockLocalStorageManager.writeToStorage(
@@ -162,14 +162,14 @@ void main() {
           () async {
             // arrange
             when(mockAuthDataSource.register(testRegisterReq)).thenAnswer(
-              (_) async => Left(ServerFailure(message: 'Server error')),
+              (_) async => const Left(ServerFailure(message: 'Server error')),
             );
 
             // act
             final result = await authRepository.register(testRegisterReq);
 
             // assert
-            expect(result, Left(ServerFailure(message: 'Server error')));
+            expect(result, const Left(ServerFailure(message: 'Server error')));
             verify(mockAuthDataSource.register(testRegisterReq));
             verifyNoMoreInteractions(mockAuthDataSource);
             verifyNever(mockLocalStorageManager.writeToStorage(any, any));
@@ -181,14 +181,14 @@ void main() {
           () async {
             // arrange
             when(mockAuthDataSource.register(testRegisterReq)).thenAnswer(
-              (_) async => Left(NetworkFailure(message: 'Network error')),
+              (_) async => const Left(NetworkFailure(message: 'Network error')),
             );
 
             // act
             final result = await authRepository.register(testRegisterReq);
 
             // assert
-            expect(result, Left(NetworkFailure(message: 'Network error')));
+            expect(result, const Left(NetworkFailure(message: 'Network error')));
             verify(mockAuthDataSource.register(testRegisterReq));
             verifyNoMoreInteractions(mockAuthDataSource);
             verifyNever(mockLocalStorageManager.writeToStorage(any, any));
