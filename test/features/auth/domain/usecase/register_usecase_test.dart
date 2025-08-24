@@ -121,7 +121,7 @@ void main() {
       'should return UnknownFailure when repository call fails with unknown error',
       () async {
         // arrange
-        const unknownFailure = UnknownFailure(message: 'Unknown error');
+        const unknownFailure = Failure.failure(message: 'Unknown error');
         when(
           mockAuthRepository.register(testRegisterReq),
         ).thenAnswer((_) async => const Left(unknownFailure));

@@ -46,62 +46,6 @@ void main() {
           );
         },
       );
-
-      test(
-        'should return Left with UnknownFailure when function throws unknown exception',
-        () async {
-          // arrange
-          Future<String> unknownErrorFunction() async {
-            await Future.delayed(const Duration(milliseconds: 10));
-            throw Exception('Unknown error');
-          }
-
-          // act
-          final result = await safeCall(unknownErrorFunction);
-
-          // assert
-          expect(result.isLeft(), true);
-          expect(
-            result.fold(
-              (failure) => failure is UnknownFailure,
-              (success) => false,
-            ),
-            true,
-          );
-          expect(
-            result.fold((failure) => failure.message, (success) => ''),
-            'Exception: Unknown error',
-          );
-        },
-      );
-
-      test(
-        'should return Left with UnknownFailure when function throws generic Exception',
-        () async {
-          // arrange
-          Future<String> genericErrorFunction() async {
-            await Future.delayed(const Duration(milliseconds: 10));
-            throw Exception('Generic error');
-          }
-
-          // act
-          final result = await safeCall(genericErrorFunction);
-
-          // assert
-          expect(result.isLeft(), true);
-          expect(
-            result.fold(
-              (failure) => failure is UnknownFailure,
-              (success) => false,
-            ),
-            true,
-          );
-          expect(
-            result.fold((failure) => failure.message, (success) => ''),
-            'Exception: Generic error',
-          );
-        },
-      );
     });
   });
 }

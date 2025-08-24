@@ -4,47 +4,47 @@ import 'package:my_boilerplate/core/domain/failures.dart';
 void main() {
   group('Failures', () {
     test('ServerFailure should be a subclass of Failure', () {
-      const failure = ServerFailure(message: 'error');
+      const failure = Failure.serverFailure(message: 'error');
       expect(failure, isA<Failure>());
     });
 
     test('UnauthorizedFailure should be a subclass of Failure', () {
-      const failure = UnauthorizedFailure(message: 'error');
+      const failure = Failure.unauthorizeFailure(message: 'error');
       expect(failure, isA<Failure>());
     });
 
     test('CacheFailure should be a subclass of Failure', () {
-      const failure = CacheFailure(message: 'error');
+      const failure = Failure.cacheFailure(message: 'error');
       expect(failure, isA<Failure>());
     });
 
     test('NetworkFailure should be a subclass of Failure', () {
-      const failure = NetworkFailure(message: 'error');
+      const failure = Failure.networkFailure(message: 'error');
       expect(failure, isA<Failure>());
     });
 
     test('AuthFailure should be a subclass of Failure', () {
-      const failure = AuthFailure(message: 'error');
+      const failure = Failure.authFailure(message: 'error');
       expect(failure, isA<Failure>());
     });
 
     test('ForbiddenFailure should be a subclass of Failure', () {
-      const failure = ForbiddenFailure(message: 'error');
+      const failure = Failure.forbidden(message: 'error');
       expect(failure, isA<Failure>());
     });
 
     test('RequestFailure should be a subclass of Failure', () {
-      const failure = RequestFailure(message: 'error');
+      const failure = Failure.requestFailure(message: 'error');
       expect(failure, isA<Failure>());
     });
 
     test('DatabaseFailure should be a subclass of Failure', () {
-      const failure = DatabaseFailure(message: 'error');
+      const failure = Failure.databaseFailre(message: 'error');
       expect(failure, isA<Failure>());
     });
 
     test('UnknownFailure should be a subclass of Failure', () {
-      const failure = UnknownFailure(message: 'error');
+      const failure = Failure.failure(message: 'error');
       expect(failure, isA<Failure>());
     });
   });
