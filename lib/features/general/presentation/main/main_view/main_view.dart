@@ -27,11 +27,11 @@ class _MainViewState extends State<MainView> {
       ],
       child: MultiBlocListener(
         listeners: [
-          BlocListener<AppCubit, AppStatus>(
+          BlocListener<AppCubit, AppState>(
             listener: (context, state) {
-              if (state == AppStatus.unauthenticated) {
-                di<AppNavigator>().goToSplash(context);
-              }
+              state.whenOrNull(
+                unauthenticated: () => di<AppNavigator>().goToSplash(context),
+              );
             },
           ),
         ],
@@ -73,8 +73,18 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Home')),
-      body: const Center(child: Text('Home View')),
+      appBar: AppBar(
+        title: const Text('Home'),
+        actions: [
+          TextButton(
+            onPressed: () => context.read<AppCubit>().logout(),
+            child: const Text('Logout'),
+          ),
+        ],
+      ),
+      body: const Center(
+        child: Text('home page'),
+      ),
     );
   }
 }
