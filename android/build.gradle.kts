@@ -1,3 +1,7 @@
+extra["MAJOR_VERSION"] = 1
+extra["MINOR_VERSION"] = 0
+extra["PATCH_VERSION"] = 0
+
 allprojects {
     repositories {
         google()
