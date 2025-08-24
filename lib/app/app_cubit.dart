@@ -1,27 +1,36 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:my_boilerplate/core/core.dart';
+import 'package:my_boilerplate/features/auth/auth.dart';
 
-enum AppStatus { initial, loading, authenticated, unauthenticated }
+part 'app_cubit.freezed.dart';
+part 'app_state.dart';
 
-class AppCubit extends Cubit<AppStatus> {
-
-  AppCubit({required this.localStorageManager}) : super(AppStatus.initial) {
+class AppCubit extends Cubit<AppState> {
+  AppCubit({required this.localStorageManager, required this.logoutUsecase})
+    : super(const AppInitial()) {
     _checkToken();
   }
+
   final LocalStorageManager localStorageManager;
+  final LogoutUsecase logoutUsecase;
 
   Future<void> _checkToken() async {
-    emit(AppStatus.loading);
+    emit(const AppLoading());
     final token = await localStorageManager.readFromStorage('token');
     if (token != null && token.isNotEmpty) {
-      emit(AppStatus.authenticated);
+      emit(const AppAuthenticated());
     } else {
-      emit(AppStatus.unauthenticated);
+      emit(const AppUnauthenticated());
     }
   }
 
   Future<void> logout() async {
-    await localStorageManager.deleteFromStorage('token');
-    emit(AppStatus.unauthenticated);
+    emit(const AppLoading());
+    final result = await logoutUsecase.call();
+    result.fold(
+      (l) => emit(AppError(l.message)),
+      (r) => emit(const AppUnauthenticated()),
+    );
   }
 }

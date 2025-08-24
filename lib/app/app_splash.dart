@@ -18,13 +18,17 @@ class _AppSplashState extends State<AppSplash> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => di<AppCubit>(),
-      child: BlocListener<AppCubit, AppStatus>(
+      child: BlocListener<AppCubit, AppState>(
         listener: (context, state) {
-          if (state == AppStatus.authenticated) {
-            appNavigator.goToMain(context);
-          } else if (state == AppStatus.unauthenticated) {
-            appNavigator.goToLogin(context);
-          }
+          state.whenOrNull(
+            authenticated: () => appNavigator.goToMain(context),
+            unauthenticated: () => appNavigator.goToLogin(context),
+          );
+          // if (state is AppAuthenticated) {
+          //   appNavigator.goToMain(context);
+          // } else if (state is AppUnauthenticated) {
+          //   appNavigator.goToLogin(context);
+          // }
         },
 
         child: const Center(child: CircularProgressIndicator()),

@@ -10,7 +10,7 @@ import 'package:sentry_logging/sentry_logging.dart';
 
 /// Initialize the app
 Future<void> appInitialize() async {
-  AppLogging.initialize(showLog: true);
+  unawaited(AppLogging.initialize(showLog: true));
   await setup();
 
   // Listen for isolate errors too
