@@ -3,4 +3,5 @@ abstract class ApiEndpoints {
 
   static String get login => '$_baseUrl/api/login';
   static String get register => '$_baseUrl/api/register';
+  static String get logout => '$_baseUrl/api/logout';
 }

@@ -203,7 +203,7 @@ class NetworkInterceptor extends Interceptor with InterceptorMixin {
         log.warning('Connection Error: ${err.requestOptions.uri}');
         final response = await requestRetrier.retryRequest(err.requestOptions);
         return handler.resolve(response);
-      } catch (e) {
+      } on NetworkException {
         log.severe('Connection Error: ${err.requestOptions.uri}');
         return handler.reject(
           DioException(

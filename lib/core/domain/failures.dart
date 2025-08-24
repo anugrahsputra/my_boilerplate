@@ -1,48 +1,32 @@
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-abstract class Failure extends Equatable {
+part 'failures.freezed.dart';
 
-  const Failure({required this.message});
-  final String message;@override
-  List<Object?> get props => [message];
-}
+@freezed
+abstract class Failure with _$Failure {
+  const factory Failure.failure({required String message}) = _Failure;
 
-class ServerFailure extends Failure {
-  const ServerFailure({required super.message});
-}
+  const factory Failure.serverFailure({required String message}) =
+      ServerFailure;
 
-class UnauthorizedFailure extends Failure {
-  const UnauthorizedFailure({required super.message});
-}
+  const factory Failure.unauthorizeFailure({required String message}) =
+      UnauthorizedFailure;
 
-class CacheFailure extends Failure {
-  const CacheFailure({required super.message});
-}
+  const factory Failure.cacheFailure({required String message}) = CacheFailure;
 
-class NetworkFailure extends Failure {
-  const NetworkFailure({required super.message});
-}
+  const factory Failure.networkFailure({required String message}) =
+      NetworkFailure;
 
-class AuthFailure extends Failure {
-  const AuthFailure({required super.message});
-}
+  const factory Failure.forbidden({required String message}) = ForbiddenFailure;
 
-class ForbiddenFailure extends Failure {
-  const ForbiddenFailure({required super.message});
-}
+  const factory Failure.requestFailure({required String message}) =
+      RequestFailure;
 
-class RequestFailure extends Failure {
-  const RequestFailure({required super.message});
-}
+  const factory Failure.databaseFailre({required String message}) =
+      DatabaseFailure;
 
-class DatabaseFailure extends Failure {
-  const DatabaseFailure({required super.message});
-}
+  const factory Failure.authFailure({required String message}) = AuthFailure;
 
-class CertificateFailure extends Failure {
-  const CertificateFailure({required super.message});
-}
-
-class UnknownFailure extends Failure {
-  const UnknownFailure({required super.message});
+  const factory Failure.certificateFailure({required String message}) =
+      CertificateFailure;
 }
