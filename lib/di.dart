@@ -104,7 +104,10 @@ Future<void> setup() async {
     )
     /* -----------------> App <-----------------*/
     ..registerFactory<AppCubit>(
-      () => AppCubit(localStorageManager: di<LocalStorageManager>()),
+      () => AppCubit(
+        localStorageManager: di<LocalStorageManager>(),
+        logoutUsecase: di<LogoutUsecase>(),
+      ),
     );
 
   _authLocator();
@@ -124,6 +127,9 @@ void _authLocator() {
     )
     ..registerLazySingleton<LoginUsecase>(
       () => LoginUsecase(repository: di<AuthRepository>()),
+    )
+    ..registerLazySingleton<LogoutUsecase>(
+      () => LogoutUsecase(repository: di<AuthRepository>()),
     )
     ..registerLazySingleton<RegisterUsecase>(
       () => RegisterUsecase(repository: di<AuthRepository>()),
