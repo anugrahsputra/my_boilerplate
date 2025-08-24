@@ -6,4 +6,6 @@ abstract class AuthRepository {
   Future<Either<Failure, Login>> login(LoginReqDto loginReq);
 
   Future<Either<Failure, Register>> register(RegisterReqDto registerReq);
+
+  Future<Either<Failure, Unit>> logout();
 }

@@ -7,10 +7,11 @@ abstract class AuthDataSource {
   Future<Either<Failure, LoginRespDto>> login(LoginReqDto loginReq);
 
   Future<Either<Failure, RegisterRespDto>> register(RegisterReqDto registerReq);
+
+  Future<Either<Failure, Unit>> logout();
 }
 
 class AuthDataSourceImpl implements AuthDataSource {
-
   AuthDataSourceImpl({required this.dioClient});
   final NetworkClient dioClient;
   final Logger log = Logger('Auth Data Source');
@@ -32,6 +33,14 @@ class AuthDataSourceImpl implements AuthDataSource {
       ApiEndpoints.register,
       data: registerReq.toJson(),
       converter: RegisterRespDto.fromJson,
+    );
+  }
+
+  @override
+  Future<Either<Failure, Unit>> logout() async {
+    return dioClient.postParsedSafe(
+      ApiEndpoints.logout,
+      converter: (data) => unit,
     );
   }
 }

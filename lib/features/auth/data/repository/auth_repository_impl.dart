@@ -5,7 +5,6 @@ import 'package:my_boilerplate/features/auth/auth.dart';
 import 'package:my_boilerplate/features/auth/data/datasource/auth_datasource.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
-
   AuthRepositoryImpl({
     required this.dataSource,
     required this.localStorageManager,
@@ -30,5 +29,14 @@ class AuthRepositoryImpl implements AuthRepository {
       Left.new,
       (data) => Right(data.toRegister()),
     );
+  }
+
+  @override
+  Future<Either<Failure, Unit>> logout() async {
+    final result = await dataSource.logout();
+    return result.fold(Left.new, (_) {
+      localStorageManager.deleteFromStorage('token');
+      return const Right(unit);
+    });
   }
 }
