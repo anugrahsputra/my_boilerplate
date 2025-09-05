@@ -5,7 +5,7 @@ import 'package:logging/logging.dart';
 const _fineColor = '\x1B[32m'; // Green
 const _infoColor = '\x1B[33m'; // Yellow
 const _severeColor = '\x1B[31m'; // Red
-const _resetColor = '\x1B[0m'; // Reset
+const _resetColor = '\x1B'; // Reset
 
 abstract class AppLogging {
   static bool isInitialize = false;
