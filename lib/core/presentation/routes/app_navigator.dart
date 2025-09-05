@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
-
+import 'package:my_boilerplate/app/app.dart';
 import 'package:my_boilerplate/core/core.dart';
+import 'package:my_boilerplate/features/auth/auth.dart';
+import 'package:my_boilerplate/features/general/general.dart';
 
 class AppNavigator {
-  final Logger log = Logger('App Navigator');
+  final Logger log = Logger('AppNavigator');
 
   bool canPop(BuildContext context) => Navigator.of(context).canPop();
 
@@ -21,28 +23,66 @@ class AppNavigator {
     }
   }
 
+  /// Go back
   void back<T>(BuildContext context, [T? result]) {
     if (canPop(context)) {
       Navigator.of(context).pop(result);
     }
   }
 
-  void pushNamed(BuildContext context, String routeName, {Object? arguments}) {
+  /// Push route with custom transition
+  void push(
+    BuildContext context,
+    Widget page, {
+    AppTransition transition = AppTransition.slideRight,
+    bool fullscreenDialog = false,
+    Object? arguments,
+  }) {
     if (!canNavigate(context)) return;
 
-    Navigator.of(context).pushNamed(routeName, arguments: arguments);
+    Navigator.of(context).push(
+      AppRoutes.buildPageRoute(
+        page: page,
+        settings: RouteSettings(arguments: arguments),
+        transition: transition,
+        fullscreenDialog: fullscreenDialog,
+      ),
+    );
   }
 
-  void pushReplacementNamed(
+  /// Push and remove all previous routes
+  void pushAndRemoveUntil(
+    BuildContext context,
+    Widget page, {
+    AppTransition transition = AppTransition.slideRight,
+    bool fullscreenDialog = false,
+    Object? arguments,
+  }) {
+    if (!canNavigate(context)) return;
+
+    Navigator.of(context).pushAndRemoveUntil(
+      AppRoutes.buildPageRoute(
+        page: page,
+        settings: RouteSettings(arguments: arguments),
+        transition: transition,
+        fullscreenDialog: fullscreenDialog,
+      ),
+      (route) => false,
+    );
+  }
+
+  /// Push named route
+  void pushNamed(
     BuildContext context,
     String routeName, {
     Object? arguments,
   }) {
     if (!canNavigate(context)) return;
 
-    Navigator.of(context).pushReplacementNamed(routeName, arguments: arguments);
+    Navigator.of(context).pushNamed(routeName, arguments: arguments);
   }
 
+  /// Push named route and clear history
   void pushNamedAndRemoveUntil(
     BuildContext context,
     String routeName, {
@@ -57,27 +97,50 @@ class AppNavigator {
     );
   }
 
-  void goToSplash(BuildContext context) {
-    if (!canNavigate(context)) return;
+  /* === Specific GoTo Methods === */
 
-    pushNamedAndRemoveUntil(context, AppPages.splash);
+  void goToSplash(
+    BuildContext context, {
+    AppTransition transition = AppTransition.fade,
+  }) {
+    pushAndRemoveUntil(
+      context,
+      const AppSplash(),
+      transition: transition,
+    );
   }
 
-  void goToLogin(BuildContext context) {
-    if (!canNavigate(context)) return;
-
-    pushNamedAndRemoveUntil(context, AppPages.login);
+  void goToLogin(
+    BuildContext context, {
+    AppTransition transition = AppTransition.slideRight,
+  }) {
+    pushAndRemoveUntil(
+      context,
+      const LoginView(),
+      transition: transition,
+    );
   }
 
-  void goToRegister(BuildContext context) {
-    if (!canNavigate(context)) return;
-
-    pushNamed(context, AppPages.register);
+  void goToRegister(
+    BuildContext context, {
+    AppTransition transition = AppTransition.slideRight,
+  }) {
+    push(
+      context,
+      const RegisterView(),
+      transition: transition,
+    );
   }
 
-  void goToMain(BuildContext context) {
-    if (!canNavigate(context)) return;
-
-    pushNamedAndRemoveUntil(context, AppPages.main);
+  void goToMain(
+    BuildContext context, {
+    AppTransition transition = AppTransition.slideUp,
+  }) {
+    pushAndRemoveUntil(
+      context,
+      const MainView(),
+      transition: transition,
+      fullscreenDialog: true,
+    );
   }
 }

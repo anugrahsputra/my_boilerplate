@@ -1,10 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:my_boilerplate/app/app.dart';
 import 'package:my_boilerplate/core/core.dart';
 import 'package:my_boilerplate/features/auth/auth.dart';
 import 'package:my_boilerplate/features/general/general.dart';
 
-/// App routes
+/// AppRoutes
 abstract class AppRoutes {
   /// Initial route
   static String get initial => AppPages.splash;
@@ -17,30 +19,85 @@ abstract class AppRoutes {
     AppPages.main: (context) => const MainView(),
   };
 
-  /// Common method for building custom page transitions
-  static PageRouteBuilder<dynamic> _buildPageRoute({
+  /// Reusable PageRouteBuilder with multiple transitions
+  static PageRouteBuilder<dynamic> buildPageRoute({
     required Widget page,
     RouteSettings? settings,
-    Offset begin = const Offset(0, 1), // Slide from bottom by default
-    Curve curve = Curves.easeInOut,
+    AppTransition transition = AppTransition.slideRight,
     bool fullscreenDialog = false,
     Duration duration = const Duration(milliseconds: 300),
   }) {
     return PageRouteBuilder(
       settings: settings,
       fullscreenDialog: fullscreenDialog,
-      pageBuilder: (_, _, _) => page,
       transitionDuration: duration,
-      transitionsBuilder: (_, animation, _, child) {
-        final tween = Tween(
-          begin: begin,
-          end: Offset.zero,
-        ).chain(CurveTween(curve: curve));
+      pageBuilder: (_, __, ___) => page,
+      transitionsBuilder: (_, animation, secondaryAnimation, child) {
+        switch (transition) {
+          case AppTransition.slideRight:
+            return SlideTransition(
+              position: animation.drive(
+                Tween(
+                  begin: const Offset(1, 0),
+                  end: Offset.zero,
+                ).chain(CurveTween(curve: Curves.easeInOut)),
+              ),
+              child: child,
+            );
 
-        return SlideTransition(
-          position: animation.drive(tween),
-          child: child,
-        );
+          case AppTransition.slideLeft:
+            return SlideTransition(
+              position: animation.drive(
+                Tween(
+                  begin: const Offset(-1, 0),
+                  end: Offset.zero,
+                ).chain(CurveTween(curve: Curves.easeInOut)),
+              ),
+              child: child,
+            );
+
+          case AppTransition.slideUp:
+            return SlideTransition(
+              position: animation.drive(
+                Tween(
+                  begin: const Offset(0, 1),
+                  end: Offset.zero,
+                ).chain(CurveTween(curve: Curves.easeInOut)),
+              ),
+              child: child,
+            );
+
+          case AppTransition.slideDown:
+            return SlideTransition(
+              position: animation.drive(
+                Tween(
+                  begin: const Offset(0, -1),
+                  end: Offset.zero,
+                ).chain(CurveTween(curve: Curves.easeInOut)),
+              ),
+              child: child,
+            );
+
+          case AppTransition.fade:
+            return FadeTransition(
+              opacity: animation,
+              child: child,
+            );
+
+          case AppTransition.scale:
+            return ScaleTransition(
+              scale: animation.drive(
+                Tween(
+                  begin: 0.8,
+                  end: 1.0,
+                ).chain(CurveTween(curve: Curves.easeInOut)),
+              ),
+              child: child,
+            );
+
+          case AppTransition.none:
+            return child;
+        }
       },
     );
   }
@@ -49,34 +106,38 @@ abstract class AppRoutes {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case AppPages.splash:
-        return _buildPageRoute(
+        return buildPageRoute(
           page: const AppSplash(),
           settings: settings,
+          transition: AppTransition.fade,
         );
 
       case AppPages.login:
-        return _buildPageRoute(
+        return buildPageRoute(
           page: const LoginView(),
           settings: settings,
-          begin: const Offset(1, 0), // Slide from right
+          transition: AppTransition.slideRight,
         );
 
       case AppPages.register:
-        return _buildPageRoute(
+        return buildPageRoute(
           page: const RegisterView(),
           settings: settings,
-          begin: const Offset(1, 0), // Slide from right
+          transition: AppTransition.slideRight,
         );
 
       case AppPages.main:
-        return _buildPageRoute(
+        return buildPageRoute(
           page: const MainView(),
           settings: settings,
-          fullscreenDialog: true, // Modal-style on iOS
+          fullscreenDialog: Platform.isIOS, // iOS uses modal-style
+          transition: Platform.isIOS
+              ? AppTransition.slideUp
+              : AppTransition.fade,
         );
 
       default:
-        return _buildPageRoute(
+        return buildPageRoute(
           page: const Scaffold(
             body: Center(
               child: Text(
@@ -86,6 +147,7 @@ abstract class AppRoutes {
             ),
           ),
           settings: settings,
+          transition: AppTransition.fade,
         );
     }
   }
