@@ -121,7 +121,11 @@ class NetworkInterceptor extends Interceptor with InterceptorMixin {
     DioException err,
     ErrorInterceptorHandler handler,
   ) async {
-    log.severe('Error: ${err.requestOptions.uri}');
+    log
+      ..severe('Error: ${err.requestOptions.uri}')
+      ..severe('Error: ${err.response!.data}')
+      ..severe('Error: ${err.response!.statusCode}');
+
     if (isBadRequest(err)) {
       return handler.reject(
         DioException(
