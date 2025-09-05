@@ -7,10 +7,10 @@ read -r -p "Enter your app name: " appname
 
 # 2. Change package name automatically
 flutter pub global activate rename
-flutter pub global run rename setBundleId --targets android,ios --bundleId "$package"
+flutter pub global run rename setBundleId --targets android,ios --value  "$package"
 
 # 3. Change app name automatically
-flutter pub global run rename setAppName --targets android,ios --appname "$appname"
+flutter pub global run rename setAppName --targets android,ios --value  "$appname"
 
 # 4. Clean & get dependencies
 flutter clean
