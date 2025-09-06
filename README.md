@@ -93,21 +93,27 @@ lib/
 
 1. **Clone the repository**
    ```bash
-   git clone <your-repo-url>
-   cd my_boilerplate
+   git clone <your-repo-url> <your-project-name>
+   cd <your-project-name>
    ```
 
-2. **Install dependencies**
+2. **Setup project name**
+  ```bash
+   chmod +x setup.sh
+   ./setup.sh
+  ``` 
+
+3. **Install dependencies**
    ```bash
    flutter pub get
    ```
 
-3. **Generate code**
+4. **Generate code**
    ```bash
    flutter packages pub run build_runner build --delete-conflicting-outputs
    ```
 
-4. **Run the app**
+5. **Run the app**
    ```bash
    flutter run
    ```

@@ -17,6 +17,15 @@ class MainView extends StatefulWidget {
 class _MainViewState extends State<MainView> {
   final AppCubit appCubit = di<AppCubit>();
   final MainCubit mainCubit = di<MainCubit>();
+  final AppNavigator appNavigator = di<AppNavigator>();
+
+  void showLoading(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => const Center(child: CircularProgressIndicator()),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +40,16 @@ class _MainViewState extends State<MainView> {
             listener: (context, state) {
               state.whenOrNull(
                 unauthenticated: () => di<AppNavigator>().goToSplash(context),
+                error: (error) {
+                  if (appNavigator.canPop(context)) {
+                    appNavigator.back(context);
+                  }
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text(error)),
+                  );
+                },
+                loading: () => showLoading(context),
               );
             },
           ),
@@ -67,9 +86,14 @@ class _MainViewState extends State<MainView> {
 }
 
 // mock views
-class HomeView extends StatelessWidget {
+class HomeView extends StatefulWidget {
   const HomeView({super.key});
 
+  @override
+  State<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
