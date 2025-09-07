@@ -1,0 +1,49 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "my_boilerplate dev",
+            "request": "launch",
+            "type": "dart",
+            "args": ["--flavor", "dev"]
+        },
+        {
+            "name": "my_boilerplate dev (profile mode) ",
+            "request": "launch",
+            "type": "dart",
+            "args": ["--flavor", "dev"],
+            "flutterMode": "profile"
+        },
+        {
+            "name": "my_boilerplate dev (release mode) ",
+            "request": "launch",
+            "type": "dart",
+            "args": ["--flavor", "dev"],
+            "flutterMode": "release"
+        },
+        {
+            "name": "my_boilerplate prod",
+            "request": "launch",
+            "type": "dart",
+            "args": ["--flavor", "prod"]
+        },
+        {
+            "name": "my_boilerplate prod (profile mode)",
+            "request": "launch",
+            "type": "dart",
+            "args": ["--flavor", "prod"],
+            "flutterMode": "profile"
+        },
+        {
+            "name": "my_boilerplate prod (release mode)",
+            "request": "launch",
+            "type": "dart",
+            "args": ["--flavor", "prod"],
+            "flutterMode": "release"
+        },
+        
+    ]
+}
