@@ -24,11 +24,6 @@ class _AppSplashState extends State<AppSplash> {
             authenticated: () => appNavigator.goToMain(context),
             unauthenticated: () => appNavigator.goToLogin(context),
           );
-          // if (state is AppAuthenticated) {
-          //   appNavigator.goToMain(context);
-          // } else if (state is AppUnauthenticated) {
-          //   appNavigator.goToLogin(context);
-          // }
         },
 
         child: const Center(child: CircularProgressIndicator()),
