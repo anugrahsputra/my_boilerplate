@@ -19,7 +19,7 @@ private fun generateVersionName(): String {
 
 android {
     namespace = "com.example.my_boilerplate"
-    compileSdk = flutter.compileSdkVersion
+    compileSdk = 36
     ndkVersion = "27.0.12077973"
 
     compileOptions {
@@ -37,8 +37,8 @@ android {
         resValue("string", "build_config_package", "com.example.my_boilerplate")
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
-        minSdk = flutter.minSdkVersion
-        targetSdk = flutter.targetSdkVersion
+        minSdk = 24
+        targetSdk = 36
         versionCode = generateVersionCode()
         versionName = generateVersionName()
     }
