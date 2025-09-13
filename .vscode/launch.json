@@ -43,7 +43,7 @@
             "type": "dart",
             "args": ["--flavor", "prod"],
             "flutterMode": "release"
-        },
+        }
         
     ]
 }
