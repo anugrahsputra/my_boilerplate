@@ -12,13 +12,15 @@ class AppIconHeader extends StatelessWidget {
         children: [
           Image.asset(IconPath.appIcon, width: 80.w),
           Text(
-            'Login',
+            context.l10n.loginTitle,
             style: TextStyle(fontSize: 30.sp, fontWeight: FontWeight.bold),
+            textAlign: TextAlign.center,
           ),
 
-          const Text(
-            'Please Login to contiue using the app',
-            style: TextStyle(fontWeight: FontWeight.w500),
+          Text(
+            context.l10n.loginSubtitle,
+            style: const TextStyle(fontWeight: FontWeight.w500),
+            textAlign: TextAlign.center,
           ),
         ],
       ),
@@ -40,13 +42,13 @@ class LoginFields extends StatelessWidget {
           initialValue: state.email.value,
           onChanged: (value) =>
               context.read<LoginBloc>().add(LoginEvent.onEmailChanged(value)),
-          hintText: 'Email',
+          hintText: context.l10n.emailHint,
           keyboardType: TextInputType.emailAddress,
           prefixIcon: const Icon(Icons.email),
           errorText:
               (state.hasSubmitted || !state.email.isPure) &&
                   state.email.isNotValid
-              ? 'Email tidak valid'
+              ? context.l10n.emailInvalidError
               : null,
         ),
         DefaultFormField(
@@ -55,13 +57,13 @@ class LoginFields extends StatelessWidget {
             LoginEvent.onPasswordChanged(value),
           ),
           isPassword: true,
-          hintText: 'Password',
+          hintText: context.l10n.passwordHint,
           keyboardType: TextInputType.visiblePassword,
           prefixIcon: const Icon(Icons.lock),
           errorText:
               (state.hasSubmitted || !state.password.isPure) &&
                   state.password.isNotValid
-              ? 'Password kosong'
+              ? context.l10n.passwordEmptyError
               : null,
         ),
       ],
@@ -92,7 +94,7 @@ class LoginButton extends StatelessWidget {
               ),
             )
           : Text(
-              'Login',
+              context.l10n.loginButton,
               style: TextStyle(
                 fontWeight: FontWeight.w600,
                 color: Theme.of(context).colorScheme.onPrimary,
@@ -116,14 +118,14 @@ class LoginFooter extends StatelessWidget {
       padding: EdgeInsets.all(16.w),
       child: RichText(
         text: TextSpan(
-          text: "Don't have account? ",
+          text: context.l10n.dontHaveAccount,
           style: TextStyle(
             color: Theme.of(context).colorScheme.onSurface,
             fontSize: 16.sp,
           ),
           children: [
             TextSpan(
-              text: 'Register',
+              text: context.l10n.registerButton,
               style: TextStyle(
                 color: Theme.of(context).colorScheme.primary,
                 fontSize: 16.sp,

@@ -39,4 +39,7 @@ class AuthRepositoryImpl implements AuthRepository {
       return const Right(unit);
     });
   }
+
+  @override
+  Future<void> logoutt() => localStorageManager.deleteFromStorage('token');
 }

@@ -7,6 +7,7 @@ import 'package:logging/logging.dart';
 import 'package:my_boilerplate/core/core.dart';
 import 'package:my_boilerplate/di.dart';
 import 'package:my_boilerplate/features/auth/auth.dart';
+import 'package:my_boilerplate/l10n/l10n.dart';
 
 part 'login_view.component.dart';
 
@@ -45,40 +46,36 @@ class _LoginViewState extends State<LoginView> {
             appNavigator.goToMain(context);
           }
         },
-        child: BlocBuilder<LoginBloc, LoginState>(
-          builder: (context, state) {
-            return Scaffold(
-              resizeToAvoidBottomInset: true,
-              body: SafeArea(
-                child: CustomScrollView(
-                  slivers: [
-                    SliverPadding(
-                      padding: EdgeInsets.all(16.w),
-                      sliver: SliverList(
-                        delegate: SliverChildListDelegate([
-                          const AppIconHeader(),
-                          SizedBox(height: 80.h),
-                          const LoginFields(),
-                          const SizedBox(height: 16),
-                          const LoginButton(),
-                        ]),
-                      ),
-                    ),
-                    SliverFillRemaining(
-                      hasScrollBody: false,
-                      fillOverscroll: true,
-                      child: Column(
-                        children: [
-                          const Spacer(),
-                          LoginFooter(navigator: appNavigator),
-                        ],
-                      ),
-                    ),
-                  ],
+        child: Scaffold(
+          resizeToAvoidBottomInset: true,
+          body: SafeArea(
+            child: CustomScrollView(
+              slivers: [
+                SliverPadding(
+                  padding: EdgeInsets.all(16.w),
+                  sliver: SliverList(
+                    delegate: SliverChildListDelegate([
+                      const AppIconHeader(),
+                      SizedBox(height: 80.h),
+                      const LoginFields(),
+                      const SizedBox(height: 16),
+                      const LoginButton(),
+                    ]),
+                  ),
                 ),
-              ),
-            );
-          },
+                SliverFillRemaining(
+                  hasScrollBody: false,
+                  fillOverscroll: true,
+                  child: Column(
+                    children: [
+                      const Spacer(),
+                      LoginFooter(navigator: appNavigator),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );

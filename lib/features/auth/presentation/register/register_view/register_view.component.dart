@@ -5,18 +5,20 @@ class RegisterHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final local = context.l10n;
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Image.asset(IconPath.appIcon, width: 80.w),
         Text(
-          'Register',
+          local.registerTitle,
           style: TextStyle(fontSize: 30.sp, fontWeight: FontWeight.bold),
         ),
 
-        const Text(
-          'Please Sign Up to contiue using the app',
-          style: TextStyle(fontWeight: FontWeight.w500),
+        Text(
+          local.registerSubtitle,
+          style: const TextStyle(fontWeight: FontWeight.w500),
         ),
       ],
     );
@@ -38,41 +40,41 @@ class RegisterFields extends StatelessWidget {
 
           onChanged: (value) =>
               context.read<RegisterBloc>().add(RegisterOnNameChanged(value)),
-          hintText: 'Full Name',
+          hintText: context.l10n.fullNameHint,
           keyboardType: TextInputType.name,
           prefixIcon: const Icon(Icons.person),
           errorText:
               (state.hasSubmitted || !state.name.isPure) &&
                   state.name.isNotValid
               ? (state.name.error == NameValidationError.tooShort
-                    ? 'Nama terlalu pendek'
-                    : 'Nama tidak boleh kosong')
+                    ? context.l10n.nameTooShortError
+                    : context.l10n.nameEmptyError)
               : null,
         ),
         DefaultFormField(
           initialValue: state.phoneNumber.value,
           onChanged: (value) =>
               context.read<RegisterBloc>().add(RegisterOnPhoneChanged(value)),
-          hintText: 'Phone Number',
+          hintText: context.l10n.phoneNumberHint,
           keyboardType: TextInputType.phone,
           prefixIcon: const Icon(Icons.phone),
           errorText:
               (state.hasSubmitted || !state.phoneNumber.isPure) &&
                   state.phoneNumber.isNotValid
-              ? 'Nomor HP tidak valid'
+              ? context.l10n.phoneNumberInvalidError
               : null,
         ),
         DefaultFormField(
           initialValue: state.email.value,
           onChanged: (value) =>
               context.read<RegisterBloc>().add(RegisterOnEmailChanged(value)),
-          hintText: 'Email',
+          hintText: context.l10n.emailHint,
           keyboardType: TextInputType.emailAddress,
           prefixIcon: const Icon(Icons.email),
           errorText:
               (state.hasSubmitted || !state.email.isPure) &&
                   state.email.isNotValid
-              ? 'Email tidak valid'
+              ? context.l10n.emailInvalidError
               : null,
         ),
         DefaultFormField(
@@ -81,13 +83,13 @@ class RegisterFields extends StatelessWidget {
             RegisterOnPasswordChanged(value),
           ),
           isPassword: true,
-          hintText: 'Password',
+          hintText: context.l10n.passwordHint,
           keyboardType: TextInputType.visiblePassword,
           prefixIcon: const Icon(Icons.lock),
           errorText:
               (state.hasSubmitted || !state.password.isPure) &&
                   state.password.isNotValid
-              ? 'Password tidak boleh kosong'
+              ? context.l10n.passwordEmptyError
               : null,
         ),
       ],
@@ -118,7 +120,7 @@ class RegisterButton extends StatelessWidget {
               ),
             )
           : Text(
-              'Register',
+              context.l10n.registerButton,
               style: TextStyle(
                 fontWeight: FontWeight.w600,
                 color: Theme.of(context).colorScheme.onPrimary,
@@ -142,14 +144,14 @@ class RegisterFooter extends StatelessWidget {
       padding: EdgeInsets.all(16.w),
       child: RichText(
         text: TextSpan(
-          text: 'Already have an account? ',
+          text: context.l10n.alreadyHaveAccount,
           style: TextStyle(
             color: Theme.of(context).colorScheme.onSurface,
             fontSize: 16.sp,
           ),
           children: [
             TextSpan(
-              text: 'Login',
+              text: context.l10n.loginButton,
               style: TextStyle(
                 color: Theme.of(context).colorScheme.primary,
                 fontSize: 16.sp,

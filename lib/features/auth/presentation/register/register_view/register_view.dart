@@ -7,6 +7,7 @@ import 'package:my_boilerplate/app/app.dart';
 import 'package:my_boilerplate/core/core.dart';
 import 'package:my_boilerplate/di.dart';
 import 'package:my_boilerplate/features/auth/auth.dart';
+import 'package:my_boilerplate/l10n/l10n.dart';
 
 part 'register_view.component.dart';
 
@@ -43,8 +44,8 @@ class _RegisterViewState extends State<RegisterView> {
             context.read<RegisterBloc>().add(const RegisterOnError());
           } else if (state.status == FormzSubmissionStatus.success) {
             scaffoldMessengerKey.currentState?.showSnackBar(
-              const SnackBar(
-                content: Text('Register Success'),
+              SnackBar(
+                content: Text(context.l10n.registerSuccess),
                 behavior: SnackBarBehavior.floating,
               ),
             );

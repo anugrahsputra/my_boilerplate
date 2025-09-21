@@ -8,4 +8,6 @@ abstract class AuthRepository {
   Future<Either<Failure, Register>> register(RegisterReqDto registerReq);
 
   Future<Either<Failure, Unit>> logout();
+
+  Future<void> logoutt();
 }
