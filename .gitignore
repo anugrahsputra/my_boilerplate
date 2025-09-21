@@ -49,3 +49,4 @@ test/helper/mock.mocks.dart
 
 
 .env
+pubspec.lock
