@@ -12,11 +12,11 @@ abstract class MainTab with _$MainTab {
 
   const MainTab._();
 
-  String get label => when(
-    home: () => 'Home',
-    search: () => 'Search',
-    favorite: () => 'Favorite',
-    profile: () => 'Profile',
+  String label(BuildContext context) => when(
+    home: () => context.l10n.homeTab,
+    search: () => context.l10n.searchTab,
+    favorite: () => context.l10n.favoriteTab,
+    profile: () => context.l10n.profileTab,
   );
 
   IconData get icon => when(

@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:my_boilerplate/features/general/general.dart';
+import 'package:my_boilerplate/l10n/l10n.dart';
 
 part 'main_cubit.freezed.dart';
 

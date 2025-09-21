@@ -4,6 +4,7 @@ import 'package:my_boilerplate/app/app.dart';
 import 'package:my_boilerplate/core/core.dart';
 import 'package:my_boilerplate/di.dart';
 import 'package:my_boilerplate/features/general/general.dart';
+import 'package:my_boilerplate/l10n/l10n.dart';
 
 part 'main_view.component.dart';
 
@@ -72,7 +73,7 @@ class _MainViewState extends State<MainView> {
                     .map(
                       (tab) => BottomNavigationBarItem(
                         icon: Icon(tab.icon),
-                        label: tab.label,
+                        label: tab.label(context),
                       ),
                     )
                     .toList(),
@@ -98,16 +99,16 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Home'),
+        title: Text(context.l10n.homePageTitle),
         actions: [
           TextButton(
             onPressed: () => context.read<AppCubit>().logout(),
-            child: const Text('Logout'),
+            child: Text(context.l10n.logoutButton),
           ),
         ],
       ),
-      body: const Center(
-        child: Text('home page'),
+      body: Center(
+        child: Text(context.l10n.homePageContent),
       ),
     );
   }
@@ -119,8 +120,8 @@ class SearchView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Search')),
-      body: const Center(child: Text('Search View')),
+      appBar: AppBar(title: Text(context.l10n.searchPageTitle)),
+      body: Center(child: Text(context.l10n.searchPageContent)),
     );
   }
 }
@@ -131,8 +132,8 @@ class FavoriteView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Favorite')),
-      body: const Center(child: Text('Favorite View')),
+      appBar: AppBar(title: Text(context.l10n.favoritePageTitle)),
+      body: Center(child: Text(context.l10n.favoritePageContent)),
     );
   }
 }
@@ -143,8 +144,8 @@ class ProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Profile')),
-      body: const Center(child: Text('Profile View')),
+      appBar: AppBar(title: Text(context.l10n.profilePageTitle)),
+      body: Center(child: Text(context.l10n.profilePageContent)),
     );
   }
 }
