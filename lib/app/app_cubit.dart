@@ -27,10 +27,7 @@ class AppCubit extends Cubit<AppState> {
 
   Future<void> logout() async {
     emit(const AppLoading());
-    final result = await logoutUsecase.call();
-    result.fold(
-      (l) => emit(AppError(l.message)),
-      (r) => emit(const AppUnauthenticated()),
-    );
+    await logoutUsecase.call();
+    emit(const AppUnauthenticated());
   }
 }

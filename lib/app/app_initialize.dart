@@ -39,6 +39,6 @@ Future<void> appInitialize() async {
         ..addIntegration(LoggingIntegration());
     },
     // Keep runApp inside the same zone
-    appRunner: () => runApp(SentryWidget(child: const MyApp())),
+    appRunner: () => runApp(SentryWidget(child: const Boilerplate())),
   );
 }
