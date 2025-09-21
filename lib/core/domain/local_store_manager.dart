@@ -9,8 +9,8 @@ abstract class LocalStorageManager {
 }
 
 class LocalStorageManagerImpl extends LocalStorageManager {
-
   LocalStorageManagerImpl({required this.storage});
+
   final FlutterSecureStorage storage;
 
   @override
