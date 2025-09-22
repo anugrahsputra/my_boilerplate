@@ -22,11 +22,6 @@ class _RegisterViewState extends State<RegisterView> {
   final RegisterBloc registerBloc = di<RegisterBloc>();
   final AppNavigator appNavigator = di<AppNavigator>();
 
-  final nameController = TextEditingController();
-  final phoneController = TextEditingController();
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider<RegisterBloc>(
