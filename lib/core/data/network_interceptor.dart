@@ -72,10 +72,19 @@ class NetworkInterceptor extends Interceptor with InterceptorMixin {
     }
   }
 
-  Future<Response<T>> _retryRequest<T>(RequestOptions requestOptions) async {
+  Future<Response<T>> _retryRequest<T>(
+    RequestOptions requestOptions, {
+    String? newToken,
+  }) async {
+    final headers = Map<String, dynamic>.from(requestOptions.headers);
+
+    if (newToken != null) {
+      headers['Authorization'] = 'Bearer $newToken';
+    }
+
     final options = Options(
       method: requestOptions.method,
-      headers: requestOptions.headers,
+      headers: headers,
     );
     return dio.request(
       requestOptions.path,
@@ -138,7 +147,13 @@ class NetworkInterceptor extends Interceptor with InterceptorMixin {
     } else if (isUnauthorized(err)) {
       if (_isRefreshing) {
         _retryQueue.add(() async {
-          final retryResponse = await dio.fetch(err.requestOptions);
+          final newToken = await localStoreManager.readFromStorage(
+            'access_token',
+          );
+          final retryResponse = await _retryRequest(
+            err.requestOptions,
+            newToken: newToken,
+          );
           handler.resolve(retryResponse);
         });
         return;
@@ -148,31 +163,33 @@ class NetworkInterceptor extends Interceptor with InterceptorMixin {
 
       try {
         final newToken = await _refreshToken();
-        _isRefreshing = false;
 
         if (newToken != null) {
-          final newToken = await _refreshToken();
+          final queueResults = <Future<void>>[];
+          for (final retry in _retryQueue) {
+            queueResults.add(retry() as Future<void>);
+          }
+
+          await Future.wait(queueResults);
+          _retryQueue.clear();
+
+          final cloneReq = await _retryRequest(
+            err.requestOptions,
+            newToken: newToken,
+          );
+          _isRefreshing = false;
+          return handler.resolve(cloneReq);
+        } else {
+          await localStoreManager.deleteFromStorage('access_token');
+          await localStoreManager.deleteFromStorage('refresh_token');
           _isRefreshing = false;
 
-          if (newToken != null) {
-            for (final retry in _retryQueue) {
-              await retry();
-            }
-            _retryQueue.clear();
-
-            // Retry original request
-            final cloneReq = await _retryRequest(err.requestOptions);
-            return handler.resolve(cloneReq);
-          } else {
-            await localStoreManager.deleteFromStorage('access_token');
-            await localStoreManager.deleteFromStorage('refresh_token');
-            return handler.reject(
-              DioException(
-                requestOptions: err.requestOptions,
-                error: UnauthorizedException(message: 'Session expired'),
-              ),
-            );
-          }
+          return handler.reject(
+            DioException(
+              requestOptions: err.requestOptions,
+              error: UnauthorizedException(message: 'Session expired'),
+            ),
+          );
         }
       } catch (e) {
         _isRefreshing = false;
@@ -183,7 +200,7 @@ class NetworkInterceptor extends Interceptor with InterceptorMixin {
           DioException(
             requestOptions: err.requestOptions,
             error: UnauthorizedException(
-              message: err.response!.data['error'] as String,
+              message: 'Authentication failed: ${e.toString()}',
             ),
           ),
         );
