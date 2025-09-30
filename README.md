@@ -69,10 +69,14 @@ lib/
    ```
 
 2. **Setup project name**
+
+## On Mac/Linux
   ```bash
    chmod +x setup.sh
    ./setup.sh
   ``` 
+## On Windows
+   run setup.bat on cmd
 
 3. **Install dependencies**
    ```bash
