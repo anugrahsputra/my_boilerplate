@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:my_boilerplate/app/app.dart';
@@ -41,12 +43,19 @@ class AppNavigator {
     if (!canNavigate(context)) return;
 
     Navigator.of(context).push(
-      AppRoutes.buildPageRoute(
-        page: page,
-        settings: RouteSettings(arguments: arguments),
-        transition: transition,
-        fullscreenDialog: fullscreenDialog,
-      ),
+      Platform.isAndroid
+          ? AppRoutes.buildMaterialPageRoute(
+              page: page,
+              settings: RouteSettings(arguments: arguments),
+              transition: transition,
+              fullscreenDialog: fullscreenDialog,
+            )
+          : AppRoutes.buildCupertinoPageRoute(
+              page: page,
+              settings: RouteSettings(arguments: arguments),
+              transition: transition,
+              fullscreenDialog: fullscreenDialog,
+            ),
     );
   }
 
@@ -61,12 +70,19 @@ class AppNavigator {
     if (!canNavigate(context)) return;
 
     Navigator.of(context).pushAndRemoveUntil(
-      AppRoutes.buildPageRoute(
-        page: page,
-        settings: RouteSettings(arguments: arguments),
-        transition: transition,
-        fullscreenDialog: fullscreenDialog,
-      ),
+      Platform.isAndroid
+          ? AppRoutes.buildMaterialPageRoute(
+              page: page,
+              settings: RouteSettings(arguments: arguments),
+              transition: transition,
+              fullscreenDialog: fullscreenDialog,
+            )
+          : AppRoutes.buildCupertinoPageRoute(
+              page: page,
+              settings: RouteSettings(arguments: arguments),
+              transition: transition,
+              fullscreenDialog: fullscreenDialog,
+            ),
       (route) => false,
     );
   }

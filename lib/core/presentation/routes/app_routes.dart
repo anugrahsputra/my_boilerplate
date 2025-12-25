@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_boilerplate/app/app.dart';
 import 'package:my_boilerplate/core/core.dart';
@@ -19,86 +20,32 @@ abstract class AppRoutes {
     AppPages.main: (context) => const MainView(),
   };
 
-  /// Reusable PageRouteBuilder with multiple transitions
-  static PageRouteBuilder<dynamic> buildPageRoute({
+  static MaterialPageRoute<T> buildMaterialPageRoute<T>({
     required Widget page,
     RouteSettings? settings,
     AppTransition transition = AppTransition.slideRight,
     bool fullscreenDialog = false,
     Duration duration = const Duration(milliseconds: 300),
   }) {
-    return PageRouteBuilder(
+    return MaterialPageRoute<T>(
+      builder: (_) => page,
       settings: settings,
       fullscreenDialog: fullscreenDialog,
-      transitionDuration: duration,
-      pageBuilder: (_, __, ___) => page,
-      transitionsBuilder: (_, animation, secondaryAnimation, child) {
-        switch (transition) {
-          case AppTransition.slideRight:
-            return SlideTransition(
-              position: animation.drive(
-                Tween(
-                  begin: const Offset(1, 0),
-                  end: Offset.zero,
-                ).chain(CurveTween(curve: Curves.easeInOut)),
-              ),
-              child: child,
-            );
+    );
+  }
 
-          case AppTransition.slideLeft:
-            return SlideTransition(
-              position: animation.drive(
-                Tween(
-                  begin: const Offset(-1, 0),
-                  end: Offset.zero,
-                ).chain(CurveTween(curve: Curves.easeInOut)),
-              ),
-              child: child,
-            );
-
-          case AppTransition.slideUp:
-            return SlideTransition(
-              position: animation.drive(
-                Tween(
-                  begin: const Offset(0, 1),
-                  end: Offset.zero,
-                ).chain(CurveTween(curve: Curves.easeInOut)),
-              ),
-              child: child,
-            );
-
-          case AppTransition.slideDown:
-            return SlideTransition(
-              position: animation.drive(
-                Tween(
-                  begin: const Offset(0, -1),
-                  end: Offset.zero,
-                ).chain(CurveTween(curve: Curves.easeInOut)),
-              ),
-              child: child,
-            );
-
-          case AppTransition.fade:
-            return FadeTransition(
-              opacity: animation,
-              child: child,
-            );
-
-          case AppTransition.scale:
-            return ScaleTransition(
-              scale: animation.drive(
-                Tween(
-                  begin: 0.8,
-                  end: 1.0,
-                ).chain(CurveTween(curve: Curves.easeInOut)),
-              ),
-              child: child,
-            );
-
-          case AppTransition.none:
-            return child;
-        }
-      },
+  /// Reusable PageRouteBuilder with multiple transitions
+  static CupertinoPageRoute<T> buildCupertinoPageRoute<T>({
+    required Widget page,
+    RouteSettings? settings,
+    AppTransition transition = AppTransition.slideRight,
+    bool fullscreenDialog = false,
+    Duration duration = const Duration(milliseconds: 300),
+  }) {
+    return CupertinoPageRoute<T>(
+      builder: (_) => page,
+      settings: settings,
+      fullscreenDialog: fullscreenDialog,
     );
   }
 
@@ -106,49 +53,88 @@ abstract class AppRoutes {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case AppPages.splash:
-        return buildPageRoute(
-          page: const AppSplash(),
-          settings: settings,
-          transition: AppTransition.fade,
-        );
+        return Platform.isAndroid
+            ? buildMaterialPageRoute(
+                page: const AppSplash(),
+                settings: settings,
+                transition: AppTransition.fade,
+              )
+            : buildCupertinoPageRoute(
+                page: const AppSplash(),
+                settings: settings,
+                transition: AppTransition.fade,
+              );
 
       case AppPages.login:
-        return buildPageRoute(
-          page: const LoginView(),
-          settings: settings,
-          transition: AppTransition.slideRight,
-        );
-
+        return Platform.isAndroid
+            ? buildMaterialPageRoute(
+                page: const LoginView(),
+                settings: settings,
+                transition: AppTransition.slideRight,
+              )
+            : buildCupertinoPageRoute(
+                page: const LoginView(),
+                settings: settings,
+                transition: AppTransition.slideRight,
+              );
       case AppPages.register:
-        return buildPageRoute(
-          page: const RegisterView(),
-          settings: settings,
-          transition: AppTransition.slideRight,
-        );
+        return Platform.isAndroid
+            ? buildMaterialPageRoute(
+                page: const RegisterView(),
+                settings: settings,
+                transition: AppTransition.slideRight,
+              )
+            : buildCupertinoPageRoute(
+                page: const RegisterView(),
+                settings: settings,
+                transition: AppTransition.slideRight,
+              );
 
       case AppPages.main:
-        return buildPageRoute(
-          page: const MainView(),
-          settings: settings,
-          fullscreenDialog: Platform.isIOS, // iOS uses modal-style
-          transition: Platform.isIOS
-              ? AppTransition.slideUp
-              : AppTransition.fade,
-        );
+        return Platform.isAndroid
+            ? buildMaterialPageRoute(
+                page: const MainView(),
+                settings: settings,
+                fullscreenDialog: Platform.isIOS, // iOS uses modal-style
+                transition: Platform.isIOS
+                    ? AppTransition.slideUp
+                    : AppTransition.fade,
+              )
+            : buildCupertinoPageRoute(
+                page: const MainView(),
+                settings: settings,
+                fullscreenDialog: Platform.isIOS, // iOS uses modal-style
+                transition: Platform.isIOS
+                    ? AppTransition.slideUp
+                    : AppTransition.fade,
+              );
 
       default:
-        return buildPageRoute(
-          page: const Scaffold(
-            body: Center(
-              child: Text(
-                '404 - Page Not Found',
-                style: TextStyle(fontSize: 18),
-              ),
-            ),
-          ),
-          settings: settings,
-          transition: AppTransition.fade,
-        );
+        return Platform.isAndroid
+            ? buildMaterialPageRoute(
+                page: const Scaffold(
+                  body: Center(
+                    child: Text(
+                      '404 - Page Not Found',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                  ),
+                ),
+                settings: settings,
+                transition: AppTransition.fade,
+              )
+            : buildCupertinoPageRoute(
+                page: const Scaffold(
+                  body: Center(
+                    child: Text(
+                      '404 - Page Not Found',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                  ),
+                ),
+                settings: settings,
+                transition: AppTransition.fade,
+              );
     }
   }
 }
