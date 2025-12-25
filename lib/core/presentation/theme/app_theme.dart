@@ -9,6 +9,12 @@ abstract class AppTheme with WidgetsBindingObserver {
       scheme: FlexScheme.blackWhite,
       surfaceMode: FlexSurfaceMode.highBackgroundLowScaffold,
       blendLevel: 8,
+      pageTransitionsTheme: const PageTransitionsTheme(
+        builders: <TargetPlatform, PageTransitionsBuilder>{
+          TargetPlatform.android: PredictiveBackPageTransitionsBuilder(),
+          TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+        },
+      ),
       subThemesData: const FlexSubThemesData(
         blendOnLevel: 8,
         outlinedButtonOutlineSchemeColor: SchemeColor.primary,
@@ -57,6 +63,12 @@ abstract class AppTheme with WidgetsBindingObserver {
       scheme: FlexScheme.blackWhite,
       surfaceMode: FlexSurfaceMode.highBackgroundLowScaffold,
       blendLevel: 2,
+      pageTransitionsTheme: const PageTransitionsTheme(
+        builders: <TargetPlatform, PageTransitionsBuilder>{
+          TargetPlatform.android: PredictiveBackPageTransitionsBuilder(),
+          TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+        },
+      ),
       subThemesData: const FlexSubThemesData(
         blendOnLevel: 10,
         outlinedButtonOutlineSchemeColor: SchemeColor.primary,
