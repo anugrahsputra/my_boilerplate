@@ -5,6 +5,7 @@ class DefaultFormField extends StatefulWidget {
   const DefaultFormField({
     super.key,
     this.controller,
+    this.inputAction = TextInputAction.done,
     this.initialValue,
     this.errorText,
     this.hintText,
@@ -15,9 +16,11 @@ class DefaultFormField extends StatefulWidget {
     this.validator,
     this.onChanged,
     this.maxLines = 1,
+    this.onSubmit,
   });
 
   final TextEditingController? controller;
+  final TextInputAction inputAction;
   final String? initialValue;
   final String? errorText;
   final String? hintText;
@@ -28,6 +31,7 @@ class DefaultFormField extends StatefulWidget {
   final String? Function(String?)? validator;
   final void Function(String)? onChanged;
   final int maxLines;
+  final void Function(String value)? onSubmit;
 
   @override
   State<DefaultFormField> createState() => _DefaultFormFieldState();
@@ -49,10 +53,11 @@ class _DefaultFormFieldState extends State<DefaultFormField> {
       controller: widget.controller,
       maxLines: widget.isPassword ? 1 : widget.maxLines,
       keyboardType: widget.keyboardType,
+      textInputAction: widget.inputAction,
       obscureText: widget.isPassword ? _isObscure : false,
       validator: widget.validator,
       onChanged: widget.onChanged,
-
+      onFieldSubmitted: (value) => widget.onSubmit?.call(value),
       decoration: InputDecoration(
         hintText: widget.hintText,
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.r)),
