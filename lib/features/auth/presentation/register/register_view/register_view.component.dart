@@ -41,7 +41,7 @@ class RegisterFields extends StatelessWidget {
           onChanged: (value) =>
               context.read<RegisterBloc>().add(RegisterOnNameChanged(value)),
           hintText: context.l10n.fullNameHint,
-          keyboardType: TextInputType.name,
+          keyboardType: .name,
           prefixIcon: const Icon(Icons.person),
           errorText:
               (state.hasSubmitted || !state.name.isPure) &&
@@ -56,7 +56,7 @@ class RegisterFields extends StatelessWidget {
           onChanged: (value) =>
               context.read<RegisterBloc>().add(RegisterOnPhoneChanged(value)),
           hintText: context.l10n.phoneNumberHint,
-          keyboardType: TextInputType.phone,
+          keyboardType: .phone,
           prefixIcon: const Icon(Icons.phone),
           errorText:
               (state.hasSubmitted || !state.phoneNumber.isPure) &&
@@ -69,7 +69,7 @@ class RegisterFields extends StatelessWidget {
           onChanged: (value) =>
               context.read<RegisterBloc>().add(RegisterOnEmailChanged(value)),
           hintText: context.l10n.emailHint,
-          keyboardType: TextInputType.emailAddress,
+          keyboardType: .emailAddress,
           prefixIcon: const Icon(Icons.email),
           errorText:
               (state.hasSubmitted || !state.email.isPure) &&
@@ -84,7 +84,7 @@ class RegisterFields extends StatelessWidget {
           ),
           isPassword: true,
           hintText: context.l10n.passwordHint,
-          keyboardType: TextInputType.visiblePassword,
+          keyboardType: .visiblePassword,
           prefixIcon: const Icon(Icons.lock),
           errorText:
               (state.hasSubmitted || !state.password.isPure) &&
@@ -110,7 +110,7 @@ class RegisterButton extends StatelessWidget {
       onTap: isButtonEnabled
           ? () => context.read<RegisterBloc>().add(const OnRegister())
           : null,
-      child: state.status == FormzSubmissionStatus.inProgress
+      child: state.status == .inProgress
           ? SizedBox(
               width: 20,
               height: 20,
@@ -122,7 +122,7 @@ class RegisterButton extends StatelessWidget {
           : Text(
               context.l10n.registerButton,
               style: TextStyle(
-                fontWeight: FontWeight.w600,
+                fontWeight: .w600,
                 color: Theme.of(context).colorScheme.onPrimary,
               ),
             ),
@@ -138,7 +138,7 @@ class RegisterFooter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      alignment: Alignment.center,
+      alignment: .center,
       height: 80.h,
       width: 1.sw,
       padding: EdgeInsets.all(16.w),
@@ -155,7 +155,7 @@ class RegisterFooter extends StatelessWidget {
               style: TextStyle(
                 color: Theme.of(context).colorScheme.primary,
                 fontSize: 16.sp,
-                fontWeight: FontWeight.bold,
+                fontWeight: .bold,
               ),
               recognizer: TapGestureRecognizer()
                 ..onTap = () => navigator.back(context),

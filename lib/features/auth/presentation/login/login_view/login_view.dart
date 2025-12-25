@@ -50,6 +50,7 @@ class _LoginViewState extends State<LoginView> {
           resizeToAvoidBottomInset: true,
           body: SafeArea(
             child: CustomScrollView(
+              keyboardDismissBehavior: .onDrag,
               slivers: [
                 SliverPadding(
                   padding: EdgeInsets.all(16.w),

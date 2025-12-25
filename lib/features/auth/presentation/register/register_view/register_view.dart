@@ -32,7 +32,7 @@ class _RegisterViewState extends State<RegisterView> {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(state.errorMessage!),
-                behavior: SnackBarBehavior.floating,
+                behavior: .floating,
               ),
             );
 
@@ -41,7 +41,7 @@ class _RegisterViewState extends State<RegisterView> {
             scaffoldMessengerKey.currentState?.showSnackBar(
               SnackBar(
                 content: Text(context.l10n.registerSuccess),
-                behavior: SnackBarBehavior.floating,
+                behavior: .floating,
               ),
             );
             appNavigator.back(context);
@@ -49,6 +49,10 @@ class _RegisterViewState extends State<RegisterView> {
         },
         child: Scaffold(
           resizeToAvoidBottomInset: true,
+          appBar: AppBar(
+            centerTitle: false,
+            backgroundColor: Theme.of(context).colorScheme.onPrimary,
+          ),
           body: SafeArea(
             child: CustomScrollView(
               slivers: [

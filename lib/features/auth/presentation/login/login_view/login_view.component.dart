@@ -14,13 +14,13 @@ class AppIconHeader extends StatelessWidget {
           Text(
             context.l10n.loginTitle,
             style: TextStyle(fontSize: 30.sp, fontWeight: FontWeight.bold),
-            textAlign: TextAlign.center,
+            textAlign: .center,
           ),
 
           Text(
             context.l10n.loginSubtitle,
             style: const TextStyle(fontWeight: FontWeight.w500),
-            textAlign: TextAlign.center,
+            textAlign: .center,
           ),
         ],
       ),
@@ -43,8 +43,9 @@ class LoginFields extends StatelessWidget {
           onChanged: (value) =>
               context.read<LoginBloc>().add(LoginEvent.onEmailChanged(value)),
           hintText: context.l10n.emailHint,
-          keyboardType: TextInputType.emailAddress,
+          keyboardType: .emailAddress,
           prefixIcon: const Icon(Icons.email),
+          inputAction: .next,
           errorText:
               (state.hasSubmitted || !state.email.isPure) &&
                   state.email.isNotValid
@@ -58,8 +59,10 @@ class LoginFields extends StatelessWidget {
           ),
           isPassword: true,
           hintText: context.l10n.passwordHint,
-          keyboardType: TextInputType.visiblePassword,
+          keyboardType: .visiblePassword,
           prefixIcon: const Icon(Icons.lock),
+          onSubmit: (value) =>
+              context.read<LoginBloc>().add(const LoginEvent.onLogin()),
           errorText:
               (state.hasSubmitted || !state.password.isPure) &&
                   state.password.isNotValid
@@ -77,14 +80,13 @@ class LoginButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = context.watch<LoginBloc>().state;
-    final isButtonEnabled =
-        state.isValid && state.status != FormzSubmissionStatus.inProgress;
+    final isButtonEnabled = state.isValid && state.status != .inProgress;
     return DefaultButton(
       isEnabled: isButtonEnabled,
       onTap: isButtonEnabled
           ? () => context.read<LoginBloc>().add(const LoginEvent.onLogin())
           : null,
-      child: state.status == FormzSubmissionStatus.inProgress
+      child: state.status == .inProgress
           ? SizedBox(
               width: 20.w,
               height: 20.h,
@@ -96,7 +98,7 @@ class LoginButton extends StatelessWidget {
           : Text(
               context.l10n.loginButton,
               style: TextStyle(
-                fontWeight: FontWeight.w600,
+                fontWeight: .w600,
                 color: Theme.of(context).colorScheme.onPrimary,
               ),
             ),
@@ -112,7 +114,7 @@ class LoginFooter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      alignment: Alignment.center,
+      alignment: .center,
       height: 80.h,
       width: 1.sw,
       padding: EdgeInsets.all(16.w),
@@ -129,7 +131,7 @@ class LoginFooter extends StatelessWidget {
               style: TextStyle(
                 color: Theme.of(context).colorScheme.primary,
                 fontSize: 16.sp,
-                fontWeight: FontWeight.bold,
+                fontWeight: .bold,
               ),
               recognizer: TapGestureRecognizer()
                 ..onTap = () => navigator.goToRegister(context),
