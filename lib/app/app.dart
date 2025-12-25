@@ -27,6 +27,7 @@ class Boilerplate extends StatelessWidget {
           darkTheme: AppTheme.dark,
           initialRoute: AppRoutes.initial,
           onGenerateRoute: AppRoutes.onGenerateRoute,
+
           localizationsDelegates: const [
             AppLocalizations.delegate,
             GlobalMaterialLocalizations.delegate,
