@@ -7,7 +7,6 @@ import 'package:encrypt/encrypt.dart' as encrypt;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http_cache_hive_store/http_cache_hive_store.dart';
-import 'package:http_certificate_pinning/http_certificate_pinning.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:my_boilerplate/app/app_cubit.dart';
 import 'package:my_boilerplate/core/core.dart';
@@ -57,9 +56,9 @@ Future<void> setup() async {
             ..addSentry(captureFailedRequests: true)
             ..interceptors.addAll([
               NetworkInterceptor(),
-              CertificatePinningInterceptor(
-                allowedSHAFingerprints: ShaFingerprints.allowedSHAFingerprints,
-              ),
+              // CertificatePinningInterceptor(
+              //   allowedSHAFingerprints: ShaFingerprints.allowedSHAFingerprints,
+              // ),
               DioCacheInterceptor(
                 options: CacheOptions(
                   store: HiveCacheStore(dir.path),
