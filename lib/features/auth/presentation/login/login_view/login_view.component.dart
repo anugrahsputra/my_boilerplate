@@ -13,13 +13,13 @@ class AppIconHeader extends StatelessWidget {
           Image.asset(IconPath.appIcon, width: 80.w),
           Text(
             context.l10n.loginTitle,
-            style: TextStyle(fontSize: 30.sp, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 30.sp, fontWeight: .bold),
             textAlign: .center,
           ),
 
           Text(
             context.l10n.loginSubtitle,
-            style: const TextStyle(fontWeight: FontWeight.w500),
+            style: const TextStyle(fontWeight: .w500),
             textAlign: .center,
           ),
         ],
@@ -117,7 +117,7 @@ class LoginFooter extends StatelessWidget {
       alignment: .center,
       height: 80.h,
       width: 1.sw,
-      padding: EdgeInsets.all(16.w),
+      padding: .all(16.w),
       child: RichText(
         text: TextSpan(
           text: context.l10n.dontHaveAccount,

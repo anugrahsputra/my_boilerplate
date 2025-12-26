@@ -33,7 +33,7 @@ class _MainViewState extends State<MainView> {
     return MultiBlocProvider(
       providers: [
         BlocProvider<AppCubit>(create: (context) => appCubit),
-        BlocProvider<MainCubit>(create: (context) => MainCubit()),
+        BlocProvider<MainCubit>(create: (context) => mainCubit),
       ],
       child: MultiBlocListener(
         listeners: [
@@ -64,19 +64,16 @@ class _MainViewState extends State<MainView> {
                     .map((tab) => state.pages[tab] ?? const SizedBox.shrink())
                     .toList(),
               ),
-              bottomNavigationBar: BottomNavigationBar(
-                type: BottomNavigationBarType.fixed,
-                currentIndex: state.currentIndex,
-                onTap: (index) =>
+              bottomNavigationBar: NavigationBar(
+                onDestinationSelected: (index) =>
                     context.read<MainCubit>().changeTabByIndex(index),
-                items: MainState.allTabs
-                    .map(
-                      (tab) => BottomNavigationBarItem(
-                        icon: Icon(tab.icon),
-                        label: tab.label(context),
-                      ),
-                    )
-                    .toList(),
+                selectedIndex: state.currentIndex,
+                destinations: MainState.allTabs.map((tab) {
+                  return NavigationDestination(
+                    icon: Icon(tab.icon),
+                    label: tab.label(context),
+                  );
+                }).toList(),
               ),
             );
           },
