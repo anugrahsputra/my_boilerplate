@@ -23,7 +23,7 @@ abstract class AppRoutes {
   static MaterialPageRoute<T> buildMaterialPageRoute<T>({
     required Widget page,
     RouteSettings? settings,
-    AppTransition transition = AppTransition.slideRight,
+    AppTransition transition = .slideRight,
     bool fullscreenDialog = false,
     Duration duration = const Duration(milliseconds: 300),
   }) {
