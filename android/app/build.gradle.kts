@@ -70,7 +70,7 @@ android {
             versionNameSuffix = "-dev"
             resValue("string", "app_name", "My Boilerplate - Dev")
         }
-        create("stag") {
+        create("staging") {
             dimension = "env"
             applicationIdSuffix = ".staging"
             versionNameSuffix = "-staging"

@@ -55,9 +55,11 @@ lib/
 ## 🛠 Setup Instructions
 
 ### Prerequisites
-- Flutter SDK 3.8.1 or higher
-- Dart SDK 3.8.1 or higher
+- [FVM](https://fvm.app/) (Recommended for managing Flutter versions)
+- Flutter SDK (managed via FVM)
 - Android Studio / VS Code
+- Xcode (for iOS development)
+- CocoaPods (for iOS development)
 - Git
 
 ### Installation
@@ -69,29 +71,91 @@ lib/
    ```
 
 2. **Setup project name**
-
-## On Mac/Linux
-  ```bash
+   ```bash
+   # On Mac/Linux
    chmod +x setup.sh
    ./setup.sh
-  ``` 
-## On Windows
-   run setup.bat on cmd
+
+   # On Windows
+   setup.bat
+   ```
 
 3. **Install dependencies**
    ```bash
-   flutter pub get
+   fvm flutter pub get
    ```
 
-4. **Generate code**
+4. **Install iOS Pods**
    ```bash
-   flutter packages pub run build_runner build --delete-conflicting-outputs
+   cd ios
+   pod install
+   cd ..
    ```
 
-5. **Run the app**
+5. **Generate code**
    ```bash
-   flutter run
+   fvm flutter pub run build_runner build --delete-conflicting-outputs
    ```
+
+6. **Run the app**
+   ```bash
+   # Run with specific flavor
+   fvm flutter run --flavor dev
+   ```
+
+## 🎨 Flavors
+
+This project supports multiple environments using Flutter flavors:
+
+- **dev**: Development environment
+- **staging**: Staging/Test environment
+- **prod**: Production environment
+
+### Running with Flavors
+```bash
+fvm flutter run --flavor dev
+fvm flutter run --flavor staging
+fvm flutter run --flavor prod
+```
+
+### Building with Flavors
+```bash
+fvm flutter build apk --flavor prod
+fvm flutter build ios --flavor prod
+```
+
+## 🛠 Troubleshooting
+
+### iOS CocoaPods Errors
+If you encounter errors like `Unable to load contents of file list: ... .xcfilelist` or missing pod configurations:
+
+1. **Clean everything**
+   ```bash
+   fvm flutter clean
+   rm -rf ios/Pods
+   rm -rf ios/Podfile.lock
+   ```
+
+2. **Reinstall**
+   ```bash
+   fvm flutter pub get
+   cd ios
+   pod install
+   cd ..
+   ```
+
+3. **Xcode Sync**
+   Ensure `ios/Flutter/Debug.xcconfig` and `ios/Flutter/Release.xcconfig` include the correct flavor-specific pod config, for example:
+   ```objc
+   #include? "Pods/Target Support Files/Pods-Runner/Pods-Runner.debug-dev.xcconfig"
+   ```
+
+### Code Generation Issues
+If `build_runner` fails:
+```bash
+fvm flutter pub run build_runner build --delete-conflicting-outputs
+```
+
 
 ### Configuration
 

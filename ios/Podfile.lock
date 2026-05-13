@@ -2,7 +2,10 @@ PODS:
   - Alamofire (5.9.1)
   - connectivity_plus (0.0.1):
     - Flutter
-  - CryptoSwift (1.8.4)
+  - CryptoSwift (1.10.0)
+  - cupertino_http (0.0.1):
+    - Flutter
+    - FlutterMacOS
   - Flutter (1.0.0)
   - flutter_native_splash (2.4.3):
     - Flutter
@@ -13,19 +16,15 @@ PODS:
     - Alamofire (~> 5.9.0)
     - CryptoSwift
     - Flutter
-  - ObjectBox (5.2.0)
-  - objectbox_flutter_libs (0.0.1):
-    - Flutter
-    - ObjectBox (= 5.2.0)
   - package_info_plus (0.4.5):
     - Flutter
   - permission_handler_apple (9.3.0):
     - Flutter
-  - Sentry/HybridSDK (8.56.2)
-  - sentry_flutter (9.14.0):
+  - Sentry/HybridSDK (8.58.2)
+  - sentry_flutter (9.20.0):
     - Flutter
     - FlutterMacOS
-    - Sentry/HybridSDK (= 8.56.2)
+    - Sentry/HybridSDK (= 8.58.2)
   - shared_preferences_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
@@ -35,11 +34,11 @@ PODS:
 
 DEPENDENCIES:
   - connectivity_plus (from `.symlinks/plugins/connectivity_plus/ios`)
+  - cupertino_http (from `.symlinks/plugins/cupertino_http/darwin`)
   - Flutter (from `Flutter`)
   - flutter_native_splash (from `.symlinks/plugins/flutter_native_splash/ios`)
   - flutter_secure_storage_darwin (from `.symlinks/plugins/flutter_secure_storage_darwin/darwin`)
   - http_certificate_pinning (from `.symlinks/plugins/http_certificate_pinning/ios`)
-  - objectbox_flutter_libs (from `.symlinks/plugins/objectbox_flutter_libs/ios`)
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
   - sentry_flutter (from `.symlinks/plugins/sentry_flutter/ios`)
@@ -50,12 +49,13 @@ SPEC REPOS:
   trunk:
     - Alamofire
     - CryptoSwift
-    - ObjectBox
     - Sentry
 
 EXTERNAL SOURCES:
   connectivity_plus:
     :path: ".symlinks/plugins/connectivity_plus/ios"
+  cupertino_http:
+    :path: ".symlinks/plugins/cupertino_http/darwin"
   Flutter:
     :path: Flutter
   flutter_native_splash:
@@ -64,8 +64,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_secure_storage_darwin/darwin"
   http_certificate_pinning:
     :path: ".symlinks/plugins/http_certificate_pinning/ios"
-  objectbox_flutter_libs:
-    :path: ".symlinks/plugins/objectbox_flutter_libs/ios"
   package_info_plus:
     :path: ".symlinks/plugins/package_info_plus/ios"
   permission_handler_apple:
@@ -80,20 +78,19 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Alamofire: f36a35757af4587d8e4f4bfa223ad10be2422b8c
   connectivity_plus: cb623214f4e1f6ef8fe7403d580fdad517d2f7dd
-  CryptoSwift: e64e11850ede528a02a0f3e768cec8e9d92ecb90
+  CryptoSwift: e2e7776512f250e66205955da748e7a4e4abffe0
+  cupertino_http: 94ac07f5ff090b8effa6c5e2c47871d48ab7c86c
   Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
   flutter_native_splash: c32d145d68aeda5502d5f543ee38c192065986cf
   flutter_secure_storage_darwin: acdb3f316ed05a3e68f856e0353b133eec373a23
   http_certificate_pinning: 133f28ad5c2d1ecda2581dd2d2cd9dc74da59012
-  ObjectBox: 946c1e8586aaa61e21b6661bab4948d06fdd51c4
-  objectbox_flutter_libs: 4d609454f39d002fc850b3019e180fc4760cdf36
   package_info_plus: af8e2ca6888548050f16fa2f1938db7b5a5df499
   permission_handler_apple: 4ed2196e43d0651e8ff7ca3483a069d469701f2d
-  Sentry: b53951377b78e21a734f5dc8318e333dbfc682d7
-  sentry_flutter: 841fa2fe08dc72eb95e2320b76e3f751f3400cf5
+  Sentry: de29b881e83bd91cf99a927f82f1fd86bfb39db2
+  sentry_flutter: cbb414ef141b64f901bc1ba32daa871349510ce4
   shared_preferences_foundation: 7036424c3d8ec98dfe75ff1667cb0cd531ec82bb
   sqflite_darwin: 20b2a3a3b70e43edae938624ce550a3cbf66a3d0
 
-PODFILE CHECKSUM: 72724428a1cd4aa75dc85eebf8c8604f8b86492c
+PODFILE CHECKSUM: 820fda401fdbdac0b46a7d9e1ffa0ecf7a8f3394
 
 COCOAPODS: 1.16.2

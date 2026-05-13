@@ -13,6 +13,7 @@ import 'package:my_boilerplate/core/core.dart';
 import 'package:my_boilerplate/features/auth/auth.dart';
 import 'package:my_boilerplate/features/auth/data/datasource/auth_datasource.dart';
 import 'package:my_boilerplate/features/general/general.dart';
+import 'package:native_dio_adapter/native_dio_adapter.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sentry_dio/sentry_dio.dart';
 
@@ -54,6 +55,7 @@ Future<void> setup() async {
               ),
             )
             ..addSentry(captureFailedRequests: true)
+            ..httpClientAdapter = NativeAdapter()
             ..interceptors.addAll([
               NetworkInterceptor(),
               // CertificatePinningInterceptor(

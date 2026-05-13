@@ -1,6 +1,6 @@
 name: my_boilerplate
 description: "A new Flutter project."
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 version: 1.0.0+1
 
@@ -13,7 +13,7 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: 1.0.8
+  cupertino_icons: ^1.0.9
   bloc: ^9.2.0
   dartz: 0.10.1
   dio: ^5.9.0
@@ -33,7 +33,7 @@ dependencies:
   path_provider: 2.1.5
   permission_handler: ^12.0.1
   shared_preferences: ^2.5.4
-  sqflite: 2.4.2
+  sqflite: ^2.4.2+1
   uuid: ^4.5.3
   flex_color_scheme: ^8.3.0
   internet_connection_checker: 3.0.1
@@ -44,14 +44,13 @@ dependencies:
   formz: 0.8.0
   sentry_flutter: ^9.14.0
   sentry_dio: ^9.14.0
-  objectbox: ^5.2.0
-  objectbox_flutter_libs: ^5.2.0
   flutter_secure_storage: ^10.0.0
   encrypt: 5.0.3
   hive_flutter: 1.1.0
   sentry_logging: ^9.14.0
   flutter_localizations:
     sdk: flutter
+  native_dio_adapter: ^1.5.1
 
 dev_dependencies:
   flutter_test:

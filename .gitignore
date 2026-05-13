@@ -47,6 +47,8 @@ coverage
 test/.test_cov.dart
 test/helper/mock.mocks.dart
 
-
 .env
 pubspec.lock
+
+# FVM Version Cache
+.fvm/
